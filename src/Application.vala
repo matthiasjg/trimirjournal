@@ -36,19 +36,19 @@ public class Journal.Application : Gtk.Application {
 
     protected override void activate () {
 
-        var button_hello = new Gtk.Button.with_label ("Click me!") {
+        var button_hello = new Gtk.Button.with_label (_("Click me!")) {
             margin = 12
         };
 
         button_hello.clicked.connect (() => {
-            button_hello.label = "Hello World!";
+            button_hello.label = _("Hello World!");
             button_hello.sensitive = false;
         });
 
         var main_window = new Gtk.ApplicationWindow (this) {
             default_height = 300,
             default_width = 300,
-            title = "Trimir Journal"
+            title = _("Trimir Journal")
         };
         main_window.add (button_hello);
         main_window.show_all ();
