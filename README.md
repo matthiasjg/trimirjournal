@@ -39,3 +39,7 @@ ninja
 cd ..
 dpkg-buildpackage
 ```
+
+## Coding in Vala with ~~Visual Studio Code~~ Codium
+
+Install [recommended extensions](https://wiki.gnome.org/Projects/Vala/Tools/VisualStudioCode) from `*.vsix` file by downloading it from Visual Studio Marketplace.
