@@ -18,7 +18,7 @@
 *
 */
 
-public class Journal.MainWindow : Hdy.ApplicationWindow {
+public class Journal.MainWindow : Gtk.ApplicationWindow {
 
     private Journal.ListView listview;
 

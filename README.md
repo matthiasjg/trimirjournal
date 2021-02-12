@@ -6,9 +6,12 @@ You'll need the following dependencies:
 * glib-2.0
 * gobject-2.0
 * gtk+-3.0
-* libhandy-1-dev
 * meson
 * valac
+
+Eventually for eOS 6:
+
+* libhandy-1-dev
 
 Run `meson build` to configure the build environment. Change to the build directory and run `ninja` to build
 
