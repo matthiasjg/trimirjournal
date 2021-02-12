@@ -20,7 +20,6 @@
 
 public class Journal.Application : Gtk.Application {
     public static GLib.Settings settings;
-    //public static Journal.JournalModel model;
 
     public Application () {
         Object (
@@ -30,27 +29,29 @@ public class Journal.Application : Gtk.Application {
     }
 
     static construct {
-        //settings = new Settings ("io.trimir.journal");
-        //model = new Journal.JournalModel ();
+        settings = new Settings ("io.trimir.journal");
     }
 
     protected override void activate () {
 
-        var button_hello = new Gtk.Button.with_label (_("Click me!")) {
-            margin = 12
-        };
+        var main_window = new MainWindow (this);
 
-        button_hello.clicked.connect (() => {
-            button_hello.label = _("Hello World!");
-            button_hello.sensitive = false;
-        });
+        int window_x, window_y;
+        var rect = Gtk.Allocation ();
 
-        var main_window = new Gtk.ApplicationWindow (this) {
-            default_height = 300,
-            default_width = 300,
-            title = _("Trimir Journal")
-        };
-        main_window.add (button_hello);
+        settings.get ("window-position", "(ii)", out window_x, out window_y);
+        settings.get ("window-size", "(ii)", out rect.width, out rect.height);
+
+        if (window_x != -1 || window_y != -1) {
+            main_window.move (window_x, window_y);
+        }
+
+        main_window.set_allocation (rect);
+
+        if (settings.get_boolean ("window-maximized")) {
+            main_window.maximize ();
+        }
+
         main_window.show_all ();
     }
 

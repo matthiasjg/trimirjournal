@@ -1,41 +1,33 @@
-# project name and programming language
 project('io.trimir.journal', 'vala', 'c')
 
-# Include the translations module
+gnome = import('gnome')
 i18n = import('i18n')
 
-# Set our translation domain
 add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format (meson.project_name()), language:'c')
 
-# Create a new executable, list the files we want to compile, list the dependencies we need, and install
+gresource = gnome.compile_resources(
+    'gresource',
+    join_paths('data', 'gresource.xml'),
+    source_dir: 'data'
+)
+
 executable(
     meson.project_name(),
+    gresource,
     'src/Application.vala',
+    'src/ListView.vala',
+    'src/MainWindow.vala',
+    'src/Widgets/LogRow.vala',
     dependencies: [
         dependency('glib-2.0'),
         dependency('gobject-2.0'),
-        dependency('gtk+-3.0')
+        dependency('gtk+-3.0'),
+        dependency('libhandy-1', version: '>=0.90.0')
     ],
     install: true
 )
 
-#Translate and install our .desktop file
-i18n.merge_file(
-    input: join_paths('data', 'trimir-journal.desktop.in'),
-    output: meson.project_name() + '.desktop',
-    po_dir: join_paths(meson.source_root(), 'po'),
-    type: 'desktop',
-    install: true,
-    install_dir: join_paths(get_option('datadir'), 'applications')
-)
-
-#Translate and install our .appdata file
-i18n.merge_file(
-    input: join_paths('data', 'trimir-journal.appdata.xml.in'),
-    output: meson.project_name() + '.appdata.xml',
-    po_dir: join_paths(meson.source_root(), 'po'),
-    install: true,
-    install_dir: join_paths(get_option('datadir'), 'metainfo')
-)
-
+subdir('data')
 subdir('po')
+
+meson.add_install_script('meson/post_install.py')

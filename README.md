@@ -3,7 +3,10 @@
 ## Building and Installation
 
 You'll need the following dependencies:
+* glib-2.0
+* gobject-2.0
 * gtk+-3.0
+* libhandy-1-dev
 * meson
 * valac
 
