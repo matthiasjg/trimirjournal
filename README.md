@@ -13,6 +13,7 @@ You'll need the following dependencies:
 Eventually for eOS 6:
 
 * libhandy-1-dev
+* libgranite-dev
 
 Run `meson build` to configure the build environment. Change to the build directory and run `ninja` to build
 

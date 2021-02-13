@@ -33,7 +33,6 @@ public class Journal.Application : Gtk.Application {
     }
 
     protected override void activate () {
-
         var main_window = new MainWindow (this);
 
         int window_x, window_y;
@@ -53,6 +52,26 @@ public class Journal.Application : Gtk.Application {
         }
 
         main_window.show_all ();
+
+        var quit_action = new SimpleAction ("quit", null);
+
+        add_action (quit_action);
+        set_accels_for_action ("app.quit", {"<Control>q"});
+
+        quit_action.activate.connect (() => {
+            if (main_window != null) {
+                main_window.destroy ();
+            }
+        });
+
+        /*  var granite_settings = Granite.Settings.get_default ();
+        var gtk_settings = Gtk.Settings.get_default ();
+
+        gtk_settings.gtk_application_prefer_dark_theme = granite_settings.prefers_color_scheme == Granite.Settings.ColorScheme.DARK;
+
+        granite_settings.notify["prefers-color-scheme"].connect (() => {
+            gtk_settings.gtk_application_prefer_dark_theme = granite_settings.prefers_color_scheme == Granite.Settings.ColorScheme.DARK;
+        }); */
     }
 
     public static int main (string[] args) {

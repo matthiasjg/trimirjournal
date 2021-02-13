@@ -21,7 +21,6 @@
 public class Journal.MainWindow : Gtk.ApplicationWindow {
 
     private uint configure_id;
-    private Journal.ListView listview;
 
     public MainWindow (Gtk.Application application) {
         Object (
@@ -32,11 +31,6 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
     }
 
     construct {
-        var log_row = new Journal.LogRow (
-            "finally fixed my #c64 setup",
-            "2019-12-26T16:25:44.502Z"
-        );
-
         var header_provider = new Gtk.CssProvider ();
         header_provider.load_from_resource ("io/trimir/journal/HeaderBar.css");
 
@@ -65,7 +59,10 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
         var sidebar = new Gtk.Grid ();
         sidebar.attach (sidebar_header, 0, 0);
 
-        listview = new Journal.ListView ();
+        unowned Gtk.StyleContext sidebar_style_context = sidebar.get_style_context ();
+        sidebar_style_context.add_class (Gtk.STYLE_CLASS_SIDEBAR);
+
+        Journal.ListView listview = new Journal.ListView ();
 
         var listview_grid = new Gtk.Grid ();
         listview_grid.attach (listview_header, 0, 0);
@@ -76,6 +73,8 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
         paned.pack2 (listview_grid, true, false);
 
         add (paned);
+
+        Journal.Application.settings.bind ("pane-position", paned, "position", GLib.SettingsBindFlags.DEFAULT);
     }
 
     public override bool configure_event (Gdk.EventConfigure event) {
