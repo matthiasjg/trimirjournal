@@ -32,49 +32,38 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
 
     construct {
         var header_provider = new Gtk.CssProvider ();
-        header_provider.load_from_resource ("io/trimir/journal/HeaderBar.css");
+        header_provider.load_from_resource ( "io/trimir/journal/HeaderBar.css" );
 
         var sidebar_header = new Gtk.HeaderBar () {
             decoration_layout = "close:",
             has_subtitle = false,
-            show_close_button = true
+            show_close_button = false
         };
 
         unowned Gtk.StyleContext sidebar_header_context = sidebar_header.get_style_context ();
-        sidebar_header_context.add_class ("sidebar-header");
-        sidebar_header_context.add_class ("default-decoration");
+        sidebar_header_context.add_class ( "sidebar-header" );
+        sidebar_header_context.add_class ( "default-decoration" );
         sidebar_header_context.add_class (Gtk.STYLE_CLASS_FLAT);
         sidebar_header_context.add_provider (header_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-        var listview_header = new Gtk.HeaderBar () {
-            has_subtitle = false,
-            decoration_layout = ":maximize",
-            show_close_button = true
-        };
-
-        unowned Gtk.StyleContext listview_header_context = listview_header.get_style_context ();
-        listview_header_context.add_class ("default-decoration");
-        listview_header_context.add_class (Gtk.STYLE_CLASS_FLAT);
-
         var sidebar = new Gtk.Grid ();
-        sidebar.attach (sidebar_header, 0, 0);
+        sidebar.attach ( sidebar_header, 0, 0 );
 
         unowned Gtk.StyleContext sidebar_style_context = sidebar.get_style_context ();
-        sidebar_style_context.add_class (Gtk.STYLE_CLASS_SIDEBAR);
+        sidebar_style_context.add_class ( Gtk.STYLE_CLASS_SIDEBAR );
 
         Journal.ListView listview = new Journal.ListView ();
 
         var listview_grid = new Gtk.Grid ();
-        listview_grid.attach (listview_header, 0, 0);
-        listview_grid.attach (listview, 0, 1);
+        listview_grid.attach ( listview, 0, 1 );
 
-        var paned = new Gtk.Paned (Gtk.Orientation.HORIZONTAL);
-        paned.pack1 (sidebar, false, false);
-        paned.pack2 (listview_grid, true, false);
+        var paned = new Gtk.Paned ( Gtk.Orientation.HORIZONTAL );
+        paned.pack1 ( sidebar, false, false );
+        paned.pack2 ( listview_grid, true, false );
 
-        add (paned);
+        add ( paned );
 
-        Journal.Application.settings.bind ("pane-position", paned, "position", GLib.SettingsBindFlags.DEFAULT);
+        Journal.Application.settings.bind ( "pane-position", paned, "position", GLib.SettingsBindFlags.DEFAULT );
     }
 
     public override bool configure_event (Gdk.EventConfigure event) {
@@ -86,22 +75,22 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
             configure_id = 0;
 
             if (is_maximized) {
-                Journal.Application.settings.set_boolean ("window-maximized", true);
+                Journal.Application.settings.set_boolean ( "window-maximized", true );
             } else {
-                Journal.Application.settings.set_boolean ("window-maximized", false);
+                Journal.Application.settings.set_boolean ( "window-maximized", false );
 
                 Gdk.Rectangle rect;
-                get_allocation (out rect);
-                Journal.Application.settings.set ("window-size", "(ii)", rect.width, rect.height);
+                get_allocation ( out rect );
+                Journal.Application.settings.set ( "window-size", "(ii)", rect.width, rect.height );
 
                 int root_x, root_y;
-                get_position (out root_x, out root_y);
-                Journal.Application.settings.set ("window-position", "(ii)", root_x, root_y);
+                get_position ( out root_x, out root_y );
+                Journal.Application.settings.set ( "window-position", "(ii)", root_x, root_y );
             }
 
             return false;
         });
 
-        return base.configure_event (event);
+        return base.configure_event (  event );
     }
 }

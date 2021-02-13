@@ -19,26 +19,25 @@
 */
 
 public class Journal.ListView : Gtk.Grid {
-    private Gtk.ScrolledWindow _scrolledWindow;
     private Gtk.TreeView _treeView;
-    private Journal.LogReader _logReader;
 
+    private Journal.LogReader _logReader;
     private Journal.LogModel[]? _logs;
 
     public ListView () {
 
-        _scrolledWindow = new Gtk.ScrolledWindow( null, null ) {
+        var scrolledWindow = new Gtk.ScrolledWindow( null, null ) {
             expand = true
         };
         _treeView = new Gtk.TreeView();
-        _scrolledWindow.add( _treeView );
+        scrolledWindow.add( _treeView );
 
         _treeView.set_grid_lines( Gtk.TreeViewGridLines.HORIZONTAL );
 		var cell = new Gtk.CellRendererText();
         cell.set_padding( 4, 10 );
-		_treeView.insert_column_with_attributes( -1, "Log", cell, "markup", 0 );
+		_treeView.insert_column_with_attributes( -1, null, cell, "markup", 0 );
 
-        add( _scrolledWindow );
+        add( scrolledWindow );
 		updateList();
     }
 
@@ -49,8 +48,8 @@ public class Journal.ListView : Gtk.Grid {
 
         Gtk.TreeIter iter;
 
-        _logReader = Journal.LogReader.sharedInstance();
         if ( _logs == null ) {
+            _logReader = Journal.LogReader.sharedInstance();
             _logs = _logReader.loadJournal();
         }
         for( int i = 0; i < _logs.length; ++i ) {
