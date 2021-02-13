@@ -20,6 +20,7 @@
 
 public class Journal.MainWindow : Gtk.ApplicationWindow {
 
+    private uint configure_id;
     private Journal.ListView listview;
 
     public MainWindow (Gtk.Application application) {
@@ -31,7 +32,10 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
     }
 
     construct {
-        var log_row = new Journal.LogRow ("finally fixed my #c64 setup", "2019-12-26T16:25:44.502Z");
+        var log_row = new Journal.LogRow (
+            "finally fixed my #c64 setup",
+            "2019-12-26T16:25:44.502Z"
+        );
 
         var header_provider = new Gtk.CssProvider ();
         header_provider.load_from_resource ("io/trimir/journal/HeaderBar.css");
@@ -74,4 +78,31 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
         add (paned);
     }
 
+    public override bool configure_event (Gdk.EventConfigure event) {
+        if (configure_id != 0) {
+            GLib.Source.remove (configure_id);
+        }
+
+        configure_id = Timeout.add (100, () => {
+            configure_id = 0;
+
+            if (is_maximized) {
+                Journal.Application.settings.set_boolean ("window-maximized", true);
+            } else {
+                Journal.Application.settings.set_boolean ("window-maximized", false);
+
+                Gdk.Rectangle rect;
+                get_allocation (out rect);
+                Journal.Application.settings.set ("window-size", "(ii)", rect.width, rect.height);
+
+                int root_x, root_y;
+                get_position (out root_x, out root_y);
+                Journal.Application.settings.set ("window-position", "(ii)", root_x, root_y);
+            }
+
+            return false;
+        });
+
+        return base.configure_event (event);
+    }
 }

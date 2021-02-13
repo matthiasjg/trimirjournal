@@ -6,6 +6,7 @@ You'll need the following dependencies:
 * glib-2.0
 * gobject-2.0
 * gtk+-3.0
+* libjson-glib-dev
 * meson
 * valac
 

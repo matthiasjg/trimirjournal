@@ -16,6 +16,8 @@ executable(
     gresource,
     'src/Application.vala',
     'src/ListView.vala',
+    'src/LogModel.vala',
+    'src/LogReader.vala',
     'src/MainWindow.vala',
     'src/Widgets/LogRow.vala',
     dependencies: [
