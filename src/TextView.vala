@@ -40,8 +40,8 @@ public class Journal.TextView : Gtk.Grid {
             _log_reader = Journal.LogReader.sharedInstance();
             _logs = _log_reader.loadJournal();
         }
-        Gtk.TextIter end_iter;
         for( int i = 0; i < _logs.length; ++i ) {
+            Gtk.TextIter end_iter;
             var log = _logs[i].log;
             var created_at = _logs[i].created_at;
             var str = "%s:  %s\n\n".printf( created_at, log );
@@ -51,8 +51,6 @@ public class Journal.TextView : Gtk.Grid {
         format_tags();
     }
 
-    // https://github.com/GNOME/gitg/blob/master/libgitg/gitg-diff-view.vala
-    // https://stackoverflow.com/questions/17109634/hyperlink-in-cellrenderertext-markup
 	public void format_tags() {
 	    Gtk.TextBuffer buffer;
 	    buffer = _text_view.buffer;
@@ -63,18 +61,17 @@ public class Journal.TextView : Gtk.Grid {
 			regex.match (buffer_text, 0, out matchInfo);
 
 			while (matchInfo.matches ()) {
-			    //print ("text"+buffer_text);
 				Gtk.TextIter start, end;
 				int start_pos, end_pos;
-				// string text = matchInfo.fetch(0);
+				string tag_text = matchInfo.fetch(0);
 				matchInfo.fetch_pos (0, out start_pos, out end_pos);
 				buffer.get_iter_at_offset(out start, start_pos);
 				buffer.get_iter_at_offset(out end, end_pos);
+				string text_tag_name = "%s_%i_%i".printf ( tag_text, start_pos, end_pos );
 
-				var tag = buffer.create_tag(null, "underline", Pango.Underline.SINGLE);
-				//text = regex.replace(text, text.length, 0, "mytag");
+				var tag = buffer.create_tag(text_tag_name, "underline", Pango.Underline.SINGLE);
 				//tag.set_data("type", "url");
-				//tag.set_data("url", text);
+				//tag.set_data("url", "https://example.com");
 				buffer.apply_tag(tag, start, end);
 
 				matchInfo.next();
