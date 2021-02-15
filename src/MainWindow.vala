@@ -46,20 +46,25 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
         sidebar_header_context.add_class (Gtk.STYLE_CLASS_FLAT);
         sidebar_header_context.add_provider (header_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-        var sidebar = new Gtk.Grid ();
-        sidebar.attach ( sidebar_header, 0, 0 );
+        //var sidebar = new Gtk.Grid ();
+        //sidebar.attach ( sidebar_header, 0, 0 );
 
-        unowned Gtk.StyleContext sidebar_style_context = sidebar.get_style_context ();
-        sidebar_style_context.add_class ( Gtk.STYLE_CLASS_SIDEBAR );
+        //unowned Gtk.StyleContext sidebar_style_context = sidebar.get_style_context ();
+        //sidebar_style_context.add_class ( Gtk.STYLE_CLASS_SIDEBAR );
 
-        Journal.ListView listview = new Journal.ListView ();
+        Journal.TextView text_view = new Journal.TextView ();
+        Journal.ListView list_view = new Journal.ListView ();
 
-        var listview_grid = new Gtk.Grid ();
-        listview_grid.attach ( listview, 0, 1 );
+        var text_view_grid = new Gtk.Grid ();
+        text_view_grid.attach ( text_view, 0, 1 );
+        var list_view_grid = new Gtk.Grid ();
+        list_view_grid.attach ( list_view, 0, 1 );
 
         var paned = new Gtk.Paned ( Gtk.Orientation.HORIZONTAL );
-        paned.pack1 ( sidebar, false, false );
-        paned.pack2 ( listview_grid, true, false );
+        //paned.pack1 ( sidebar, false, false );
+        paned.pack1 ( text_view_grid, false, false );
+        paned.pack2 ( list_view_grid, true, false );
+
 
         add ( paned );
 

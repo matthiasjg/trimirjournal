@@ -19,9 +19,9 @@
 */
 
 public class Journal.ListView : Gtk.Grid {
-    private Gtk.TreeView _treeView;
+    private Gtk.TreeView _tree_view;
 
-    private Journal.LogReader _logReader;
+    private Journal.LogReader _log_reader;
     private Journal.LogModel[]? _logs;
 
     public ListView () {
@@ -29,36 +29,38 @@ public class Journal.ListView : Gtk.Grid {
         var scrolledWindow = new Gtk.ScrolledWindow( null, null ) {
             expand = true
         };
-        _treeView = new Gtk.TreeView();
-        scrolledWindow.add( _treeView );
+        _tree_view = new Gtk.TreeView();
+        _tree_view.hover_selection = false;
+        scrolledWindow.add( _tree_view );
 
-        _treeView.set_grid_lines( Gtk.TreeViewGridLines.HORIZONTAL );
+        _tree_view.set_grid_lines( Gtk.TreeViewGridLines.HORIZONTAL );
 		var cell = new Gtk.CellRendererText();
-        cell.set_padding( 4, 10 );
-		_treeView.insert_column_with_attributes( -1, null, cell, "markup", 0 );
+		cell.wrap_mode = Pango.WrapMode.WORD_CHAR;
+		cell.width = 300;
+		cell.wrap_width = 300;
+        //cell.set_padding( 4, 10 );
+		_tree_view.insert_column_with_attributes( -1, null, cell, "markup", 0 );
 
         add( scrolledWindow );
 		updateList();
     }
 
-    private void updateList()
-    {
+    private void updateList() {
         var listmodel = new Gtk.ListStore( 1, typeof(string) );
-		_treeView.set_model( listmodel );
+		_tree_view.set_model( listmodel );
 
         Gtk.TreeIter iter;
 
         if ( _logs == null ) {
-            _logReader = Journal.LogReader.sharedInstance();
-            _logs = _logReader.loadJournal();
+            _log_reader = Journal.LogReader.sharedInstance();
+            _logs = _log_reader.loadJournal();
         }
         for( int i = 0; i < _logs.length; ++i ) {
             listmodel.append( out iter );
             var log = _logs[i].log;
             var created_at = _logs[i].created_at;
-            var str = "<big><b>%s</b></big>\n\n%s".printf( log, created_at );
+            var str = "<big><b>%s</b></big>\n%s".printf( log, created_at );
             listmodel.set( iter, 0, str );
         }
     }
-
 }
