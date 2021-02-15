@@ -18,42 +18,39 @@
 *
 */
 public class Journal.TextView : Gtk.Grid {
-    private Gtk.TextView _text_view;
+    private Gtk.ListBox _list_box;
 
     private Journal.LogReader _log_reader;
     private Journal.LogModel[]? _logs;
 
     public TextView () {
-        var scrolledWindow = new Gtk.ScrolledWindow( null, null ) {
+        Gtk.ScrolledWindow scrolled_window = new Gtk.ScrolledWindow( null, null ) {
             expand = true
         };
-        _text_view = new Gtk.TextView();
-        _text_view.wrap_mode = Gtk.WrapMode.WORD_CHAR;
-        scrolledWindow.add( _text_view );
-
-        add( scrolledWindow );
-		updateText();
+        _list_box = new Gtk.ListBox();
+        scrolled_window.add( _list_box );
+        add( scrolled_window );
+		loadJournalLogs();
     }
 
-    private void updateText() {
+    private void loadJournalLogs() {
         if ( _logs == null ) {
             _log_reader = Journal.LogReader.sharedInstance();
             _logs = _log_reader.loadJournal();
         }
         for( int i = 0; i < _logs.length; ++i ) {
-            Gtk.TextIter end_iter;
+            Gtk.TextView text_view = new Gtk.TextView();
+            text_view.wrap_mode = Gtk.WrapMode.WORD_CHAR;
             var log = _logs[i].log;
             var created_at = _logs[i].created_at;
             var str = "%s:  %s\n\n".printf( created_at, log );
-            _text_view.buffer.get_end_iter(out end_iter);
-            _text_view.buffer.insert(ref end_iter, str, -1);
+            text_view.buffer.text = str;
+            text_view.buffer = format_tags ( text_view.buffer );
+            _list_box.insert( text_view, -1 );
         }
-        format_tags();
     }
 
-	public void format_tags() {
-	    Gtk.TextBuffer buffer;
-	    buffer = _text_view.buffer;
+	public Gtk.TextBuffer format_tags(Gtk.TextBuffer buffer) {
 		try {
     		var buffer_text = buffer.text;
 			GLib.Regex regex = /(?:^|)#(\w+)/;
@@ -79,5 +76,6 @@ public class Journal.TextView : Gtk.Grid {
 		} catch(Error e) {
 		    print ("Unable to format tags: %s\n", e.message);
 		}
+		return buffer;
 	}
 }
