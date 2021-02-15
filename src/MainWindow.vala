@@ -46,24 +46,31 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
         sidebar_header_context.add_class (Gtk.STYLE_CLASS_FLAT);
         sidebar_header_context.add_provider (header_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-        //var sidebar = new Gtk.Grid ();
-        //sidebar.attach ( sidebar_header, 0, 0 );
+        var journal_view_header = new Gtk.HeaderBar () {
+            has_subtitle = false,
+            decoration_layout = ":maximize",
+            show_close_button = false
+        };
 
-        //unowned Gtk.StyleContext sidebar_style_context = sidebar.get_style_context ();
-        //sidebar_style_context.add_class ( Gtk.STYLE_CLASS_SIDEBAR );
+        unowned Gtk.StyleContext journal_view_header_context = journal_view_header.get_style_context ();
+        journal_view_header_context.add_class ("default-decoration");
+        journal_view_header_context.add_class (Gtk.STYLE_CLASS_FLAT);
 
-        Journal.TextView text_view = new Journal.TextView ();
-        Journal.ListView list_view = new Journal.ListView ();
+        var sidebar = new Gtk.Grid ();
+        sidebar.attach ( sidebar_header, 0, 0 );
 
-        var text_view_grid = new Gtk.Grid ();
-        text_view_grid.attach ( text_view, 0, 1 );
-        var list_view_grid = new Gtk.Grid ();
-        list_view_grid.attach ( list_view, 0, 1 );
+        unowned Gtk.StyleContext sidebar_style_context = sidebar.get_style_context ();
+        sidebar_style_context.add_class ( Gtk.STYLE_CLASS_SIDEBAR );
+
+        Journal.JournalView journal_view = new Journal.JournalView ();
+
+        var journal_view_grid = new Gtk.Grid ();
+        journal_view_grid.attach ( journal_view_header, 0, 0 );
+        journal_view_grid.attach ( journal_view, 0, 1 );
 
         var paned = new Gtk.Paned ( Gtk.Orientation.HORIZONTAL );
-        //paned.pack1 ( sidebar, false, false );
-        paned.pack1 ( text_view_grid, false, false );
-        paned.pack2 ( list_view_grid, true, false );
+        paned.pack1 ( sidebar, false, false );
+        paned.pack2 ( journal_view_grid, true, false );
 
 
         add ( paned );

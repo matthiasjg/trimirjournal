@@ -17,17 +17,19 @@
 * Boston, MA 02110-1301 USA
 *
 */
-public class Journal.TextView : Gtk.Grid {
+public class Journal.JournalView : Gtk.Grid {
     private Gtk.ListBox _list_box;
 
     private Journal.LogReader _log_reader;
     private Journal.LogModel[]? _logs;
 
-    public TextView () {
+    public JournalView () {
         Gtk.ScrolledWindow scrolled_window = new Gtk.ScrolledWindow( null, null ) {
             expand = true
         };
-        _list_box = new Gtk.ListBox();
+        _list_box = new Gtk.ListBox () {
+            selection_mode = Gtk.SelectionMode.NONE
+        };
         scrolled_window.add( _list_box );
         add( scrolled_window );
 		loadJournalLogs();
@@ -43,7 +45,7 @@ public class Journal.TextView : Gtk.Grid {
             text_view.wrap_mode = Gtk.WrapMode.WORD_CHAR;
             var log = _logs[i].log;
             var created_at = _logs[i].created_at;
-            var str = "%s:  %s\n\n".printf( created_at, log );
+            var str = "%s:  %s\n".printf( created_at, log );
             text_view.buffer.text = str;
             text_view.buffer = format_tags ( text_view.buffer );
             _list_box.insert( text_view, -1 );

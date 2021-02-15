@@ -15,11 +15,10 @@ executable(
     meson.project_name(),
     gresource,
     'src/Application.vala',
-    'src/ListView.vala',
     'src/LogModel.vala',
     'src/LogReader.vala',
     'src/MainWindow.vala',
-    'src/TextView.vala',
+    'src/JournalView.vala',
     dependencies: [
         dependency('glib-2.0'),
         dependency('gobject-2.0'),
