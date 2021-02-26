@@ -52,6 +52,18 @@ public class Journal.JournalView : Gtk.Grid {
         }
     }
 
+    private bool handleTagEvent(
+        Gtk.TextTag text_tag,
+        Object object,
+        Gdk.Event event,
+        Gtk.TextIter iter) {
+
+        if (event.type == Gdk.Event.BUTTON_PRESS) {
+            print ("Tag clicked: %s\n", text_tag.get_data("tag"));
+        }
+        return true;
+    }
+
 	public Gtk.TextBuffer format_tags(Gtk.TextBuffer buffer) {
 		try {
     		var buffer_text = buffer.text;
@@ -62,16 +74,22 @@ public class Journal.JournalView : Gtk.Grid {
 			while (matchInfo.matches ()) {
 				Gtk.TextIter start, end;
 				int start_pos, end_pos;
-				string tag_text = matchInfo.fetch(0);
+
 				matchInfo.fetch_pos (0, out start_pos, out end_pos);
 				buffer.get_iter_at_offset(out start, start_pos);
 				buffer.get_iter_at_offset(out end, end_pos);
-				string text_tag_name = "%s_%i_%i".printf ( tag_text, start_pos, end_pos );
 
-				var tag = buffer.create_tag(text_tag_name, "underline", Pango.Underline.SINGLE);
-				//tag.set_data("type", "url");
-				//tag.set_data("url", "https://example.com");
-				buffer.apply_tag(tag, start, end);
+				string tag_text = matchInfo.fetch(0);
+				// string text_tag_name = "%s_%i_%i".printf ( tag_text, start_pos, end_pos );
+
+				var tag_ul = buffer.create_tag(null, "underline", Pango.Underline.SINGLE);
+				var tag_b = buffer.create_tag(null, "weight", Pango.Weight.BOLD);
+
+                tag_ul.set_data("tag", tag_text);
+				tag_ul.event.connect(handleTagEvent);
+
+				buffer.apply_tag(tag_ul, start, end);
+				buffer.apply_tag(tag_b, start, end);
 
 				matchInfo.next();
 			}
