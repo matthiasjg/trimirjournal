@@ -35,31 +35,39 @@ public class Journal.JournalView : Gtk.Grid {
 		loadJournalLogs();
     }
 
-    private void loadJournalLogs() {
+    private void loadJournalLogs(string tag_filter = "") {
         if ( _logs == null ) {
             _log_reader = Journal.LogReader.sharedInstance();
             _logs = _log_reader.loadJournal();
         }
+
+        _list_box.foreach ((log) => _list_box.remove ( log ) );
+
         for( int i = 0; i < _logs.length; ++i ) {
-            Gtk.TextView text_view = new Gtk.TextView();
-            text_view.wrap_mode = Gtk.WrapMode.WORD_CHAR;
             var log = _logs[i].log;
             var created_at = _logs[i].created_at;
             var str = "%s:  %s\n".printf( created_at, log );
-            text_view.buffer.text = str;
-            text_view.buffer = format_tags ( text_view.buffer );
-            _list_box.insert( text_view, -1 );
+            bool add_log = true;
+            if ( tag_filter != "" ) {
+                add_log = log.contains( tag_filter );
+            }
+            if ( add_log ) {
+                Gtk.TextView text_view = new Gtk.TextView();
+                text_view.wrap_mode = Gtk.WrapMode.WORD_CHAR;
+                text_view.buffer.text = str;
+                text_view.buffer = format_tags ( text_view.buffer );
+                _list_box.insert( text_view, -1 );
+            }
         }
+        _list_box.show_all();
     }
 
-    private bool handleTagEvent(
-        Gtk.TextTag text_tag,
-        Object object,
-        Gdk.Event event,
-        Gtk.TextIter iter) {
+    private bool handleTagEvent( Gtk.TextTag text_tag,
+        Object object, Gdk.Event event, Gtk.TextIter iter) {
 
-        if (event.type == Gdk.Event.BUTTON_PRESS) {
-            print ("Tag clicked: %s\n", text_tag.get_data("tag"));
+        if ( event.type == Gdk.Event.BUTTON_PRESS ) {
+            string tag_text = text_tag.get_data( "tag" );
+            loadJournalLogs( tag_text );
         }
         return true;
     }
@@ -69,32 +77,32 @@ public class Journal.JournalView : Gtk.Grid {
     		var buffer_text = buffer.text;
 			GLib.Regex regex = /(?:^|)#(\w+)/;
 			GLib.MatchInfo matchInfo;
-			regex.match (buffer_text, 0, out matchInfo);
+			regex.match ( buffer_text, 0, out matchInfo );
 
 			while (matchInfo.matches ()) {
 				Gtk.TextIter start, end;
 				int start_pos, end_pos;
 
-				matchInfo.fetch_pos (0, out start_pos, out end_pos);
-				buffer.get_iter_at_offset(out start, start_pos);
-				buffer.get_iter_at_offset(out end, end_pos);
+				matchInfo.fetch_pos ( 0, out start_pos, out end_pos );
+				buffer.get_iter_at_offset( out start, start_pos );
+				buffer.get_iter_at_offset( out end, end_pos );
 
 				string tag_text = matchInfo.fetch(0);
 				// string text_tag_name = "%s_%i_%i".printf ( tag_text, start_pos, end_pos );
 
-				var tag_ul = buffer.create_tag(null, "underline", Pango.Underline.SINGLE);
-				var tag_b = buffer.create_tag(null, "weight", Pango.Weight.BOLD);
+				var tag_ul = buffer.create_tag (null, "underline", Pango.Underline.SINGLE );
+				var tag_b = buffer.create_tag( null, "weight", Pango.Weight.BOLD );
 
-                tag_ul.set_data("tag", tag_text);
-				tag_ul.event.connect(handleTagEvent);
+                tag_ul.set_data( "tag", tag_text );
+				tag_ul.event.connect( handleTagEvent );
 
-				buffer.apply_tag(tag_ul, start, end);
-				buffer.apply_tag(tag_b, start, end);
+				buffer.apply_tag( tag_ul, start, end );
+				buffer.apply_tag( tag_b, start, end );
 
 				matchInfo.next();
 			}
 		} catch(Error e) {
-		    print ("Unable to format tags: %s\n", e.message);
+		    print ( "Unable to format tags: %s\n", e.message );
 		}
 		return buffer;
 	}
