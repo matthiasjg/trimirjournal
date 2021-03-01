@@ -46,6 +46,17 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
         sidebar_header_context.add_class (Gtk.STYLE_CLASS_FLAT);
         sidebar_header_context.add_provider (header_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
+        var gtk_settings = Gtk.Settings.get_default ();
+
+        var mode_switch = new Granite.ModeSwitch.from_icon_name (
+            "display-brightness-symbolic",
+            "weather-clear-night-symbolic"
+        );
+        mode_switch.primary_icon_tooltip_text = ("Light background");
+        mode_switch.secondary_icon_tooltip_text = ("Dark background");
+        mode_switch.valign = Gtk.Align.CENTER;
+        mode_switch.bind_property ("active", gtk_settings, "gtk-application-prefer-dark-theme", GLib.BindingFlags.BIDIRECTIONAL);
+
         var journal_view_header = new Gtk.HeaderBar () {
             has_subtitle = false,
             decoration_layout = ":maximize",
@@ -55,6 +66,11 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
         unowned Gtk.StyleContext journal_view_header_context = journal_view_header.get_style_context ();
         journal_view_header_context.add_class ("default-decoration");
         journal_view_header_context.add_class (Gtk.STYLE_CLASS_FLAT);
+
+        var headerbar = new Gtk.HeaderBar ();
+        headerbar.get_style_context ().add_class ("default-decoration");
+        headerbar.show_close_button = true;
+        headerbar.pack_end (mode_switch);
 
         var sidebar = new Gtk.Grid ();
         sidebar.attach ( sidebar_header, 0, 0 );
@@ -72,7 +88,7 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
         paned.pack1 ( sidebar, false, false );
         paned.pack2 ( journal_view_grid, true, false );
 
-
+        set_titlebar (headerbar);
         add ( paned );
 
         Journal.Application.settings.bind ( "pane-position", paned, "position", GLib.SettingsBindFlags.DEFAULT );
