@@ -46,7 +46,9 @@ public class Journal.JournalView : Gtk.Grid {
         for( int i = 0; i < _logs.length; ++i ) {
             var log = _logs[i].log;
             var created_at = _logs[i].created_at;
-            var str = "%s:  %s\n".printf( created_at, log );
+            var created_at_date_time = new DateTime.from_iso8601 ( created_at, new TimeZone.local () );
+            var relative_created_at = Granite.DateTime.get_relative_datetime ( created_at_date_time );
+            var str = "%s:  %s\n".printf( relative_created_at, log );
             bool add_log = true;
             if ( tag_filter != "" ) {
                 add_log = log.contains( tag_filter );
