@@ -18,7 +18,7 @@
 *
 */
 
-const string JournalFilePath = "/home/matthias/Tresors/matthias tresor/ZenJournal_backup_Sat_Feb_13_2021.json";
+const string JournalFilePath = "/home/matthias/Tresors/matthias tresor/ZenJournal_backup_Mon_Mar_01_2021.json";
 
 public class Journal.LogReader : Object {
     private static LogReader __instance;

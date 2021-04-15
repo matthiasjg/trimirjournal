@@ -63,6 +63,15 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
             show_close_button = false
         };
 
+        var tag_filter_popover = new Journal.TagFilterPopover( "testTag" );
+
+        var tag_filter_grid = new Gtk.Grid () {
+            margin_top= 3
+        };
+        tag_filter_grid.attach (tag_filter_popover, 0, 0);
+        tag_filter_grid.show_all ();
+        journal_view_header.add (tag_filter_grid);
+
         unowned Gtk.StyleContext journal_view_header_context = journal_view_header.get_style_context ();
         journal_view_header_context.add_class ("default-decoration");
         journal_view_header_context.add_class (Gtk.STYLE_CLASS_FLAT);
