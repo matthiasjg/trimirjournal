@@ -57,24 +57,13 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
         mode_switch.valign = Gtk.Align.CENTER;
         mode_switch.bind_property ("active", gtk_settings, "gtk-application-prefer-dark-theme", GLib.BindingFlags.BIDIRECTIONAL);
 
-        var journal_view_header = new Gtk.HeaderBar () {
-            has_subtitle = false,
-            decoration_layout = ":maximize",
-            show_close_button = false
-        };
-
         var tag_filter_popover = new Journal.TagFilterPopover( "testTag" );
 
         var tag_filter_grid = new Gtk.Grid () {
-            margin_top= 3
+            margin_top = 2,
+            margin_bottom = 2
         };
-        tag_filter_grid.attach (tag_filter_popover, 0, 0);
-        tag_filter_grid.show_all ();
-        journal_view_header.add (tag_filter_grid);
-
-        unowned Gtk.StyleContext journal_view_header_context = journal_view_header.get_style_context ();
-        journal_view_header_context.add_class ("default-decoration");
-        journal_view_header_context.add_class (Gtk.STYLE_CLASS_FLAT);
+        tag_filter_grid.attach ( tag_filter_popover, 0, 0 );
 
         var headerbar = new Gtk.HeaderBar ();
         headerbar.get_style_context ().add_class ("default-decoration");
@@ -90,7 +79,7 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
         Journal.JournalView journal_view = new Journal.JournalView ();
 
         var journal_view_grid = new Gtk.Grid ();
-        journal_view_grid.attach ( journal_view_header, 0, 0 );
+        journal_view_grid.attach ( tag_filter_grid, 0, 0 );
         journal_view_grid.attach ( journal_view, 0, 1 );
 
         var paned = new Gtk.Paned ( Gtk.Orientation.HORIZONTAL );

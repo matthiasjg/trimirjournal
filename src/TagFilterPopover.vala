@@ -26,5 +26,7 @@ public class Journal.TagFilterPopover : Journal.TagPopover<string?> {
             placeholder: tag_filter
         );
     }
+
+    construct {}
 }
 
