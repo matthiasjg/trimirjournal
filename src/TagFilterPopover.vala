@@ -22,7 +22,7 @@ public class Journal.TagFilterPopover : Journal.TagPopover<string?> {
 
     public TagFilterPopover ( string tag_filter = "" ) {
         Object (
-            icon_name: "office-calendar-symbolic",
+            icon_name: "folder-tag",
             placeholder: tag_filter
         );
     }
