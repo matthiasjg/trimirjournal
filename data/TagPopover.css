@@ -20,11 +20,12 @@
 
 tag-popover grid {
     border-radius: 3px;
-    background: @SILVER_300;
+    background: @BLUEBERRY_100;
+    border-color: @BLUEBERRY_300;
 }
 
 tag-popover button {
-    color: @SILVER_900;
+    color: @BLUEBERRY_900;
     font-size: 0.9em;
     font-weight: 600;
 }

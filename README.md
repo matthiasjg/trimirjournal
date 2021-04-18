@@ -52,6 +52,7 @@ dpkg-buildpackage
 
 Install [recommended extensions](https://wiki.gnome.org/Projects/Vala/Tools/VisualStudioCode) from `*.vsix` file by downloading it from Visual Studio Marketplace.
 
-## Resources
+## elementary Resources
 
+- https://elementary.io/docs/human-interface-guidelines#color
 - https://github.com/elementary/icons
