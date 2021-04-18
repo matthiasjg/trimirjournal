@@ -18,23 +18,23 @@
 *
 */
 
-tag-popover grid {
+tag-button grid {
     border-radius: 3px;
     background: @BLUEBERRY_100;
     border-color: @BLUEBERRY_300;
 }
 
-tag-popover button {
+tag-button button {
     color: @BLUEBERRY_900;
-    font-size: 0.9em;
+    font-size: 1em;
     font-weight: 600;
 }
 
-tag-popover.error grid {
+tag-button.error grid {
     background: alpha (@error_color, 0.2);
 }
 
-tag-popover.error button {
+tag-button.error button {
     color: @error_color;
 }
 

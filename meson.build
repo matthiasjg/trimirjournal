@@ -19,8 +19,7 @@ executable(
     'src/LogReader.vala',
     'src/MainWindow.vala',
     'src/JournalView.vala',
-    'src/TagFilterPopover.vala',
-    'src/TagPopover.vala',
+    'src/TagButton.vala',
     dependencies: [
         dependency('glib-2.0'),
         dependency('gobject-2.0'),

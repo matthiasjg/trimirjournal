@@ -2,7 +2,7 @@
 <gresources>
   <gresource prefix="/io/trimir/journal">
     <file compressed="true">HeaderBar.css</file>
-    <file compressed="true">TagPopover.css</file>
+    <file compressed="true">TagButton.css</file>
   </gresource>
 </gresources>
 

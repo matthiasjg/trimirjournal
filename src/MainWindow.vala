@@ -57,13 +57,13 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
         mode_switch.valign = Gtk.Align.CENTER;
         mode_switch.bind_property ("active", gtk_settings, "gtk-application-prefer-dark-theme", GLib.BindingFlags.BIDIRECTIONAL);
 
-        var tag_filter_popover = new Journal.TagFilterPopover( "testTag" );
+        var tag_filter_button = new Journal.TagButton( "testTag", 10 );
 
         var tag_filter_grid = new Gtk.Grid () {
             margin_top = 2,
             margin_bottom = 2
         };
-        tag_filter_grid.attach ( tag_filter_popover, 0, 0 );
+        tag_filter_grid.attach ( tag_filter_button, 0, 0 );
 
         var headerbar = new Gtk.HeaderBar ();
         headerbar.get_style_context ().add_class ("default-decoration");
