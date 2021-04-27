@@ -67,7 +67,7 @@ public class Journal.JournalView : Gtk.Grid {
     private bool handleTagEvent( Gtk.TextTag text_tag,
         Object object, Gdk.Event event, Gtk.TextIter iter) {
 
-        if ( event.type == Gdk.Event.BUTTON_PRESS ) {
+        if ( event.type == Gdk.EventType.BUTTON_PRESS ) {
             string tag_text = text_tag.get_data( "tag" );
             loadJournalLogs( tag_text );
         }

@@ -48,12 +48,14 @@ cd ..
 dpkg-buildpackage
 ```
 
-## Flatbak build 
+## Flatbak build on Debian Buster
 
 ```bash
 # flatpak remote-add --if-not-exists elementary https://flatpak.elementary.io/repo.flatpakrepo
+# flatpak install io.elementary.Platform
 # flatpak install io.elementary.Sdk
 flatpak-builder build  io.trimir.journal.yml --user --install --force-clean
+flatpak run io.trimir.journal
 ```
 
 ## Coding in Vala with ~~Visual Studio Code~~ Codium
@@ -64,3 +66,7 @@ Install [recommended extensions](https://wiki.gnome.org/Projects/Vala/Tools/Visu
 
 - https://elementary.io/docs/human-interface-guidelines#color
 - https://github.com/elementary/icons
+
+## Flatpak Resources
+
+- https://docs.flatpak.org/en/latest/sandbox-permissions.html

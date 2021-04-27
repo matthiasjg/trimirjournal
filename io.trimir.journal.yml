@@ -1,12 +1,15 @@
 app-id: io.trimir.journal
 runtime: io.elementary.Platform
-runtime-version: '0.1.0'
+runtime-version: "daily"
 sdk: io.elementary.Sdk
 command: io.trimir.journal
 finish-args:
-  - '--share=ipc'
-  - '--socket=fallback-x11'
-  - '--socket=wayland'
+  - "--share=ipc"
+  - "--socket=fallback-x11"
+  - "--socket=wayland"
+  - "--filesystem=home"
+  - '--system-talk-name=org.freedesktop.Accounts'
+  - "--metadata=X-DConf=migrate-path=/io/trimir/journal/"
 modules:
   - name: trimirjournal
     buildsystem: meson
