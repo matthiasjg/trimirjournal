@@ -52,7 +52,7 @@ dpkg-buildpackage
 
 ```bash
 # flatpak remote-add --if-not-exists elementary https://flatpak.elementary.io/repo.flatpakrepo
-# flatpak install sdk io.elementary.Sdk
+# flatpak install io.elementary.Sdk
 flatpak-builder build  io.trimir.journal.yml --user --install --force-clean
 ```
 
