@@ -1,6 +1,6 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
- * SPDX-FileCopyrightText: 2021 Matthias Joachim Geisler, openwebcraft (https://trimir.io)
+ * SPDX-FileCopyrightText: 2021 Matthias Joachim Geisler, openwebcraft <matthiasjg@openwebcraft.com>
  */
 
 const string JournalFilePath = "/home/matthias/Tresors/matthias tresor/ZenJournal_backup_Mon_Mar_01_2021.json";
