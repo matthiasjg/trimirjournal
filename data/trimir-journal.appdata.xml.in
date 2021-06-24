@@ -42,9 +42,9 @@
     <content_attribute id="money-purchasing">none</content_attribute>
     <content_attribute id="money-gambling">none</content_attribute>
   </content_rating>
-  <translation type="gettext">io.elementary.tasks</translation>
+  <translation type="gettext">io.trimir.journal</translation>
   <developer_name>Matthias Joachim Geisler, openwebcraft</developer_name>
-  <url type="homepage">https://trimir.io</url>
+  <url type="homepage">https://openwebcraft.com</url>
   <url type="bugtracker">https://github.com/matthiasjg/trimirjournal/issues</url>
   <custom>
     <value key="x-appcenter-color-primary">#603461</value>
