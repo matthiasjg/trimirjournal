@@ -3,7 +3,7 @@
  * SPDX-FileCopyrightText: 2021 Matthias Joachim Geisler, openwebcraft <matthiasjg@openwebcraft.com>
  */
 
-const string JournalFilePath = "/home/matthias/Tresors/matthias tresor/ZenJournal_backup_Mon_Mar_01_2021.json";
+const string JournalFilePath = "/home/matthias/Tresors/matthias tresor/ZenJournal_backup_Fri_Jun_25_2021.json";
 
 public class Journal.LogReader : Object {
     private static LogReader __instance;
