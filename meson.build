@@ -18,6 +18,7 @@ executable(
     'src/LogModel.vala',
     'src/LogReader.vala',
     'src/MainWindow.vala',
+    'src/JournalController.vala',
     'src/JournalView.vala',
     'src/TagButton.vala',
     dependencies: [

@@ -6,6 +6,10 @@
 public class Journal.MainWindow : Gtk.ApplicationWindow {
 
     private uint configure_id;
+    
+    private Gtk.Grid _tag_filter_grid;
+    
+    private Journal.JournalController _controller;
 
     public MainWindow (Gtk.Application application) {
         Object (
@@ -42,13 +46,13 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
         mode_switch.valign = Gtk.Align.CENTER;
         mode_switch.bind_property ("active", gtk_settings, "gtk-application-prefer-dark-theme", GLib.BindingFlags.BIDIRECTIONAL);
 
-        var tag_filter_button = new Journal.TagButton( "testTag", 10 );
-
-        var tag_filter_grid = new Gtk.Grid () {
+        _controller = Journal.JournalController.sharedInstance();
+        _controller.updated_journal_logs.connect( on_updated_journal_logs );
+        
+        _tag_filter_grid = new Gtk.Grid () {
             margin_top = 2,
             margin_bottom = 2
         };
-        tag_filter_grid.attach ( tag_filter_button, 0, 0 );
 
         var headerbar = new Gtk.HeaderBar ();
         headerbar.get_style_context ().add_class ("default-decoration");
@@ -64,7 +68,7 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
         Journal.JournalView journal_view = new Journal.JournalView ();
 
         var journal_view_grid = new Gtk.Grid ();
-        journal_view_grid.attach ( tag_filter_grid, 0, 0 );
+        journal_view_grid.attach ( _tag_filter_grid, 0, 0 );
         journal_view_grid.attach ( journal_view, 0, 1 );
 
         var paned = new Gtk.Paned ( Gtk.Orientation.HORIZONTAL );
@@ -75,6 +79,16 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
         add ( paned );
 
         Journal.Application.settings.bind ( "pane-position", paned, "position", GLib.SettingsBindFlags.DEFAULT );
+    }
+    
+    private void on_updated_journal_logs ( string tag_filter, LogModel[] filtered_logs ) {
+        if ( tag_filter != "" ) {
+            var tag_filter_button = new Journal.TagButton( tag_filter, filtered_logs.length );
+            _tag_filter_grid.attach ( tag_filter_button, 0, 0 );   
+        } else {
+            _tag_filter_grid.remove_row( 0 );
+        }
+        _tag_filter_grid.show_all();
     }
 
     public override bool configure_event (Gdk.EventConfigure event) {

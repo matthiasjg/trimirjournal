@@ -4,9 +4,10 @@
  */
 public class Journal.JournalView : Gtk.Grid {
     private Gtk.ListBox _list_box;
-
-    private Journal.LogReader _log_reader;
-    private Journal.LogModel[]? _logs;
+    
+    private Journal.JournalController _controller;
+    
+    public signal void filtered_logs( string tag_filter, LogModel[] filtered_logs );
 
     public JournalView () {
         Gtk.ScrolledWindow scrolled_window = new Gtk.ScrolledWindow( null, null ) {
@@ -17,44 +18,37 @@ public class Journal.JournalView : Gtk.Grid {
         };
         scrolled_window.add( _list_box );
         add( scrolled_window );
-		loadJournalLogs();
+        
+        _controller = Journal.JournalController.sharedInstance();
+        _controller.updated_journal_logs.connect( on_updated_journal_logs );
+        _controller.load_journal_logs();
     }
 
-    private void loadJournalLogs(string tag_filter = "") {
-        if ( _logs == null ) {
-            _log_reader = Journal.LogReader.sharedInstance();
-            _logs = _log_reader.loadJournal();
-        }
-
+    private void on_updated_journal_logs(string tag_filter, LogModel[] logs) {
         _list_box.foreach ((log) => _list_box.remove ( log ) );
 
-        for( int i = 0; i < _logs.length; ++i ) {
-            var log = _logs[i].log;
-            var created_at = _logs[i].created_at;
+        for( int i = 0; i < logs.length; ++i ) {
+            var log = logs[i].log;
+            var created_at = logs[i].created_at;
             var created_at_date_time = new DateTime.from_iso8601 ( created_at, new TimeZone.local () );
             var relative_created_at = Granite.DateTime.get_relative_datetime ( created_at_date_time );
             var str = "%s:  %s\n".printf( relative_created_at, log );
-            bool add_log = true;
-            if ( tag_filter != "" ) {
-                add_log = log.contains( tag_filter );
-            }
-            if ( add_log ) {
-                Gtk.TextView text_view = new Gtk.TextView();
-                text_view.wrap_mode = Gtk.WrapMode.WORD_CHAR;
-                text_view.buffer.text = str;
-                text_view.buffer = format_tags ( text_view.buffer );
-                _list_box.insert( text_view, -1 );
-            }
+            Gtk.TextView text_view = new Gtk.TextView();
+            text_view.wrap_mode = Gtk.WrapMode.WORD_CHAR;
+            text_view.buffer.text = str;
+            text_view.buffer = format_tags ( text_view.buffer );
+            _list_box.insert( text_view, -1 );
         }
+        filtered_logs( tag_filter, logs );
         _list_box.show_all();
     }
 
-    private bool handleTagEvent( Gtk.TextTag text_tag,
+    private bool tag_clicked_handler( Gtk.TextTag text_tag,
         Object object, Gdk.Event event, Gtk.TextIter iter) {
 
         if ( event.type == Gdk.EventType.BUTTON_PRESS ) {
             string tag_text = text_tag.get_data( "tag" );
-            loadJournalLogs( tag_text );
+            _controller.load_journal_logs( tag_text );
         }
         return true;
     }
@@ -81,7 +75,7 @@ public class Journal.JournalView : Gtk.Grid {
 				var tag_b = buffer.create_tag( null, "weight", Pango.Weight.BOLD );
 
                 tag_ul.set_data( "tag", tag_text );
-				tag_ul.event.connect( handleTagEvent );
+				tag_ul.event.connect( tag_clicked_handler );
 
 				buffer.apply_tag( tag_ul, start, end );
 				buffer.apply_tag( tag_b, start, end );
