@@ -5,7 +5,7 @@
 
 public class Journal.TagButton : Gtk.EventBox {
 
-    private Journal.JournalController _controller;
+    private Journal.Controller _controller;
 
     public string tag_text { get; construct; }
     public int tag_count { get; construct; }
@@ -65,7 +65,7 @@ public class Journal.TagButton : Gtk.EventBox {
 
         add ( button_box );
 
-        _controller = Journal.JournalController.sharedInstance();
+        _controller = Journal.Controller.sharedInstance();
 
         delete_button.clicked.connect (() => {
             _controller.load_journal_logs();

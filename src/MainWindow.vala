@@ -9,7 +9,7 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
     
     private Gtk.Grid _tag_filter_grid;
     
-    private Journal.JournalController _controller;
+    private Journal.Controller _controller;
 
     public MainWindow (Gtk.Application application) {
         Object (
@@ -46,7 +46,7 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
         mode_switch.valign = Gtk.Align.CENTER;
         mode_switch.bind_property ("active", gtk_settings, "gtk-application-prefer-dark-theme", GLib.BindingFlags.BIDIRECTIONAL);
 
-        _controller = Journal.JournalController.sharedInstance();
+        _controller = Journal.Controller.sharedInstance();
         _controller.updated_journal_logs.connect( on_updated_journal_logs );
         
         _tag_filter_grid = new Gtk.Grid () {
@@ -65,7 +65,7 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
         unowned Gtk.StyleContext sidebar_style_context = sidebar.get_style_context ();
         sidebar_style_context.add_class ( Gtk.STYLE_CLASS_SIDEBAR );
 
-        Journal.JournalView journal_view = new Journal.JournalView ();
+        Journal.LogView journal_view = new Journal.LogView ();
 
         var journal_view_grid = new Gtk.Grid ();
         journal_view_grid.attach ( _tag_filter_grid, 0, 0 );

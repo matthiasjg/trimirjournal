@@ -18,8 +18,8 @@ executable(
     'src/LogModel.vala',
     'src/LogReader.vala',
     'src/MainWindow.vala',
-    'src/JournalController.vala',
-    'src/JournalView.vala',
+    'src/Controller.vala',
+    'src/LogView.vala',
     'src/TagButton.vala',
     dependencies: [
         dependency('glib-2.0'),
