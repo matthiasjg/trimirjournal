@@ -11,7 +11,7 @@ class Journal.Controller : Object {
 
     public signal void updated_journal_logs (string tag_filter, LogModel[] logs);
 
-    public static Controller sharedInstance () {
+    public static Controller shared_instance () {
         if (__instance == null) {
             __instance = new Journal.Controller ();
         }
@@ -20,10 +20,10 @@ class Journal.Controller : Object {
 
     public void load_journal_logs (string tag_filter = "") {
         if (_logs == null) {
-            _log_reader = Journal.LogReader.sharedInstance ();
-            _logs = _log_reader.loadJournal ();
+            _log_reader = Journal.LogReader.shared_instance ();
+            _logs = _log_reader.load_journal ();
         }
-        print (@"Loaded Journal with $(_logs.length) logs\n");
+        debug ("Loaded Journal with %d logs", _logs.length);
 
         var filtered_logs = new Journal.LogModel[] {};
         if (tag_filter != "") {
@@ -32,11 +32,10 @@ class Journal.Controller : Object {
                     filtered_logs += _logs[i];
                 }
             }
-            print (@"Filtered Journal for tag $(tag_filter) with $(filtered_logs.length) logs\n");
+            debug ("Filtered Journal for tag %s with %d logs", tag_filter, filtered_logs.length);
         } else {
             filtered_logs = _logs;
         }
         updated_journal_logs (tag_filter, filtered_logs);
     }
 }
-

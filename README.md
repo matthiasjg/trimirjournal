@@ -28,6 +28,14 @@ To install, use `ninja install`, then execute with `io.trimir.journal`
 ```bash
 ninja install
 io.trimir.journal
+
+# one liner to lint, build and run with debugging enabled
+io.elementary.vala-lint && \
+    cd build \
+    && ninja \
+    && ninja install \
+    && G_MESSAGES_DEBUG=all io.trimir.journal \
+    ; cd -
 ```
 
 ## Translations (i18n)
@@ -61,6 +69,22 @@ flatpak run io.trimir.journal
 ## Coding in Vala with ~~Visual Studio Code~~ Codium
 
 Install [recommended extensions](https://wiki.gnome.org/Projects/Vala/Tools/VisualStudioCode) from `*.vsix` file by downloading it from Visual Studio Marketplace.
+
+## Linting 
+
+To make it easier to follow the [elementary Code-Style guidelines](https://elementary.io/docs/code/reference#code-style) one can use [vala-lint](https://github.com/vala-lang/vala-lint):
+
+```bash
+cd  ~/Code
+git clone https://github.com/vala-lang/vala-lint
+cd vala-lint
+sudo apt install cmake libvala-0.48-dev
+meson build --prefix=/usr
+cd build
+ninja test
+sudo ninja install
+io.elementary.vala-lint
+```
 
 ## elementary Resources
 

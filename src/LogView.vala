@@ -19,7 +19,7 @@ public class Journal.LogView : Gtk.Grid {
         scrolled_window.add (_list_box);
         add (scrolled_window);
 
-        _controller = Journal.Controller.sharedInstance ();
+        _controller = Journal.Controller.shared_instance ();
         _controller.updated_journal_logs.connect (on_updated_journal_logs);
         _controller.load_journal_logs ();
     }
@@ -56,19 +56,19 @@ public class Journal.LogView : Gtk.Grid {
     public Gtk.TextBuffer format_tags (Gtk.TextBuffer buffer) {
         try {
             var buffer_text = buffer.text;
-            GLib.Regex regex = / ( ? : ^ |) #(\ w +) /;
-            GLib.MatchInfo matchInfo;
-            regex.match (buffer_text, 0, out matchInfo);
+            GLib.Regex regex = new GLib.Regex ("(?:^|)#(\\w+)");
+            GLib.MatchInfo match_info;
+            regex.match (buffer_text, 0, out match_info);
 
-            while (matchInfo.matches ()) {
+            while (match_info.matches ()) {
                 Gtk.TextIter start, end;
                 int start_pos, end_pos;
 
-                matchInfo.fetch_pos (0, out start_pos, out end_pos);
+                match_info.fetch_pos (0, out start_pos, out end_pos);
                 buffer.get_iter_at_offset (out start, start_pos);
                 buffer.get_iter_at_offset (out end, end_pos);
 
-                string tag_text = matchInfo.fetch (0);
+                string tag_text = match_info.fetch (0);
                 // string text_tag_name = "%s_%i_%i".printf ( tag_text, start_pos, end_pos );
 
                 var tag_ul = buffer.create_tag (null, "underline", Pango.Underline.SINGLE);
@@ -80,7 +80,7 @@ public class Journal.LogView : Gtk.Grid {
                 buffer.apply_tag (tag_ul, start, end);
                 buffer.apply_tag (tag_b, start, end);
 
-                matchInfo.next ();
+                match_info.next ();
             }
         } catch (Error e) {
             print ("Unable to format tags: %s\n", e.message);

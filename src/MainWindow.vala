@@ -46,7 +46,7 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
         mode_switch.valign = Gtk.Align.CENTER;
         mode_switch.bind_property ("active", gtk_settings, "gtk-application-prefer-dark-theme", GLib.BindingFlags.BIDIRECTIONAL);
 
-        _controller = Journal.Controller.sharedInstance ();
+        _controller = Journal.Controller.shared_instance ();
         _controller.updated_journal_logs.connect (on_updated_journal_logs);
 
         _tag_filter_grid = new Gtk.Grid () {

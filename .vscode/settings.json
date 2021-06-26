@@ -1,5 +1,0 @@
-{
-    "uncrustify.configPath.linux": "uncrustify.vala.cfg",
-    "uncrustify.configPath.osx": "uncrustify.vala.cfg",
-    "uncrustify.configPath.windows": "uncrustify.vala.cfg"
-}

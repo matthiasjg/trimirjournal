@@ -17,4 +17,3 @@ public class Journal.LogModel : Object {
         _created_at = json.get_string_member ("createdAt");
     }
 }
-

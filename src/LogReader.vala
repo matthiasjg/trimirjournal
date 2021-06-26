@@ -3,12 +3,12 @@
  * SPDX-FileCopyrightText: 2021 Matthias Joachim Geisler, openwebcraft <matthiasjg@openwebcraft.com>
  */
 
-const string JournalFilePath = "/home/matthias/Tresors/matthias tresor/ZenJournal_backup_Fri_Jun_25_2021.json";
+const string JOURNAL_FILE_PATH = "/home/matthias/Tresors/matthias tresor/ZenJournal_backup_Fri_Jun_25_2021.json";
 
 public class Journal.LogReader : Object {
     private static LogReader __instance;
 
-    public static LogReader sharedInstance () {
+    public static LogReader shared_instance () {
         if (__instance == null) {
             __instance = new Journal.LogReader ();
         }
@@ -16,7 +16,7 @@ public class Journal.LogReader : Object {
         return __instance;
     }
 
-    public Journal.LogModel[] ? loadJournal () {
+    public Journal.LogModel[] ? load_journal () {
         Journal.LogModel[] result = null;
 
         Json.Parser parser = new Json.Parser ();
@@ -24,10 +24,10 @@ public class Journal.LogReader : Object {
             uint8[] contents;
             string etag_out;
 
-            File file = File.new_for_path (JournalFilePath);
+            File file = File.new_for_path (JOURNAL_FILE_PATH);
             file.load_contents (null, out contents, out etag_out);
 
-            // parser.load_from_file ( JournalFilePath );
+            // parser.load_from_file ( JOURNAL_FILE_PATH );
             parser.load_from_data ((string) contents);
             Json.Node root_node = parser.get_root ();
             var array = root_node.get_array ();
@@ -40,7 +40,7 @@ public class Journal.LogReader : Object {
             }
             result = logs;
         } catch (Error e) {
-            print ("Unable to parse '%s': %s\n", JournalFilePath, e.message);
+            print ("Unable to parse '%s': %s\n", JOURNAL_FILE_PATH, e.message);
         }
 
         return result;
