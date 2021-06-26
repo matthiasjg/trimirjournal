@@ -6,9 +6,9 @@
 public class Journal.MainWindow : Gtk.ApplicationWindow {
 
     private uint configure_id;
-    
+
     private Gtk.Grid _tag_filter_grid;
-    
+
     private Journal.Controller _controller;
 
     public MainWindow (Gtk.Application application) {
@@ -21,7 +21,7 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
 
     construct {
         var header_provider = new Gtk.CssProvider ();
-        header_provider.load_from_resource ( "io/trimir/journal/HeaderBar.css" );
+        header_provider.load_from_resource ("io/trimir/journal/HeaderBar.css");
 
         var sidebar_header = new Gtk.HeaderBar () {
             decoration_layout = "close:",
@@ -30,8 +30,8 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
         };
 
         unowned Gtk.StyleContext sidebar_header_context = sidebar_header.get_style_context ();
-        sidebar_header_context.add_class ( "sidebar-header" );
-        sidebar_header_context.add_class ( "default-decoration" );
+        sidebar_header_context.add_class ("sidebar-header");
+        sidebar_header_context.add_class ("default-decoration");
         sidebar_header_context.add_class (Gtk.STYLE_CLASS_FLAT);
         sidebar_header_context.add_provider (header_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
@@ -46,9 +46,9 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
         mode_switch.valign = Gtk.Align.CENTER;
         mode_switch.bind_property ("active", gtk_settings, "gtk-application-prefer-dark-theme", GLib.BindingFlags.BIDIRECTIONAL);
 
-        _controller = Journal.Controller.sharedInstance();
-        _controller.updated_journal_logs.connect( on_updated_journal_logs );
-        
+        _controller = Journal.Controller.sharedInstance ();
+        _controller.updated_journal_logs.connect (on_updated_journal_logs);
+
         _tag_filter_grid = new Gtk.Grid () {
             margin_top = 2,
             margin_bottom = 2
@@ -60,35 +60,35 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
         headerbar.pack_end (mode_switch);
 
         var sidebar = new Gtk.Grid ();
-        sidebar.attach ( sidebar_header, 0, 0 );
+        sidebar.attach (sidebar_header, 0, 0);
 
         unowned Gtk.StyleContext sidebar_style_context = sidebar.get_style_context ();
-        sidebar_style_context.add_class ( Gtk.STYLE_CLASS_SIDEBAR );
+        sidebar_style_context.add_class (Gtk.STYLE_CLASS_SIDEBAR);
 
         Journal.LogView journal_view = new Journal.LogView ();
 
         var journal_view_grid = new Gtk.Grid ();
-        journal_view_grid.attach ( _tag_filter_grid, 0, 0 );
-        journal_view_grid.attach ( journal_view, 0, 1 );
+        journal_view_grid.attach (_tag_filter_grid, 0, 0);
+        journal_view_grid.attach (journal_view, 0, 1);
 
-        var paned = new Gtk.Paned ( Gtk.Orientation.HORIZONTAL );
-        paned.pack1 ( sidebar, false, false );
-        paned.pack2 ( journal_view_grid, true, false );
+        var paned = new Gtk.Paned (Gtk.Orientation.HORIZONTAL);
+        paned.pack1 (sidebar, false, false);
+        paned.pack2 (journal_view_grid, true, false);
 
         set_titlebar (headerbar);
-        add ( paned );
+        add (paned);
 
-        Journal.Application.settings.bind ( "pane-position", paned, "position", GLib.SettingsBindFlags.DEFAULT );
+        Journal.Application.settings.bind ("pane-position", paned, "position", GLib.SettingsBindFlags.DEFAULT);
     }
-    
-    private void on_updated_journal_logs ( string tag_filter, LogModel[] filtered_logs ) {
-        if ( tag_filter != "" ) {
-            var tag_filter_button = new Journal.TagButton( tag_filter, filtered_logs.length );
-            _tag_filter_grid.attach ( tag_filter_button, 0, 0 );   
+
+    private void on_updated_journal_logs (string tag_filter, LogModel[] filtered_logs) {
+        if (tag_filter != "") {
+            var tag_filter_button = new Journal.TagButton (tag_filter, filtered_logs.length);
+            _tag_filter_grid.attach (tag_filter_button, 0, 0);
         } else {
-            _tag_filter_grid.remove_row( 0 );
+            _tag_filter_grid.remove_row (0);
         }
-        _tag_filter_grid.show_all();
+        _tag_filter_grid.show_all ();
     }
 
     public override bool configure_event (Gdk.EventConfigure event) {
@@ -100,22 +100,22 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
             configure_id = 0;
 
             if (is_maximized) {
-                Journal.Application.settings.set_boolean ( "window-maximized", true );
+                Journal.Application.settings.set_boolean ("window-maximized", true);
             } else {
-                Journal.Application.settings.set_boolean ( "window-maximized", false );
+                Journal.Application.settings.set_boolean ("window-maximized", false);
 
                 Gdk.Rectangle rect;
-                get_allocation ( out rect );
-                Journal.Application.settings.set ( "window-size", "(ii)", rect.width, rect.height );
+                get_allocation (out rect);
+                Journal.Application.settings.set ("window-size", "(ii)", rect.width, rect.height);
 
                 int root_x, root_y;
-                get_position ( out root_x, out root_y );
-                Journal.Application.settings.set ( "window-position", "(ii)", root_x, root_y );
+                get_position (out root_x, out root_y);
+                Journal.Application.settings.set ("window-position", "(ii)", root_x, root_y);
             }
 
             return false;
         });
 
-        return base.configure_event (  event );
+        return base.configure_event (event);
     }
 }

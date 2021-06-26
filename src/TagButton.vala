@@ -13,7 +13,7 @@ public class Journal.TagButton : Gtk.EventBox {
     private Gtk.Button tag_button;
     private static Gtk.CssProvider style_provider;
 
-    public TagButton ( string tag_text, int tag_count ) {
+    public TagButton (string tag_text, int tag_count) {
         Object (
             tag_text: tag_text,
             tag_count: tag_count
@@ -21,7 +21,7 @@ public class Journal.TagButton : Gtk.EventBox {
     }
 
     class construct {
-        set_css_name ( "tag-button" );
+        set_css_name ("tag-button");
     }
 
     static construct {
@@ -31,7 +31,7 @@ public class Journal.TagButton : Gtk.EventBox {
 
     construct {
         events |= Gdk.EventMask.ENTER_NOTIFY_MASK
-            | Gdk.EventMask.LEAVE_NOTIFY_MASK;
+                  | Gdk.EventMask.LEAVE_NOTIFY_MASK;
 
         var label = @"$_tag_text ($_tag_count)";
         tag_button = new Gtk.Button () {
@@ -63,12 +63,12 @@ public class Journal.TagButton : Gtk.EventBox {
         button_box.add (delete_button_revealer);
         button_box.get_style_context ().add_provider (style_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-        add ( button_box );
+        add (button_box);
 
-        _controller = Journal.Controller.sharedInstance();
+        _controller = Journal.Controller.sharedInstance ();
 
         delete_button.clicked.connect (() => {
-            _controller.load_journal_logs();
+            _controller.load_journal_logs ();
         });
 
         tag_button.clicked.connect (() => {
