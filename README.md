@@ -66,11 +66,26 @@ flatpak-builder build  io.trimir.journal.yml --user --install --force-clean
 flatpak run io.trimir.journal
 ```
 
-## Coding in Vala with ~~Visual Studio Code~~ Codium
+## Editor/ IDE
+
+**Visual Studio Code**
+
+Install Princeton et al's uber-awesome [vala-vscode](https://marketplace.visualstudio.com/items?itemName=prince781.vala) ([src](https://github.com/Prince781/vala-vscode)).
+
+**Codium**
 
 Install [recommended extensions](https://wiki.gnome.org/Projects/Vala/Tools/VisualStudioCode) from `*.vsix` file by downloading it from Visual Studio Marketplace.
 
-## Linting 
+## elementary Resources
+
+- https://elementary.io/docs/human-interface-guidelines#color
+- https://github.com/elementary/icons
+
+## Vala Resources
+
+[vala-language-server](https://github.com/Prince781/vala-language-server)
+
+[Vala support for Visual Studio Code](https://github.com/Prince781/vala-vscode)
 
 To make it easier to follow the [elementary Code-Style guidelines](https://elementary.io/docs/code/reference#code-style) one can use [vala-lint](https://github.com/vala-lang/vala-lint):
 
@@ -85,11 +100,6 @@ ninja test
 sudo ninja install
 io.elementary.vala-lint
 ```
-
-## elementary Resources
-
-- https://elementary.io/docs/human-interface-guidelines#color
-- https://github.com/elementary/icons
 
 ## Flatpak Resources
 
