@@ -14,11 +14,3 @@ tag-button button {
     font-size: 1em;
     font-weight: 600;
 }
-
-tag-button.error grid {
-    background: alpha (@error_color, 0.2);
-}
-
-tag-button.error button {
-    color: @error_color;
-}
