@@ -1,9 +1,0 @@
-/*
- * SPDX-License-Identifier: GPL-3.0-or-later
- * SPDX-FileCopyrightText: 2021 Matthias Joachim Geisler, openwebcraft <matthiasjg@openwebcraft.com>
- */
-
-.sidebar-header {
-    background-color: shade (@bg_color, 0.92);
-    color: mix (@bg_color, @text_color, 0.77);
-}

@@ -3,7 +3,7 @@
  * SPDX-FileCopyrightText: 2021 Matthias Joachim Geisler, openwebcraft <matthiasjg@openwebcraft.com>
  */
 
-public class Journal.MainWindow : Gtk.ApplicationWindow {
+public class Journal.MainWindow : Hdy.ApplicationWindow {
 
     private uint configure_id;
 
@@ -23,17 +23,15 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
         var header_provider = new Gtk.CssProvider ();
         header_provider.load_from_resource ("io/trimir/journal/HeaderBar.css");
 
-        var sidebar_header = new Gtk.HeaderBar () {
+        var sidebar_header = new Hdy.HeaderBar () {
             decoration_layout = "close:",
             has_subtitle = false,
-            show_close_button = false
+            show_close_button = true
         };
 
         unowned Gtk.StyleContext sidebar_header_context = sidebar_header.get_style_context ();
-        sidebar_header_context.add_class ("sidebar-header");
         sidebar_header_context.add_class ("default-decoration");
         sidebar_header_context.add_class (Gtk.STYLE_CLASS_FLAT);
-        sidebar_header_context.add_provider (header_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         var gtk_settings = Gtk.Settings.get_default ();
 
@@ -57,10 +55,14 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
             margin_bottom = 2
         };
 
-        var headerbar = new Gtk.HeaderBar ();
+        var headerbar = new Hdy.HeaderBar ();
         headerbar.get_style_context ().add_class ("default-decoration");
-        headerbar.show_close_button = true;
+        headerbar.show_close_button = false;
         headerbar.pack_end (mode_switch);
+
+        unowned Gtk.StyleContext headerbar_context = headerbar.get_style_context ();
+        headerbar_context.add_class ("default-decoration");
+        headerbar_context.add_class (Gtk.STYLE_CLASS_FLAT);
 
         var sidebar = new Gtk.Grid ();
         sidebar.attach (sidebar_header, 0, 0);
@@ -71,14 +73,14 @@ public class Journal.MainWindow : Gtk.ApplicationWindow {
         Journal.LogView journal_view = new Journal.LogView ();
 
         var journal_view_grid = new Gtk.Grid ();
-        journal_view_grid.attach (_tag_filter_grid, 0, 0);
-        journal_view_grid.attach (journal_view, 0, 1);
+        journal_view_grid.attach (headerbar, 0, 0);
+        journal_view_grid.attach (_tag_filter_grid, 0, 1);
+        journal_view_grid.attach (journal_view, 0, 2);
 
         var paned = new Gtk.Paned (Gtk.Orientation.HORIZONTAL);
         paned.pack1 (sidebar, false, false);
         paned.pack2 (journal_view_grid, true, false);
 
-        set_titlebar (headerbar);
         add (paned);
 
         Journal.Application.settings.bind ("pane-position", paned, "position", GLib.SettingsBindFlags.DEFAULT);
