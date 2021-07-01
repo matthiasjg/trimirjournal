@@ -33,11 +33,12 @@ public class Journal.TagButton : Gtk.EventBox {
         events |= Gdk.EventMask.ENTER_NOTIFY_MASK
                   | Gdk.EventMask.LEAVE_NOTIFY_MASK;
 
-        var label = @"$_tag_text ($_tag_count)";
+        var label = "%s (%d)".printf (_tag_text, _tag_count);
         tag_button = new Gtk.Button () {
             label = label,
             image = new Gtk.Image.from_icon_name ("folder-tag", Gtk.IconSize.BUTTON),
-            always_show_image = true
+            always_show_image = true,
+            tooltip_text = _("Tag filter %s").printf (_tag_text)
         };
 
         unowned Gtk.StyleContext tag_button_context = tag_button.get_style_context ();
