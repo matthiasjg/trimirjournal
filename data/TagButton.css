@@ -5,12 +5,12 @@
 
 tag-button grid {
     border-radius: 3px;
-    background: @BLUEBERRY_100;
-    border-color: @BLUEBERRY_300;
+    background: @accent_color_100;
+    border-color: @accent_color_300;
 }
 
 tag-button button {
-    color: @BLUEBERRY_900;
+    color: @accent_color_900;
     font-size: 1em;
     font-weight: 600;
 }
