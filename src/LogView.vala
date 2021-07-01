@@ -68,7 +68,7 @@ public class Journal.LogView : Gtk.Grid {
                 buffer.get_iter_at_offset (out start, start_pos);
                 buffer.get_iter_at_offset (out end, end_pos);
 
-                string tag_text = match_info.fetch (0);
+                string tag_text = match_info.fetch (0).replace ("#", "");
                 // string text_tag_name = "%s_%i_%i".printf ( tag_text, start_pos, end_pos );
 
                 var tag_ul = buffer.create_tag (null, "underline", Pango.Underline.SINGLE);
