@@ -2,6 +2,7 @@
 <gresources>
   <gresource prefix="/io/trimir/journal">
     <file compressed="true">TagButton.css</file>
+    <file compressed="true">LogRow.css</file>
   </gresource>
 </gresources>
 

@@ -19,6 +19,7 @@ executable(
     'src/LogReader.vala',
     'src/MainWindow.vala',
     'src/Controller.vala',
+    'src/LogRow.vala',
     'src/LogView.vala',
     'src/JournalRow.vala',
     'src/TagButton.vala',

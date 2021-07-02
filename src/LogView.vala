@@ -2,21 +2,27 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  * SPDX-FileCopyrightText: 2021 Matthias Joachim Geisler, openwebcraft <matthiasjg@openwebcraft.com>
  */
+
 public class Journal.LogView : Gtk.Grid {
-    private Gtk.ListBox _list_box;
+    private Gtk.ListBox log_list;
+    private string active_tag_filter;
 
     private Journal.Controller _controller;
 
     public signal void filtered_logs (string tag_filter, LogModel[] filtered_logs);
 
-    public LogView () {
-        Gtk.ScrolledWindow scrolled_window = new Gtk.ScrolledWindow (null, null) {
+    public LogView () {}
+
+    construct {
+        var scrolled_window = new Gtk.ScrolledWindow (null, null) {
             expand = true
         };
-        _list_box = new Gtk.ListBox () {
+        log_list = new Gtk.ListBox () {
             selection_mode = Gtk.SelectionMode.NONE
         };
-        scrolled_window.add (_list_box);
+        log_list.get_style_context ().add_class (Gtk.STYLE_CLASS_BACKGROUND);
+        log_list.set_filter_func (filter_function);
+        scrolled_window.add (log_list);
         add (scrolled_window);
 
         _controller = Journal.Controller.shared_instance ();
@@ -24,8 +30,19 @@ public class Journal.LogView : Gtk.Grid {
         _controller.load_journal_logs ();
     }
 
+    private bool filter_function (Gtk.ListBoxRow row) {
+        if (active_tag_filter != null && active_tag_filter != "") {
+            if (active_tag_filter in ((Journal.LogRow) row).tags) {
+                return true;
+            }
+            return false;
+        }
+        return true;
+    }
+
     private void on_updated_journal_logs (string tag_filter, LogModel[] logs) {
-        _list_box.foreach ((log) => _list_box.remove (log));
+        active_tag_filter = tag_filter;
+        log_list.foreach ((log) => log_list.remove (log));
 
         for (int i = 0; i < logs.length; ++i) {
             var log = logs[i].log;
@@ -33,14 +50,24 @@ public class Journal.LogView : Gtk.Grid {
             var created_at_date_time = new DateTime.from_iso8601 (created_at, new TimeZone.local ());
             var relative_created_at = Granite.DateTime.get_relative_datetime (created_at_date_time);
             var str = "%s:  %s\n".printf (relative_created_at, log);
-            Gtk.TextView text_view = new Gtk.TextView ();
+            Gtk.TextView text_view = new Gtk.TextView () {};
             text_view.wrap_mode = Gtk.WrapMode.WORD_CHAR;
             text_view.buffer.text = str;
             text_view.buffer = format_tags (text_view.buffer);
-            _list_box.insert (text_view, -1);
+            string[] tags = {};
+            text_view.buffer
+                .get_tag_table ()
+                .foreach ((tag) => {
+                    var data_tag = tag.get_data <string> ("tag");
+                    if ( data_tag != null && data_tag != "") {
+                        tags += data_tag;
+                    }
+                });
+            Journal.LogRow log_row = new Journal.LogRow (text_view, tags);
+            log_list.insert (log_row, -1);
         }
         filtered_logs (tag_filter, logs);
-        _list_box.show_all ();
+        log_list.show_all ();
     }
 
     private bool tag_clicked_handler (Gtk.TextTag text_tag,
@@ -53,7 +80,7 @@ public class Journal.LogView : Gtk.Grid {
         return true;
     }
 
-    public Gtk.TextBuffer format_tags (Gtk.TextBuffer buffer) {
+    private Gtk.TextBuffer format_tags (Gtk.TextBuffer buffer) {
         try {
             var buffer_text = buffer.text;
             GLib.Regex regex = new GLib.Regex ("(?:^|)#(\\w+)");
