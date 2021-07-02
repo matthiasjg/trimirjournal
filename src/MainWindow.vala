@@ -7,6 +7,8 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
 
     private uint configure_id;
 
+    private Gtk.ListBox listbox;
+    private Gtk.ButtonBox bookmark_tag_filter_buttonbox;
     private Gtk.Grid tag_filter_grid;
 
     private Journal.Controller _controller;
@@ -21,9 +23,6 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
 
     construct {
         Hdy.init ();
-
-        var header_provider = new Gtk.CssProvider ();
-        header_provider.load_from_resource ("io/trimir/journal/log_view_header.css");
 
         var sidebar_header = new Hdy.HeaderBar () {
             decoration_layout = "close:",
@@ -70,8 +69,40 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
         log_view_header_context.add_class ("default-decoration");
         log_view_header_context.add_class (Gtk.STYLE_CLASS_FLAT);
 
+        listbox = new Gtk.ListBox ();
+
+        var journal_row = new Journal.JournalRow ();
+        listbox.add (journal_row);
+
+        var scrolledwindow = new Gtk.ScrolledWindow (null, null) {
+            expand = true,
+            hscrollbar_policy = Gtk.PolicyType.NEVER
+        };
+        scrolledwindow.add (listbox);
+
+        bookmark_tag_filter_buttonbox = new Gtk.ButtonBox (Gtk.Orientation.VERTICAL);
+
+        var add_tasklist_popover = new Gtk.Popover (null);
+        add_tasklist_popover.add (bookmark_tag_filter_buttonbox);
+
+        var bookmark_tag_filter_button = new Gtk.MenuButton () {
+            label = ("Bookmark Tag Filter…"),
+            image = new Gtk.Image.from_icon_name ("list-add-symbolic", Gtk.IconSize.SMALL_TOOLBAR),
+            always_show_image = true,
+            popover = add_tasklist_popover,
+            sensitive = false
+        };
+
+        var actionbar = new Gtk.ActionBar ();
+        actionbar.add (bookmark_tag_filter_button);
+
+        unowned Gtk.StyleContext actionbar_style_context = actionbar.get_style_context ();
+        actionbar_style_context.add_class (Gtk.STYLE_CLASS_FLAT);
+
         var sidebar = new Gtk.Grid ();
         sidebar.attach (sidebar_header, 0, 0);
+        sidebar.attach (scrolledwindow, 0, 1);
+        sidebar.attach (actionbar, 0, 2);
 
         unowned Gtk.StyleContext sidebar_style_context = sidebar.get_style_context ();
         sidebar_style_context.add_class (Gtk.STYLE_CLASS_SIDEBAR);
