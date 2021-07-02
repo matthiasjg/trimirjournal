@@ -10,6 +10,9 @@ clear:
 fresh:
 	clear build
 
+all:
+	fresh yolo
+
 yolo: 
 	io.elementary.vala-lint \
 		&& cd build \
