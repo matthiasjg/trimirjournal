@@ -1,5 +1,4 @@
-.PHONY: default
-default: yolo ;
+.PHONY: clear
 
 build:
 	meson build --prefix=/usr

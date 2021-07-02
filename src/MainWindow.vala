@@ -52,10 +52,9 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
         _controller.updated_journal_logs.connect (on_updated_journal_logs);
 
         tag_filter_grid = new Gtk.Grid () {
-            margin_top = 20,
-            margin_bottom = 20,
-            margin_left = 20,
-            margin_right = 20
+            margin_left = 24,
+            margin_top = 24,
+            margin_bottom = 24
         };
 
         var log_view_header = new Hdy.HeaderBar () {
