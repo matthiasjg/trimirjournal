@@ -7,7 +7,7 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
 
     private uint configure_id;
 
-    private Gtk.Grid _tag_filter_grid;
+    private Gtk.Grid tag_filter_grid;
 
     private Journal.Controller _controller;
 
@@ -20,8 +20,10 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
     }
 
     construct {
+        Hdy.init ();
+
         var header_provider = new Gtk.CssProvider ();
-        header_provider.load_from_resource ("io/trimir/journal/HeaderBar.css");
+        header_provider.load_from_resource ("io/trimir/journal/log_view_header.css");
 
         var sidebar_header = new Hdy.HeaderBar () {
             decoration_layout = "close:",
@@ -50,19 +52,23 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
         _controller = Journal.Controller.shared_instance ();
         _controller.updated_journal_logs.connect (on_updated_journal_logs);
 
-        _tag_filter_grid = new Gtk.Grid () {
-            margin_top = 2,
-            margin_bottom = 2
+        tag_filter_grid = new Gtk.Grid () {
+            margin_top = 20,
+            margin_bottom = 20,
+            margin_left = 20,
+            margin_right = 20
         };
 
-        var headerbar = new Hdy.HeaderBar ();
-        headerbar.get_style_context ().add_class ("default-decoration");
-        headerbar.show_close_button = false;
-        headerbar.pack_end (mode_switch);
+        var log_view_header = new Hdy.HeaderBar () {
+            has_subtitle = false,
+            decoration_layout = ":maximize",
+            show_close_button = true
+        };
+        log_view_header.pack_end (mode_switch);
 
-        unowned Gtk.StyleContext headerbar_context = headerbar.get_style_context ();
-        headerbar_context.add_class ("default-decoration");
-        headerbar_context.add_class (Gtk.STYLE_CLASS_FLAT);
+        unowned Gtk.StyleContext log_view_header_context = log_view_header.get_style_context ();
+        log_view_header_context.add_class ("default-decoration");
+        log_view_header_context.add_class (Gtk.STYLE_CLASS_FLAT);
 
         var sidebar = new Gtk.Grid ();
         sidebar.attach (sidebar_header, 0, 0);
@@ -70,16 +76,27 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
         unowned Gtk.StyleContext sidebar_style_context = sidebar.get_style_context ();
         sidebar_style_context.add_class (Gtk.STYLE_CLASS_SIDEBAR);
 
-        Journal.LogView journal_view = new Journal.LogView ();
+        Journal.LogView log_view = new Journal.LogView ();
 
-        var journal_view_grid = new Gtk.Grid ();
-        journal_view_grid.attach (headerbar, 0, 0);
-        journal_view_grid.attach (_tag_filter_grid, 0, 1);
-        journal_view_grid.attach (journal_view, 0, 2);
+        Gtk.Label log_view_title = new Gtk.Label (_("Journal")) {
+            ellipsize = Pango.EllipsizeMode.END,
+            margin_start = 24,
+            xalign = 0
+        };
+
+        unowned Gtk.StyleContext log_view_title_context = log_view_title.get_style_context ();
+        log_view_title_context.add_class (Granite.STYLE_CLASS_H1_LABEL);
+        log_view_title_context.add_class (Granite.STYLE_CLASS_ACCENT);
+
+        var log_view_grid = new Gtk.Grid ();
+        log_view_grid.attach (log_view_header, 0, 0);
+        log_view_grid.attach (log_view_title, 0, 1);
+        log_view_grid.attach (tag_filter_grid, 0, 2);
+        log_view_grid.attach (log_view, 0, 3);
 
         var paned = new Gtk.Paned (Gtk.Orientation.HORIZONTAL);
         paned.pack1 (sidebar, false, false);
-        paned.pack2 (journal_view_grid, true, false);
+        paned.pack2 (log_view_grid, true, false);
 
         add (paned);
 
@@ -89,11 +106,11 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
     private void on_updated_journal_logs (string tag_filter, LogModel[] filtered_logs) {
         if (tag_filter != "") {
             var tag_filter_button = new Journal.TagButton (tag_filter, filtered_logs.length);
-            _tag_filter_grid.attach (tag_filter_button, 0, 0);
+            tag_filter_grid.attach (tag_filter_button, 0, 0);
         } else {
-            _tag_filter_grid.remove_row (0);
+            tag_filter_grid.remove_row (0);
         }
-        _tag_filter_grid.show_all ();
+        tag_filter_grid.show_all ();
     }
 
     public override bool configure_event (Gdk.EventConfigure event) {
