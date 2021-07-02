@@ -20,6 +20,7 @@ executable(
     'src/MainWindow.vala',
     'src/Controller.vala',
     'src/LogView.vala',
+    'src/JournalRow.vala',
     'src/TagButton.vala',
     dependencies: [
         dependency('glib-2.0'),
