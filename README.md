@@ -81,7 +81,7 @@ Install [recommended extensions](https://wiki.gnome.org/Projects/Vala/Tools/Visu
 - https://elementary.io/docs/human-interface-guidelines#color
 - https://github.com/elementary/icons
 
-## Vala Resources
+## Vala & GTK Resources
 
 [vala-language-server](https://github.com/Prince781/vala-language-server)
 
@@ -100,6 +100,8 @@ ninja test
 sudo ninja install
 io.elementary.vala-lint
 ```
+
+[awesome-gtk](https://github.com/unrelentingtech/awesome-gtk), a list of native, open source GTK (3 and 4) applications.
 
 ## Flatpak Resources
 
