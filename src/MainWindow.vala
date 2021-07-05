@@ -7,6 +7,7 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
 
     private uint configure_id;
 
+    private Gtk.SearchEntry search_entry;
     private Gtk.ListBox listbox;
     private Gtk.ButtonBox bookmark_tag_filter_buttonbox;
     private Gtk.Grid tag_filter_grid;
@@ -23,6 +24,11 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
 
     construct {
         Hdy.init ();
+
+        search_entry = new Gtk.SearchEntry ();
+        search_entry.hexpand = true;
+        search_entry.placeholder_text = _("Search Log");
+        search_entry.valign = Gtk.Align.CENTER;
 
         var sidebar_header = new Hdy.HeaderBar () {
             decoration_layout = "close:",
@@ -51,17 +57,16 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
         _controller = Journal.Controller.shared_instance ();
         _controller.updated_journal_logs.connect (on_updated_journal_logs);
 
-        tag_filter_grid = new Gtk.Grid () {
-            margin_left = 24,
-            margin_top = 24,
-            margin_bottom = 24
-        };
+        tag_filter_grid = new Gtk.Grid ();
+        tag_filter_grid.hexpand = true;
+        tag_filter_grid.valign = Gtk.Align.CENTER;
 
         var log_view_header = new Hdy.HeaderBar () {
+            show_close_button = true,
             has_subtitle = false,
-            decoration_layout = ":maximize",
-            show_close_button = true
+            decoration_layout = ":maximize"
         };
+        log_view_header.set_custom_title (tag_filter_grid);
         log_view_header.pack_end (mode_switch);
 
         unowned Gtk.StyleContext log_view_header_context = log_view_header.get_style_context ();
@@ -99,6 +104,7 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
         actionbar_style_context.add_class (Gtk.STYLE_CLASS_FLAT);
 
         var sidebar = new Gtk.Grid ();
+        sidebar.get_style_context ().add_class (Gtk.STYLE_CLASS_SIDEBAR);
         sidebar.attach (sidebar_header, 0, 0);
         sidebar.attach (scrolledwindow, 0, 1);
         sidebar.attach (actionbar, 0, 2);
@@ -108,7 +114,7 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
 
         Journal.LogView log_view = new Journal.LogView ();
 
-        Gtk.Label log_view_title = new Gtk.Label (_("Journal")) {
+        /* Gtk.Label log_view_title = new Gtk.Label (_("Journal")) {
             ellipsize = Pango.EllipsizeMode.END,
             margin_start = 24,
             xalign = 0
@@ -116,13 +122,13 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
 
         unowned Gtk.StyleContext log_view_title_context = log_view_title.get_style_context ();
         log_view_title_context.add_class (Granite.STYLE_CLASS_H1_LABEL);
-        log_view_title_context.add_class (Granite.STYLE_CLASS_ACCENT);
+        log_view_title_context.add_class (Granite.STYLE_CLASS_ACCENT); */
 
         var log_view_grid = new Gtk.Grid ();
         log_view_grid.attach (log_view_header, 0, 0);
-        log_view_grid.attach (log_view_title, 0, 1);
-        log_view_grid.attach (tag_filter_grid, 0, 2);
-        log_view_grid.attach (log_view, 0, 3);
+        // log_view_grid.attach (log_view_title, 0, 1);
+        // log_view_grid.attach (tag_filter_grid, 0, 1);
+        log_view_grid.attach (log_view, 0, 1);
 
         var paned = new Gtk.Paned (Gtk.Orientation.HORIZONTAL);
         paned.pack1 (sidebar, false, false);
@@ -136,9 +142,12 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
     private void on_updated_journal_logs (string tag_filter, LogModel[] filtered_logs) {
         if (tag_filter != "") {
             var tag_filter_button = new Journal.TagButton (tag_filter, filtered_logs.length);
+            tag_filter_grid.remove_column (0);
             tag_filter_grid.attach (tag_filter_button, 0, 0);
         } else {
-            tag_filter_grid.remove_row (0);
+            tag_filter_grid.remove_column (0);
+            tag_filter_grid.attach (search_entry, 0, 0);
+            // tag_filter_grid.attach (new Gtk.Separator (Gtk.Orientation.HORIZONTAL), 0, 0);
         }
         tag_filter_grid.show_all ();
     }

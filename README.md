@@ -7,13 +7,11 @@ You'll need the following dependencies:
 * gobject-2.0
 * gtk+-3.0
 * libjson-glib-dev
-* meson
-* valac
-
-Eventually for eOS 6:
-
+* libgtksourceview-4.0-dev
 * libhandy-1-dev
 * libgranite-dev
+* meson
+* valac
 
 Run `meson build` to configure the build environment. Change to the build directory and run `ninja` to build
 
@@ -99,6 +97,13 @@ cd build
 ninja test
 sudo ninja install
 io.elementary.vala-lint
+```
+
+[Gtk Inspecteur](https://elementary.io/docs/code/os-dev#gtk-inspector) (from ` elementary-sdk`):
+
+```bash
+gsettings set org.gtk.Settings.Debug enable-inspector-keybinding true
+# GTK_DEBUG=interactive io.trimir.journal
 ```
 
 [awesome-gtk](https://github.com/unrelentingtech/awesome-gtk), a list of native, open source GTK (3 and 4) applications.

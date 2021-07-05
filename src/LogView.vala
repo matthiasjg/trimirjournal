@@ -49,8 +49,12 @@ public class Journal.LogView : Gtk.Grid {
             var created_at = logs[i].created_at;
             var created_at_date_time = new DateTime.from_iso8601 (created_at, new TimeZone.local ());
             var relative_created_at = Granite.DateTime.get_relative_datetime (created_at_date_time);
-            var str = "%s:  %s\n".printf (relative_created_at, log);
+            var str = "%s:  %s".printf (relative_created_at, log);
             Gtk.TextView text_view = new Gtk.TextView () {};
+            text_view.editable = false;
+            text_view.left_margin = text_view.right_margin = 6;
+            text_view.monospace = true;
+            text_view.pixels_above_lines = text_view.pixels_below_lines = 3;
             text_view.wrap_mode = Gtk.WrapMode.WORD_CHAR;
             text_view.buffer.text = str;
             text_view.buffer = format_tags (text_view.buffer);

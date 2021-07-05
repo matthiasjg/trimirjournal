@@ -29,7 +29,8 @@ executable(
         dependency('gtk+-3.0'),
         dependency('json-glib-1.0'),
 	    dependency('granite', version: '>=0.5'),
-        dependency('libhandy-1', version: '>=0.90.0')
+        dependency('libhandy-1', version: '>=0.90.0'),
+        dependency('gtksourceview-4')
     ],
     install: true
 )

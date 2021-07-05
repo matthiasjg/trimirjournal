@@ -17,5 +17,5 @@ yolo:
 		&& cd build \
 		&& ninja \
 		&& ninja install \
-		&& G_MESSAGES_DEBUG=all io.trimir.journal \
+		&& G_MESSAGES_DEBUG=all GTK_DEBUG=interactive io.trimir.journal \
 		; cd -
