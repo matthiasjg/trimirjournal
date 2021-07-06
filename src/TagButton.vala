@@ -36,7 +36,7 @@ public class Journal.TagButton : Gtk.EventBox {
         var label = "%s (%d)".printf (_tag_text, _tag_count);
         tag_button = new Gtk.Button () {
             label = label,
-            image = new Gtk.Image.from_icon_name ("folder-tag", Gtk.IconSize.BUTTON),
+            image = new Gtk.Image.from_icon_name ("tag-symbolic", Gtk.IconSize.BUTTON),
             always_show_image = true,
             tooltip_text = _("Tag filter %s").printf (_tag_text)
         };

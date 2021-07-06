@@ -6,7 +6,7 @@
 public class Journal.JournalRow : Gtk.ListBoxRow {
 
     construct {
-        var icon = new Gtk.Image.from_icon_name ("appointment", Gtk.IconSize.MENU);
+        var icon = new Gtk.Image.from_icon_name ("accessories-dictionary-symbolic", Gtk.IconSize.MENU);
 
         var display_name_label = new Gtk.Label (_("Journal")) {
             ellipsize = Pango.EllipsizeMode.MIDDLE,
