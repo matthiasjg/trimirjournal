@@ -15,6 +15,7 @@ executable(
     meson.project_name(),
     gresource,
     'src/Application.vala',
+    'src/LogDao.vala',
     'src/LogModel.vala',
     'src/LogReader.vala',
     'src/MainWindow.vala',
