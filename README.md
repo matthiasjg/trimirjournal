@@ -3,7 +3,8 @@
 ## Building and Installation
 
 You'll need the following dependencies:
-* libgda-5.0
+* libxml2-dev
+* libgda-5.0-dev
 * glib-2.0
 * gobject-2.0
 * gtk+-3.0
@@ -106,6 +107,8 @@ io.elementary.vala-lint
 gsettings set org.gtk.Settings.Debug enable-inspector-keybinding true
 # GTK_DEBUG=interactive io.trimir.journal
 ```
+
+[awesome-vala](https://github.com/desiderantes/awesome-vala)
 
 [awesome-gtk](https://github.com/unrelentingtech/awesome-gtk), a list of native, open source GTK (3 and 4) applications.
 

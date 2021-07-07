@@ -36,11 +36,12 @@ public class Journal.LogReader : Object {
             for (uint i = array.get_length () - 1; i > 0; --i) {
                 var object = array.get_object_element (i);
                 var log = new LogModel.fromJsonObject (object);
+                debug (log.to_string ());
                 logs += log;
             }
             result = logs;
         } catch (Error e) {
-            print ("Unable to parse '%s': %s\n", JOURNAL_FILE_PATH, e.message);
+            error ("Unable to parse '%s': %s\n", JOURNAL_FILE_PATH, e.message);
         }
 
         return result;

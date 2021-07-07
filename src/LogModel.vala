@@ -18,6 +18,6 @@ public class Journal.LogModel : Object {
     }
 
     public string to_string () {
-        return "created_at: %s, log: %s".printf(created_at, log);
+        return "created_at: %s, log: %s".printf (created_at, log);
     }
 }

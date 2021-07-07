@@ -15,7 +15,6 @@ executable(
     meson.project_name(),
     gresource,
     'src/Application.vala',
-    'src/Database.vala',
     'src/LogModel.vala',
     'src/LogReader.vala',
     'src/MainWindow.vala',
@@ -25,6 +24,7 @@ executable(
     'src/JournalRow.vala',
     'src/TagButton.vala',
     dependencies: [
+        dependency('libxml-2.0'),
         dependency('libgda-5.0'),
         dependency('glib-2.0'),
         dependency('gobject-2.0'),
