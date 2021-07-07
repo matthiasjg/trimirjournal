@@ -3,6 +3,7 @@
 ## Building and Installation
 
 You'll need the following dependencies:
+* libgda-5.0
 * glib-2.0
 * gobject-2.0
 * gtk+-3.0
