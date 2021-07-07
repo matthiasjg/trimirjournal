@@ -109,6 +109,10 @@ gsettings set org.gtk.Settings.Debug enable-inspector-keybinding true
 
 [awesome-gtk](https://github.com/unrelentingtech/awesome-gtk), a list of native, open source GTK (3 and 4) applications.
 
+[libgda vala samples](https://gitlab.gnome.org/GNOME/libgda/-/tree/LIBGDA_5_2_8/samples/vala)
+
+[todo-vala-example (gda)](https://github.com/undeadspez/todo-vala-example)
+
 ## Flatpak Resources
 
 - https://docs.flatpak.org/en/latest/sandbox-permissions.html
