@@ -16,4 +16,8 @@ public class Journal.LogModel : Object {
         _log = json.get_string_member ("log");
         _created_at = json.get_string_member ("createdAt");
     }
+
+    public string to_string () {
+        return "created_at: %s, log: %s".printf(created_at, log);
+    }
 }
