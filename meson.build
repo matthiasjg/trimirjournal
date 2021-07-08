@@ -23,30 +23,54 @@ debs = [
         dependency('gtksourceview-4')
     ]
 
-executable(
-    meson.project_name(),
-    gresource,
+utils_files = [
+    'src/Utils.vala'
+]
+
+model_files = [
+    'src/LogModel.vala'
+]
+
+dao_files = [
+    'src/LogDao.vala'
+]
+
+app_files = [
     'src/Application.vala',
-    'src/LogDao.vala',
-    'src/LogModel.vala',
     'src/LogReader.vala',
     'src/MainWindow.vala',
     'src/Controller.vala',
     'src/LogRow.vala',
     'src/LogView.vala',
     'src/JournalRow.vala',
-    'src/TagButton.vala',
+    'src/TagButton.vala'
+]
+
+executable(
+    meson.project_name(),
+    gresource,
+    utils_files,
+    model_files,
+    dao_files,
+    app_files,
     dependencies: debs,
     install: true
 )
 
 tests_name = meson.project_name() + '-tests'
 
-tests_deps = debs + []
+tests_deps = debs
+
+tests_files = [
+    utils_files,
+    model_files,
+    dao_files,
+    'src/Tests.vala'
+]
 
 tests = executable(
     tests_name,
-    'src/LogDaoTest.vala',
+    tests_files,
     dependencies: tests_deps
 )
 

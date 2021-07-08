@@ -8,6 +8,7 @@
 
     protected string conn_str = "SQLite://DB_DIR=.;DB_NAME=io.trimir.journal";
 
+    private const string SQL_DB_FILE = "io.trimir.journal.db_0_1";
     private const string SQL_TABLE_NAME_LOGS = "logs";
     private const string SQL_COLUMN_NAME_CREATED_AT = "created_at";
     private const string SQL_COLUMN_NAME_LOG = "log";
@@ -19,12 +20,7 @@
     """;
 
     public LogDao () {
-        try {
-            __conn = Gda.Connection.open_from_string (null, conn_str, null, Gda.ConnectionOptions.NONE);
-            create_table ();
-        } catch (Error e) {
-            critical ("Could not open connection");
-        }
+        init_db ();
     }
 
     public Journal.LogModel[] ? get_all () requires (__conn.is_opened ()) {
@@ -106,7 +102,69 @@
         debug ("TODO not implemented yet");
     }
 
-    protected void create_table () requires (__conn.is_opened ()) {
+    /*-
+    * Copyright (c) 2012-2018 elementary LLC. (https://elementary.io)
+    *
+    * This program is free software: you can redistribute it and/or modify
+    * it under the terms of the GNU Lesser General Public License as published by
+    * the Free Software Foundation, either version 2 of the License, or
+    * (at your option) any later version.
+    *
+    * This program is distributed in the hope that it will be useful,
+    * but WITHOUT ANY WARRANTY; without even the implied warranty of
+    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    * GNU Lesser General Public License for more details.
+    *
+    * You should have received a copy of the GNU Lesser General Public License
+    * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    *
+    * The Music authors hereby grant permission for non-GPL compatible
+    * GStreamer plugins to be used and distributed together with GStreamer
+    * and Music. This permission is above and beyond the permissions granted
+    * by the GPL license by which Music is covered. If you modify this code
+    * you may extend this exception to your version of the code, but you are not
+    * obligated to do so. If you do not wish to do so, delete this exception
+    * statement from your version.
+    *
+    * Authored by: Scott Ringwelski <sgringwe@mtu.edu>
+    *              Victor Eduardo <victoreduardm@gmail.com>
+    *              Corentin Noël <corentin@elementary.io>
+    */
+    // https://github.com/elementary/music/blob/master/src/LocalBackend/LocalLibrary.vala
+    private void init_db () {
+        var database_dir = Journal.Utils.get_data_directory ();
+        try {
+            database_dir.make_directory_with_parents (null);
+        } catch (Error err) {
+            if (err is IOError.EXISTS == false)
+                error ("Could not create data directory: %s", err.message);
+        }
+
+        var db_file = database_dir.get_child (SQL_DB_FILE + ".db");
+        bool new_db = !db_file.query_exists ();
+        if (new_db) {
+            try {
+                db_file.create (FileCreateFlags.PRIVATE);
+            } catch (Error e) {
+                critical ("Error: %s", e.message);
+            }
+        }
+
+        try {
+            __conn = new Gda.Connection.from_string (
+                "SQLite",
+                "DB_DIR=%s;DB_NAME=%s".printf (database_dir.get_path (), SQL_DB_FILE),
+                null,
+                Gda.ConnectionOptions.NONE);
+            __conn.open ();
+        } catch (Error e) {
+            error (e.message);
+        }
+
+        create_table ();
+    }
+
+    private void create_table () requires (__conn.is_opened ()) {
         try {
             var result = __conn.execute_non_select_command (SQL_STATEMENT_CREATE_TABLE_LOGS);
             debug ("Table %s created: %s", SQL_TABLE_NAME_LOGS, result.to_string ());
@@ -114,4 +172,5 @@
             critical ("Could not CREATE TABLE %s", SQL_TABLE_NAME_LOGS);
         }
     }
+
 }

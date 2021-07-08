@@ -3,8 +3,9 @@
  * SPDX-FileCopyrightText: 2021 Matthias Joachim Geisler, openwebcraft <matthiasjg@openwebcraft.com>
  */
 
-void add_foo_tests () {
-    GLib.Test.add_func ("/vala/test", () => {
+void add_log_dao_tests () {
+    Test.add_func ("/LogDao/get_all", () => {
+        Journal.LogDao log_dao = new Journal.LogDao ();
         assert ("foo" + "bar" == "foobar");
     });
 }
@@ -12,6 +13,6 @@ void add_foo_tests () {
 
 int main (string[] args) {
     Test.init (ref args);
-    add_foo_tests ();
+    add_log_dao_tests ();
     return Test.run ();
 }
