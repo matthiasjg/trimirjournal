@@ -93,6 +93,8 @@
         string sql_table_name = "",
         string sql_stmt_create_table = ""
     ) requires (db_connection.is_opened ()) {
+        debug ("sql_table_name: %s", sql_table_name);
+        debug ("sql_stmt_create_table: %s", sql_stmt_create_table);
         if (sql_table_name == "") {
             critical ("Missing SQL table name: %s", sql_table_name);
         } else if (sql_stmt_create_table == "") {

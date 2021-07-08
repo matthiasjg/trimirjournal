@@ -17,7 +17,7 @@
     private const string SQL_COLUMN_NAME_CREATED_AT = "created_at";
     private const string SQL_COLUMN_NAME_LOG = "log";
 
-    public LogDao (string db_file_name = "") {
+    public LogDao (string db_file_name = DB_FILE_NAME ) {
         db_connection = init_db (db_file_name, SQL_TABLE_NAME, SQL_STATEMENT_CREATE_TABLE);
     }
 
