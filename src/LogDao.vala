@@ -6,14 +6,12 @@
  public class Journal.LogDao : Object {
     protected Gda.Connection __conn;
 
-    protected string conn_str = "SQLite://DB_DIR=.;DB_NAME=io.trimir.journal";
-
-    private const string SQL_DB_FILE = "io.trimir.journal.db_0_1";
+    private const string SQL_DB_FILE = "io_trimir_journal_1_0_0";
     private const string SQL_TABLE_NAME_LOGS = "logs";
     private const string SQL_COLUMN_NAME_CREATED_AT = "created_at";
     private const string SQL_COLUMN_NAME_LOG = "log";
     private const string SQL_STATEMENT_CREATE_TABLE_LOGS = """
-        CREATE TABLE IF NOT EXISTS %s (
+        CREATE TABLE IF NOT EXISTS logs (
             created_at DATE PRIMARY KEY,
             log TEXT NOT NULL
         );
