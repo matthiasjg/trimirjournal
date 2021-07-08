@@ -3,10 +3,13 @@
  * SPDX-FileCopyrightText: 2021 Matthias Joachim Geisler, openwebcraft <matthiasjg@openwebcraft.com>
  */
 
+const string SQL_DB_FILE_NAME = "io_trimir_journal_1_0_0_test";
+
 void add_log_dao_tests () {
     Test.add_func ("/LogDao/get_all", () => {
-        Journal.LogDao log_dao = new Journal.LogDao ();
-        assert ("foo" + "bar" == "foobar");
+        Journal.LogDao log_dao = new Journal.LogDao (SQL_DB_FILE_NAME);
+        Journal.LogModel[] ? logs = log_dao.get_all ();
+        assert (logs == null || logs.length == 0);
     });
 }
 
