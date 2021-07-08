@@ -32,6 +32,7 @@ model_files = [
 ]
 
 dao_files = [
+    'src/BaseDao.vala',
     'src/LogDao.vala'
 ]
 

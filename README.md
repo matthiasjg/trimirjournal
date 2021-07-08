@@ -118,6 +118,8 @@ gsettings set org.gtk.Settings.Debug enable-inspector-keybinding true
 
 [Writing tests for Vala](https://esite.ch/2012/06/writing-tests-for-vala/)
 
+[design-patterns-for-humans/vala](https://github.com/design-patterns-for-humans/vala)
+
 ## Flatpak Resources
 
 - https://docs.flatpak.org/en/latest/sandbox-permissions.html
