@@ -18,8 +18,16 @@
         );
     """;
 
-    public Journal.LogModel[] ? get_all ()
-        requires (__conn.is_opened ()) {
+    public LogDao () {
+        try {
+            __conn = Gda.Connection.open_from_string (null, conn_str, null, Gda.ConnectionOptions.NONE);
+            create_table ();
+        } catch (Error e) {
+            critical ("Could not open connection");
+        }
+    }
+
+    public Journal.LogModel[] ? get_all () requires (__conn.is_opened ()) {
         var builder = new Gda.SqlBuilder (Gda.SqlStatementType.SELECT);
         builder.select_add_field ("*", null, null);
         builder.select_add_target (SQL_TABLE_NAME_LOGS, null);
@@ -46,8 +54,7 @@
         return logs;
     }
 
-    public Journal.LogModel get_log (string created_at)
-        requires (__conn.is_opened ()) {
+    public Journal.LogModel get_log (string created_at) requires (__conn.is_opened ()) {
         var builder = new Gda.SqlBuilder (Gda.SqlStatementType.SELECT);
         builder.set_where ((Gda.SqlBuilderId) created_at);
         builder.select_add_target (SQL_TABLE_NAME_LOGS, null);
@@ -70,8 +77,7 @@
         return log;
     }
 
-    public void create_log (Journal.LogModel log)
-        requires (__conn.is_opened ()) {
+    public void create_log (Journal.LogModel log) requires (__conn.is_opened ()) {
         var builder = new Gda.SqlBuilder (Gda.SqlStatementType.INSERT);
         var created_at_val = Value (typeof (string));
         var log_val = Value (typeof (string));
@@ -92,15 +98,15 @@
         }
     }
 
-    public void update_log (Journal.LogModel log) {
+    public void update_log (Journal.LogModel log) requires (__conn.is_opened ()) {
         debug ("TODO not implemented yet");
     }
 
-    public void destroy_log (string createt_at) {
+    public void destroy_log (string createt_at) requires (__conn.is_opened ()) {
         debug ("TODO not implemented yet");
     }
 
-    protected void create_table () {
+    protected void create_table () requires (__conn.is_opened ()) {
         try {
             var result = __conn.execute_non_select_command (SQL_STATEMENT_CREATE_TABLE_LOGS);
             debug ("Table %s created: %s", SQL_TABLE_NAME_LOGS, result.to_string ());

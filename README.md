@@ -116,6 +116,12 @@ gsettings set org.gtk.Settings.Debug enable-inspector-keybinding true
 
 [todo-vala-example (gda)](https://github.com/undeadspez/todo-vala-example)
 
+[Writing tests for Vala](https://esite.ch/2012/06/writing-tests-for-vala/)
+
 ## Flatpak Resources
 
 - https://docs.flatpak.org/en/latest/sandbox-permissions.html
+
+## elementary OS Resources
+
+[awesome-elementaryos](https://github.com/kleinrein/awesome-elementaryos)

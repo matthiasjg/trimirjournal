@@ -19,3 +19,9 @@ yolo:
 		&& ninja install \
 		&& G_MESSAGES_DEBUG=all GTK_DEBUG=interactive io.trimir.journal \
 		; cd -
+
+test: 
+	io.elementary.vala-lint \
+		&& cd build \
+		&& ninja test \
+		; cd -
