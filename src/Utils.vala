@@ -4,7 +4,7 @@
  */
 
 namespace Journal.Utils {
-    private const string APP_NAME = "journal";
+    private const string APP_NAME = "io.trimir.journal";
 
     /*-
     * Copyright (c) 2012-2018 elementary LLC. (https://elementary.io)
