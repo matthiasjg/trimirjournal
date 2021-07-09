@@ -9,8 +9,6 @@ public class Journal.LogView : Gtk.Grid {
 
     private Journal.Controller _controller;
 
-    public signal void filtered_logs (string tag_filter, LogModel[] filtered_logs);
-
     public LogView () {}
 
     construct {
@@ -44,12 +42,13 @@ public class Journal.LogView : Gtk.Grid {
         active_tag_filter = tag_filter;
         log_list.foreach ((log) => log_list.remove (log));
 
-        for (int i = 0; i < logs.length; ++i) {
+        for (int i = logs.length - 1; i + 1 > 0; --i) {
             var log = logs[i].log;
             var created_at = logs[i].created_at;
             var created_at_date_time = new DateTime.from_iso8601 (created_at, new TimeZone.local ());
             var relative_created_at = Granite.DateTime.get_relative_datetime (created_at_date_time);
             var str = "%s:  %s".printf (relative_created_at, log);
+            debug (str);
             Gtk.TextView text_view = new Gtk.TextView () {};
             text_view.editable = false;
             text_view.left_margin = text_view.right_margin = 6;
@@ -70,7 +69,6 @@ public class Journal.LogView : Gtk.Grid {
             Journal.LogRow log_row = new Journal.LogRow (text_view, tags);
             log_list.insert (log_row, -1);
         }
-        filtered_logs (tag_filter, logs);
         log_list.show_all ();
     }
 
