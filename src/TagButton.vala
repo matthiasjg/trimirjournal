@@ -38,7 +38,7 @@ public class Journal.TagButton : Gtk.EventBox {
             label = label,
             image = new Gtk.Image.from_icon_name ("tag-symbolic", Gtk.IconSize.BUTTON),
             always_show_image = true,
-            tooltip_text = _("Tag filter %s").printf (_tag_text)
+            tooltip_text = _("Active tag filter %s").printf (_tag_text)
         };
 
         unowned Gtk.StyleContext tag_button_context = tag_button.get_style_context ();

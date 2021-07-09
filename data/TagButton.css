@@ -4,12 +4,13 @@
  */
 
 tag-button grid {
-    border-radius: 3px;
+    border-radius: 4px;
     background: @accent_color_100;
     border-color: @accent_color_300;
 }
 
 tag-button button {
+    border-radius: 4px;
     color: @accent_color_900;
     font-size: 1em;
     font-weight: 600;
