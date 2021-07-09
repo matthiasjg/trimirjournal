@@ -7,6 +7,7 @@ const string SQL_DB_FILE_NAME = "io_trimir_journal_1_0_0_test";
 
 void add_log_dao_tests () {
     Test.add_func ("/LogDao/get_all", () => {
+        debug ("TEST_DATA_FILE: %s", TEST_DATA_FILE);
         Journal.LogDao log_dao = new Journal.LogDao (SQL_DB_FILE_NAME);
         Journal.LogModel[] ? logs = log_dao.select_all_entities ();
         assert (logs == null || logs.length == 0);
