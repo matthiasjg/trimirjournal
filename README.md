@@ -120,6 +120,8 @@ gsettings set org.gtk.Settings.Debug enable-inspector-keybinding true
 
 [design-patterns-for-humans/vala](https://github.com/design-patterns-for-humans/vala)
 
+[live-chart](https://github.com/lcallarec/live-chart)
+
 ## Flatpak Resources
 
 - https://docs.flatpak.org/en/latest/sandbox-permissions.html

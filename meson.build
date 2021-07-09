@@ -11,7 +11,7 @@ gresource = gnome.compile_resources(
     source_dir: 'data'
 )
 
-debs = [
+deps = [
         dependency('libxml-2.0'),
         dependency('libgda-5.0'),
         dependency('glib-2.0'),
@@ -54,36 +54,22 @@ executable(
     model_files,
     dao_files,
     app_files,
-    dependencies: debs,
+    dependencies: deps,
     install: true
 )
 
-tests_name = meson.project_name() + '-tests'
-
-tests_deps = debs
-
-tests_config = configuration_data()
-tests_config.set('source_dir', meson.source_root())
-tests_conf = configure_file(input : 'src/TestsConfig.vala', output: 'TestsConfig.vala', configuration: tests_config)
-
-tests_files = [
-    join_paths(meson.build_root(), '@0@'.format(tests_conf)),
-    utils_files,
-    model_files,
-    dao_files,
-    'src/TestsConfig.vala',
-    'src/Tests.vala'
-]
-
-tests = executable(
-    tests_name,
-    tests_files,
-    dependencies: tests_deps
-)
-
-test('Tests', tests)
-
 subdir('data')
 subdir('po')
+
+tests_deps = declare_dependency(
+    dependencies: deps,
+    sources: [
+        utils_files,
+        model_files,
+        dao_files
+    ],
+    include_directories: [include_directories('.')]
+)
+subdir('tests')
 
 meson.add_install_script('meson/post_install.py')
