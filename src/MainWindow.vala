@@ -25,10 +25,13 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
     construct {
         Hdy.init ();
 
-        search_entry = new Gtk.SearchEntry ();
-        search_entry.hexpand = true;
-        search_entry.placeholder_text = _("Search Log");
-        search_entry.valign = Gtk.Align.CENTER;
+        search_entry = new Gtk.SearchEntry () {
+            hexpand = true,
+            placeholder_text = _("Search Log"),
+            tooltip_text = _("Not implemented yet"),
+            valign = Gtk.Align.CENTER,
+            sensitive = false
+        };
 
         var sidebar_header = new Hdy.HeaderBar () {
             decoration_layout = "close:",
@@ -91,6 +94,7 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
 
         var bookmark_tag_filter_button = new Gtk.MenuButton () {
             label = ("Bookmark Tag Filter…"),
+            tooltip_text = _("Not implemented yet"),
             image = new Gtk.Image.from_icon_name ("list-add-symbolic", Gtk.IconSize.SMALL_TOOLBAR),
             always_show_image = true,
             popover = add_tasklist_popover,

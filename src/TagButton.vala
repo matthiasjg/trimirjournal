@@ -38,7 +38,7 @@ public class Journal.TagButton : Gtk.EventBox {
             label = label,
             image = new Gtk.Image.from_icon_name ("tag-symbolic", Gtk.IconSize.BUTTON),
             always_show_image = true,
-            tooltip_text = _("Active tag filter %s").printf (_tag_text)
+            tooltip_text = _("Active filter for tag %s").printf (_tag_text)
         };
 
         unowned Gtk.StyleContext tag_button_context = tag_button.get_style_context ();
@@ -46,7 +46,7 @@ public class Journal.TagButton : Gtk.EventBox {
         tag_button_context.add_provider (style_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         var delete_button = new Gtk.Button.from_icon_name ("process-stop-symbolic", Gtk.IconSize.BUTTON) {
-            tooltip_text = _("Remove")
+            tooltip_text = _("Remove filter for tag %s").printf (_tag_text)
         };
 
         unowned Gtk.StyleContext delete_button_context = delete_button.get_style_context ();
