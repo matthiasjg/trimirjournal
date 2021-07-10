@@ -4,23 +4,19 @@
  */
 
  public abstract class Journal.BaseDao<TModel> : Object {
-    private Gda.Connection db_connection;
+    protected Gda.Connection db_connection;
 
     protected const string DB_FILE_NAME = "io_trimir_journal_1_0_0";
 
-    /* protected BaseDao (string db_file_name = "") {
-        init_db (db_file_name != "" ? db_file_name : SQL_DB_FILE_NAME);
-    }*/
-
     public abstract TModel[] ? select_all_entities ();
 
-    public abstract TModel select_entity (string key);
+    public abstract TModel ? select_entity (int id);
 
-    public abstract bool insert_entity (TModel obj);
+    public abstract TModel ? insert_entity (TModel t_model);
 
-    public abstract bool update_entity (TModel obj);
+    public abstract TModel ? update_entity (TModel t_model);
 
-    public abstract bool delete_entity (string key);
+    public abstract bool delete_entity (int id);
 
     /*-
     * Copyright (c) 2012-2018 elementary LLC. (https://elementary.io)
@@ -53,6 +49,7 @@
     // https://github.com/elementary/music/blob/master/src/LocalBackend/LocalLibrary.vala
     protected Gda.Connection ? init_db (
         string db_file_name = DB_FILE_NAME,
+        bool db_force_create = false,
         string sql_table_name = "",
         string sql_stmt_create_table = ""
     ) {
@@ -67,6 +64,13 @@
 
         var db_file = database_dir.get_child (db_file_name + ".db");
         bool new_db = !db_file.query_exists ();
+        if (!new_db && db_force_create) {
+            try {
+                db_file.delete ();
+            } catch (Error e) {
+                print ("Error: %s", e.message);
+            }
+        }
         if (new_db) {
             try {
                 db_file.create (FileCreateFlags.PRIVATE);

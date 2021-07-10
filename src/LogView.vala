@@ -18,7 +18,8 @@ public class Journal.LogView : Gtk.Grid {
         log_list = new Gtk.ListBox () {
             selection_mode = Gtk.SelectionMode.NONE
         };
-        log_list.get_style_context ().add_class (Gtk.STYLE_CLASS_BACKGROUND);
+        unowned Gtk.StyleContext log_list_style_context = log_list.get_style_context ();
+        log_list_style_context.add_class (Gtk.STYLE_CLASS_BACKGROUND);
         log_list.set_filter_func (filter_function);
         scrolled_window.add (log_list);
         add (scrolled_window);

@@ -4,21 +4,31 @@
  */
 
 const string SQL_DB_FILE_NAME = "io_trimir_journal_1_0_0_test";
-
 const string TEST_DATA_FILE_JSON = "ZenJournal_backup.json";
 
 void add_log_dao_tests () {
     Test.add_func ("/LogDao/select_all_entities", () => {
-        Journal.LogDao log_dao = new Journal.LogDao (SQL_DB_FILE_NAME);
+        Journal.LogDao log_dao = new Journal.LogDao (SQL_DB_FILE_NAME, true);
         Journal.LogModel[] ? logs = log_dao.select_all_entities ();
         assert (logs == null || logs.length == 0);
     });
 
-    Test.add_func ("/LogDao/create_entity", () => {
-        debug ("TEST_DATA_DIR: %s", TEST_DATA_DIR);
-        Journal.LogDao log_dao = new Journal.LogDao (SQL_DB_FILE_NAME);
-        Journal.LogModel[] ? logs = log_dao.select_all_entities ();
-        assert (logs == null || logs.length == 0);
+    Test.add_func ("/LogDao/insert_entity", () => {
+        var json_file = "%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON);
+        debug ("json_file: %s", json_file);
+
+        Journal.LogReader log_reader = Journal.LogReader.shared_instance ();
+        Journal.LogModel[] logs_read = log_reader.load_journal (json_file);
+        var log_read = logs_read[0];
+
+        Journal.LogDao log_dao = new Journal.LogDao (SQL_DB_FILE_NAME, true);
+        Journal.LogModel log_inserted = log_dao.insert_entity (log_read);
+        debug ("log_inserted: %s", log_inserted.to_string ());
+
+        Journal.LogModel log_selected = log_dao.select_entity (log_read.id);
+        debug ("log_selected: %s", log_selected.to_string ());
+
+        assert (log_inserted.id == log_selected.id);
     });
 }
 

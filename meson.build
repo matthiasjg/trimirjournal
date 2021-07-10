@@ -24,7 +24,8 @@ deps = [
     ]
 
 utils_files = [
-    'src/Utils.vala'
+    'src/Utils.vala',
+    'src/LogReader.vala'
 ]
 
 model_files = [
@@ -38,7 +39,6 @@ dao_files = [
 
 app_files = [
     'src/Application.vala',
-    'src/LogReader.vala',
     'src/MainWindow.vala',
     'src/Controller.vala',
     'src/LogRow.vala',

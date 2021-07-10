@@ -22,9 +22,11 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
         );
     }
 
-    construct {
+    static construct {
         Hdy.init ();
+    }
 
+    construct {
         search_entry = new Gtk.SearchEntry () {
             hexpand = true,
             placeholder_text = _("Search Log"),
