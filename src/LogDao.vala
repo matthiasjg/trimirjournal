@@ -116,7 +116,7 @@
             Gda.Statement stmt = builder.get_statement ();
             debug (stmt.to_sql_extended (db_connection, null, Gda.StatementSqlFlag.PARAMS_AS_VALUES, null));
             db_connection.statement_execute_non_select (stmt, null , out inserted_row);
-            log.id = (int) inserted_row.get_holder_value ("+0").get_int ();
+            log.id = inserted_row.get_holder_value ("+0").get_int ();
         } catch (Error e) {
             critical ("Could not INSERT log '%s': %s", log.to_string (), e.message);
         }
@@ -150,7 +150,23 @@
     }
 
     public override bool delete_entity (int id) requires (db_connection.is_opened ()) {
-        critical ("Not implemented yet");
+        var builder = new Gda.SqlBuilder (Gda.SqlStatementType.DELETE);
+        var id_val = Value (typeof (int));
+        id_val.set_int (id);
+        var id_field = builder.add_id (SQL_COLUMN_NAME_ID);
+        var id_param = builder.add_expr_value (null, id_val);
+        var id_cond = builder.add_cond (Gda.SqlOperatorType.EQ, id_field, id_param, 0);
+        builder.set_where (id_cond);
+        builder.set_table (SQL_TABLE_NAME);
+        try {
+            Gda.Set deleted_row;
+            Gda.Statement stmt = builder.get_statement ();
+            debug (stmt.to_sql_extended (db_connection, null, Gda.StatementSqlFlag.PARAMS_AS_VALUES, null));
+            db_connection.statement_execute_non_select (stmt, null , out deleted_row);
+            return true;
+        } catch (Error e) {
+            critical ("Could not DELETE log %i: %s", id, e.message);
+        }
         return false;
     }
 }

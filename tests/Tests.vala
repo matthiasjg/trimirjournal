@@ -51,6 +51,23 @@ void add_log_dao_tests () {
 
         assert (log_updated.log == log_update_txt);
     });
+
+    Test.add_func ("/LogDao/delete_entity", () => {
+        var json_file = "%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON);
+        debug ("json_file: %s", json_file);
+
+        Journal.LogReader log_reader = Journal.LogReader.shared_instance ();
+        Journal.LogModel[] logs_read = log_reader.load_journal (json_file);
+        var log_read = logs_read[0];
+
+        Journal.LogDao log_dao = new Journal.LogDao (SQL_DB_FILE_NAME, true);
+        Journal.LogModel log_inserted = log_dao.insert_entity (log_read);
+        debug ("log_inserted: %s", log_inserted.to_string ());
+
+        bool is_log_deleted = log_dao.delete_entity (log_inserted.id);
+
+        assert (is_log_deleted == true);
+    });
 }
 
 
