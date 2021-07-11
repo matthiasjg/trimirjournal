@@ -121,16 +121,6 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
 
         Journal.LogView log_view = new Journal.LogView ();
 
-        /* Gtk.Label log_view_title = new Gtk.Label (_("Journal")) {
-            ellipsize = Pango.EllipsizeMode.END,
-            margin_start = 24,
-            xalign = 0
-        };
-
-        unowned Gtk.StyleContext log_view_title_context = log_view_title.get_style_context ();
-        log_view_title_context.add_class (Granite.STYLE_CLASS_H1_LABEL);
-        log_view_title_context.add_class (Granite.STYLE_CLASS_ACCENT); */
-
         log_entry = new Gtk.Entry () {
             hexpand = true,
             placeholder_text = _("Add Log"),
@@ -147,8 +137,6 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
 
         var log_view_grid = new Gtk.Grid ();
         log_view_grid.attach (log_view_header, 0, 0);
-        // log_view_grid.attach (log_view_title, 0, 1);
-        // log_view_grid.attach (tag_filter_grid, 0, 1);
         log_view_grid.attach (log_view, 0, 1);
         log_view_grid.attach (log_view_actionbar, 0, 2);
 
@@ -169,7 +157,6 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
         } else {
             tag_filter_grid.remove_column (0);
             tag_filter_grid.attach (log_search_entry, 0, 0);
-            // tag_filter_grid.attach (new Gtk.Separator (Gtk.Orientation.HORIZONTAL), 0, 0);
         }
         tag_filter_grid.show_all ();
     }
