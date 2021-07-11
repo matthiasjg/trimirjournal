@@ -7,7 +7,8 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
 
     private uint configure_id;
 
-    private Gtk.SearchEntry search_entry;
+    private Gtk.SearchEntry log_search_entry;
+    private Gtk.Entry log_entry;
     private Gtk.ListBox listbox;
     private Gtk.ButtonBox bookmark_tag_filter_buttonbox;
     private Gtk.Grid tag_filter_grid;
@@ -27,7 +28,7 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
     }
 
     construct {
-        search_entry = new Gtk.SearchEntry () {
+        log_search_entry = new Gtk.SearchEntry () {
             hexpand = true,
             placeholder_text = _("Search Log"),
             tooltip_text = _("Not implemented yet"),
@@ -103,17 +104,17 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
             sensitive = false
         };
 
-        var actionbar = new Gtk.ActionBar ();
-        actionbar.add (bookmark_tag_filter_button);
+        var sidebar_actionbar = new Gtk.ActionBar ();
+        sidebar_actionbar.add (bookmark_tag_filter_button);
 
-        unowned Gtk.StyleContext actionbar_style_context = actionbar.get_style_context ();
-        actionbar_style_context.add_class (Gtk.STYLE_CLASS_FLAT);
+        unowned Gtk.StyleContext sidebar_actionbar_style_context = sidebar_actionbar.get_style_context ();
+        sidebar_actionbar_style_context.add_class (Gtk.STYLE_CLASS_FLAT);
 
         var sidebar = new Gtk.Grid ();
         sidebar.get_style_context ().add_class (Gtk.STYLE_CLASS_SIDEBAR);
         sidebar.attach (sidebar_header, 0, 0);
         sidebar.attach (scrolledwindow, 0, 1);
-        sidebar.attach (actionbar, 0, 2);
+        sidebar.attach (sidebar_actionbar, 0, 2);
 
         unowned Gtk.StyleContext sidebar_style_context = sidebar.get_style_context ();
         sidebar_style_context.add_class (Gtk.STYLE_CLASS_SIDEBAR);
@@ -130,11 +131,26 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
         log_view_title_context.add_class (Granite.STYLE_CLASS_H1_LABEL);
         log_view_title_context.add_class (Granite.STYLE_CLASS_ACCENT); */
 
+        log_entry = new Gtk.Entry () {
+            hexpand = true,
+            placeholder_text = _("Add Log"),
+            tooltip_text = _("Not implemented yet"),
+            valign = Gtk.Align.CENTER,
+            sensitive = false
+        };
+
+        var log_view_actionbar = new Gtk.ActionBar ();
+        log_view_actionbar.add (log_entry);
+
+        unowned Gtk.StyleContext log_view_actionbar_style_context = log_view_actionbar.get_style_context ();
+        log_view_actionbar_style_context.add_class (Gtk.STYLE_CLASS_FLAT);
+
         var log_view_grid = new Gtk.Grid ();
         log_view_grid.attach (log_view_header, 0, 0);
         // log_view_grid.attach (log_view_title, 0, 1);
         // log_view_grid.attach (tag_filter_grid, 0, 1);
         log_view_grid.attach (log_view, 0, 1);
+        log_view_grid.attach (log_view_actionbar, 0, 2);
 
         var paned = new Gtk.Paned (Gtk.Orientation.HORIZONTAL);
         paned.pack1 (sidebar, false, false);
@@ -152,7 +168,7 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
             tag_filter_grid.attach (tag_filter_button, 0, 0);
         } else {
             tag_filter_grid.remove_column (0);
-            tag_filter_grid.attach (search_entry, 0, 0);
+            tag_filter_grid.attach (log_search_entry, 0, 0);
             // tag_filter_grid.attach (new Gtk.Separator (Gtk.Orientation.HORIZONTAL), 0, 0);
         }
         tag_filter_grid.show_all ();
