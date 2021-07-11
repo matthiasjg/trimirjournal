@@ -24,27 +24,30 @@ deps = [
     ]
 
 utils_files = [
-    'src/Utils.vala',
-    'src/LogReader.vala'
+    'src/Utils/Utils.vala',
+    'src/Utils/LogReader.vala'
 ]
 
 model_files = [
-    'src/LogModel.vala'
+    'src/Model/LogModel.vala'
 ]
 
 dao_files = [
-    'src/BaseDao.vala',
-    'src/LogDao.vala'
+    'src/Dao/BaseDao.vala',
+    'src/Dao/LogDao.vala'
+]
+
+ui_files = [
+    'src/Ui/LogRow.vala',
+    'src/Ui/LogView.vala',
+    'src/Ui/JournalRow.vala',
+    'src/Ui/TagButton.vala',
+    'src/Ui/MainWindow.vala'
 ]
 
 app_files = [
     'src/Application.vala',
-    'src/MainWindow.vala',
-    'src/Controller.vala',
-    'src/LogRow.vala',
-    'src/LogView.vala',
-    'src/JournalRow.vala',
-    'src/TagButton.vala'
+    'src/Controller.vala'
 ]
 
 executable(
@@ -53,6 +56,7 @@ executable(
     utils_files,
     model_files,
     dao_files,
+    ui_files,
     app_files,
     dependencies: deps,
     install: true
