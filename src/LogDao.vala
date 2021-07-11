@@ -34,7 +34,6 @@
     }
 
     private Journal.LogModel get_log_from_data_model (Gda.DataModelIter iter) {
-        debug ("iter %d", iter.current_row);
         Journal.LogModel log = new Journal.LogModel.with_id (
             iter.get_value_for_field (SQL_COLUMN_NAME_ID).get_int (),
             iter.get_value_for_field (SQL_COLUMN_NAME_CREATED_AT).get_string (),
@@ -54,12 +53,11 @@
             debug (stmt.to_sql_extended (db_connection, null, Gda.StatementSqlFlag.PARAMS_AS_VALUES, null));
             Gda.DataModel data_model = db_connection.statement_execute_select (stmt, null);
             int row_count = data_model.get_n_rows ();
-            debug ("Row count: %d", row_count);
+            debug ("Row count: %i", row_count);
             if (row_count > 0) {
                 var iter = data_model.create_iter ();
                 do {
                     Journal.LogModel log = get_log_from_data_model (iter);
-                    debug (log.to_string ());
                     logs+= log;
                 } while (iter.move_next ());
                 debug ("Number of logs retrieved: %d", logs.length);
@@ -87,14 +85,14 @@
             debug (stmt.to_sql_extended (db_connection, null, Gda.StatementSqlFlag.PARAMS_AS_VALUES, null));
             Gda.DataModel data_model = db_connection.statement_execute_select (stmt, null);
             int row_count = data_model.get_n_rows ();
-            debug ("Row count: %d", row_count);
-            var iter = data_model.create_iter ();
-            iter.move_to_row (0);
-            do {
+            debug ("Row count: %i", row_count);
+            if (row_count == 1) {
+                var iter = data_model.create_iter ();
+                iter.move_to_row (0);
                 log = get_log_from_data_model (iter);
-            } while (iter.move_next ());
+            }
         } catch (Error e) {
-            critical ("Could not SELECT log %s: %s", id.to_string (), e.message);
+            critical ("Could not SELECT log %i: %s", id, e.message);
         }
         return log;
     }
