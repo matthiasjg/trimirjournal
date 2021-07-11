@@ -25,3 +25,9 @@ test:
 		&& cd build \
 		&& ninja test \
 		; cd -
+
+i18n:
+	cd build \
+		&& ninja io.trimir.journal-pot \
+		&& ninja io.trimir.journal-update-po \
+		; cd -

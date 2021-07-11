@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.trimir.journal\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-01 21:37+0100\n"
+"POT-Creation-Date: 2021-07-11 16:34+0200\n"
 "PO-Revision-Date: 2021-02-01 21:35+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -17,16 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/Application.vala:39
-msgid "Click me!"
-msgstr "Klich mich!"
-
-#: src/Application.vala:44
-msgid "Hello World!"
-msgstr "Hallo Welt"
-
-#: src/Application.vala:51 data/trimir-journal.desktop.in:3
-#: data/trimir-journal.appdata.xml.in:6
+#: data/trimir-journal.desktop.in:3 data/trimir-journal.appdata.xml.in:6
 msgid "Trimir Journal"
 msgstr ""
 
@@ -35,11 +26,11 @@ msgid "Journaling App"
 msgstr ""
 
 #: data/trimir-journal.desktop.in:5 data/trimir-journal.appdata.xml.in:7
-msgid "Journaling, Logging und Aktivitäts-Tracking"
+msgid "Journaling, Logging and Activity Tracking"
 msgstr ""
 
 #: data/trimir-journal.desktop.in:8
-msgid "application-default-icon"
+msgid "accessories-text-editor"
 msgstr ""
 
 #: data/trimir-journal.desktop.in:11
@@ -48,9 +39,17 @@ msgstr ""
 
 #: data/trimir-journal.appdata.xml.in:9
 msgid ""
-"Das Trimir Journal wurde entwickelt und erstellt, um all Deine " "Erfahrungen, Gedanken und Ideen sowie Deine (Sport-) Aktivitäten " "aufzuzeichnen und im Nachhinein zu bewerten."
+"Trimir Journal is designed and built to help record and in retrospect "
+"evaluate all of your experiences, thoughts and ideas as well as your "
+"(sports) activities."
 msgstr ""
 
 #: data/trimir-journal.appdata.xml.in:46
 msgid "Matthias Joachim Geisler, openwebcraft"
 msgstr ""
+
+#~ msgid "Click me!"
+#~ msgstr "Klich mich!"
+
+#~ msgid "Hello World!"
+#~ msgstr "Hallo Welt"

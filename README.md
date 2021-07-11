@@ -42,9 +42,11 @@ io.elementary.vala-lint && \
 
 The app is fully translatable.
 
-Each time new translatable strings are added or old ones change, one should regenerate the `.pot` and `po` files using the commands (targets) `ninja io.trimir-journal-pot` and `ninja io.trimir-journal-update-po` from `build/` dir.
+Each time new translatable strings are added or old ones change, one should regenerate the `.pot` and `po` files using the commands (targets) `ninja io.trimir.journal-pot` and `ninja io.trimi.journal-update-po` from `build/` dir.
 
-For new languages, just list them in the `po/LINGUAS` file and generate the new `.po` file with the command (target) `ninja io.trimir-journal-update-po`.
+For new languages, just list them in the `po/LINGUAS` file and generate the new `.po` file with the command (target) `ninja io.trimir.journal-update-po`.
+
+... or `make i18n` ;-).
 
 ## Build .deb locally
 
