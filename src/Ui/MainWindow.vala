@@ -7,13 +7,17 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
 
     private uint configure_id;
 
-    private Gtk.SearchEntry log_search_entry;
     private Gtk.Entry log_entry;
     private Gtk.ListBox listbox;
-    private Gtk.ButtonBox bookmark_tag_filter_buttonbox;
-    private Gtk.Grid tag_filter_grid;
+    private Gtk.ButtonBox sidebar_menu_buttonbox;
+    // private Gtk.ActionBar sidebar_actionbar;
+    private Gtk.ActionBar log_view_actionbar;
+    private Journal.TagButton tag_filter_button;
 
     private Journal.Controller _controller;
+
+    public const string ACTION_PREFIX = "win.";
+    public const string ACTION_IMPORT = "action_import";
 
     public MainWindow (Gtk.Application application) {
         Object (
@@ -28,14 +32,6 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
     }
 
     construct {
-        log_search_entry = new Gtk.SearchEntry () {
-            hexpand = true,
-            placeholder_text = _("Search Log"),
-            tooltip_text = _("Not implemented yet"),
-            valign = Gtk.Align.CENTER,
-            sensitive = false
-        };
-
         var sidebar_header = new Hdy.HeaderBar () {
             decoration_layout = "close:",
             has_subtitle = false,
@@ -63,17 +59,28 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
         _controller = Journal.Controller.shared_instance ();
         _controller.updated_journal_logs.connect (on_updated_journal_logs);
 
-        tag_filter_grid = new Gtk.Grid ();
-        tag_filter_grid.hexpand = true;
-        tag_filter_grid.valign = Gtk.Align.CENTER;
+        var import_menuitem = new Gtk.MenuItem.with_label (_("Import to Journal…"));
+        import_menuitem.action_name = ACTION_PREFIX + ACTION_IMPORT;
+
+        var menu = new Gtk.Menu ();
+        menu.append (import_menuitem);
+        // menu.append (new Gtk.SeparatorMenuItem ());
+        menu.show_all ();
+
+        var menu_button = new Gtk.MenuButton ();
+        menu_button.image = new Gtk.Image.from_icon_name ("open-menu", Gtk.IconSize.LARGE_TOOLBAR);
+        menu_button.popup = menu;
+        menu_button.valign = Gtk.Align.CENTER;
 
         var log_view_header = new Hdy.HeaderBar () {
             show_close_button = true,
             has_subtitle = false,
             decoration_layout = ":maximize"
         };
-        log_view_header.set_custom_title (tag_filter_grid);
+        log_view_header.pack_end (menu_button);
         log_view_header.pack_end (mode_switch);
+        log_view_header.set_title (_("Trimir Journal"));
+        log_view_header.show_all ();
 
         unowned Gtk.StyleContext log_view_header_context = log_view_header.get_style_context ();
         log_view_header_context.add_class ("default-decoration");
@@ -82,7 +89,17 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
         listbox = new Gtk.ListBox ();
 
         var journal_row = new Journal.JournalRow ();
+        var tags_row = new Journal.TagsRow () {
+            sensitive = false,
+            tooltip_text = _("Not implemented yet")
+        };
+        var saved_searches_row = new Journal.SavedSearchesRow () {
+            sensitive = false,
+            tooltip_text = _("Not implemented yet")
+        };
         listbox.add (journal_row);
+        listbox.add (tags_row);
+        listbox.add (saved_searches_row);
 
         var scrolledwindow = new Gtk.ScrolledWindow (null, null) {
             expand = true,
@@ -90,13 +107,14 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
         };
         scrolledwindow.add (listbox);
 
-        bookmark_tag_filter_buttonbox = new Gtk.ButtonBox (Gtk.Orientation.VERTICAL);
+        sidebar_menu_buttonbox = new Gtk.ButtonBox (Gtk.Orientation.VERTICAL);
 
         var add_tasklist_popover = new Gtk.Popover (null);
-        add_tasklist_popover.add (bookmark_tag_filter_buttonbox);
+        add_tasklist_popover.add (sidebar_menu_buttonbox);
 
-        var bookmark_tag_filter_button = new Gtk.MenuButton () {
-            label = ("Bookmark Tag Filter…"),
+        /*
+        var sidebar_menu_button = new Gtk.MenuButton () {
+            label = _("Add Chart"),
             tooltip_text = _("Not implemented yet"),
             image = new Gtk.Image.from_icon_name ("list-add-symbolic", Gtk.IconSize.SMALL_TOOLBAR),
             always_show_image = true,
@@ -104,17 +122,18 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
             sensitive = false
         };
 
-        var sidebar_actionbar = new Gtk.ActionBar ();
-        sidebar_actionbar.add (bookmark_tag_filter_button);
+        sidebar_actionbar = new Gtk.ActionBar ();
+        sidebar_actionbar.add (sidebar_menu_button);
 
         unowned Gtk.StyleContext sidebar_actionbar_style_context = sidebar_actionbar.get_style_context ();
         sidebar_actionbar_style_context.add_class (Gtk.STYLE_CLASS_FLAT);
+        */
 
         var sidebar = new Gtk.Grid ();
         sidebar.get_style_context ().add_class (Gtk.STYLE_CLASS_SIDEBAR);
         sidebar.attach (sidebar_header, 0, 0);
         sidebar.attach (scrolledwindow, 0, 1);
-        sidebar.attach (sidebar_actionbar, 0, 2);
+        // sidebar.attach (sidebar_actionbar, 0, 2);
 
         unowned Gtk.StyleContext sidebar_style_context = sidebar.get_style_context ();
         sidebar_style_context.add_class (Gtk.STYLE_CLASS_SIDEBAR);
@@ -123,13 +142,13 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
 
         log_entry = new Gtk.Entry () {
             hexpand = true,
-            placeholder_text = _("Add Log"),
+            placeholder_text = _("Start logging or type ? to search your Journal…"),
             tooltip_text = _("Not implemented yet"),
             valign = Gtk.Align.CENTER,
             sensitive = false
         };
 
-        var log_view_actionbar = new Gtk.ActionBar ();
+        log_view_actionbar = new Gtk.ActionBar ();
         log_view_actionbar.add (log_entry);
 
         unowned Gtk.StyleContext log_view_actionbar_style_context = log_view_actionbar.get_style_context ();
@@ -150,15 +169,16 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
     }
 
     private void on_updated_journal_logs (string tag_filter, LogModel[] filtered_logs) {
-        if (tag_filter != "") {
-            var tag_filter_button = new Journal.TagButton (tag_filter, filtered_logs.length);
-            tag_filter_grid.remove_column (0);
-            tag_filter_grid.attach (tag_filter_button, 0, 0);
-        } else {
-            tag_filter_grid.remove_column (0);
-            tag_filter_grid.attach (log_search_entry, 0, 0);
+        if (log_view_actionbar != null) {
+            log_view_actionbar.get_children ().foreach ( child => (log_view_actionbar.remove (child)));
+            if (tag_filter != "") {
+                tag_filter_button = new Journal.TagButton (tag_filter, filtered_logs.length);
+                log_view_actionbar.add (tag_filter_button);
+            } else {
+                log_view_actionbar.add (log_entry);
+            }
+            log_view_actionbar.show_all ();
         }
-        tag_filter_grid.show_all ();
     }
 
     public override bool configure_event (Gdk.EventConfigure event) {

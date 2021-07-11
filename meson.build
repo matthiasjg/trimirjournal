@@ -41,6 +41,8 @@ ui_files = [
     'src/Ui/LogRow.vala',
     'src/Ui/LogView.vala',
     'src/Ui/JournalRow.vala',
+    'src/Ui/TagsRow.vala',
+    'src/Ui/SavedSearchesRow.vala',
     'src/Ui/TagButton.vala',
     'src/Ui/MainWindow.vala'
 ]
