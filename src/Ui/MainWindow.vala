@@ -89,6 +89,9 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
         listbox = new Gtk.ListBox ();
 
         var journal_row = new Journal.JournalRow ();
+        listbox.add (journal_row);
+
+        /*
         var tags_row = new Journal.TagsRow () {
             sensitive = false,
             tooltip_text = _("Not implemented yet")
@@ -97,9 +100,9 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
             sensitive = false,
             tooltip_text = _("Not implemented yet")
         };
-        listbox.add (journal_row);
         listbox.add (tags_row);
         listbox.add (saved_searches_row);
+        */
 
         var scrolledwindow = new Gtk.ScrolledWindow (null, null) {
             expand = true,
