@@ -18,6 +18,7 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
 
     public const string ACTION_PREFIX = "win.";
     public const string ACTION_RESTORE = "action_restore";
+    public const string ACTION_BACKUP = "action_backup";
 
     public MainWindow (Gtk.Application application) {
         Object (
@@ -62,8 +63,12 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
         var restore_menuitem = new Gtk.MenuItem.with_label (_("Reset and Restore…"));
         restore_menuitem.action_name = ACTION_PREFIX + ACTION_RESTORE;
 
+        var backup_menuitem = new Gtk.MenuItem.with_label (_("Backup…"));
+        backup_menuitem.action_name = ACTION_PREFIX + ACTION_BACKUP;
+
         var menu = new Gtk.Menu ();
         menu.append (restore_menuitem);
+        menu.append (backup_menuitem);
         // menu.append (new Gtk.SeparatorMenuItem ());
         menu.show_all ();
 
