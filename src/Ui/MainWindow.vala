@@ -145,8 +145,9 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
             placeholder_text = _("Start logging or type ? to search your Journal…"),
             tooltip_text = _("Not implemented yet"),
             valign = Gtk.Align.CENTER,
-            sensitive = false
+            sensitive = false,
         };
+        log_entry.set_icon_from_icon_name (0, "edit-find-replace-symbolic");
 
         log_view_actionbar = new Gtk.ActionBar ();
         log_view_actionbar.add (log_entry);
