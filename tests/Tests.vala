@@ -30,6 +30,27 @@ void add_log_dao_tests () {
 
         assert (log_inserted.id == log_selected.id);
     });
+
+    Test.add_func ("/LogDao/update_entity", () => {
+        var json_file = "%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON);
+        debug ("json_file: %s", json_file);
+
+        Journal.LogReader log_reader = Journal.LogReader.shared_instance ();
+        Journal.LogModel[] logs_read = log_reader.load_journal (json_file);
+        var log_read = logs_read[0];
+
+        Journal.LogDao log_dao = new Journal.LogDao (SQL_DB_FILE_NAME, true);
+        Journal.LogModel log_inserted = log_dao.insert_entity (log_read);
+        debug ("log_inserted: %s", log_inserted.to_string ());
+        var log_to_update = log_inserted;
+        string log_update_txt = "I changed my mind #yolo";
+        log_to_update.log = log_update_txt;
+
+        Journal.LogModel log_updated = log_dao.update_entity (log_to_update);
+        debug ("log_updated: %s", log_updated.to_string ());
+
+        assert (log_updated.log == log_update_txt);
+    });
 }
 
 
