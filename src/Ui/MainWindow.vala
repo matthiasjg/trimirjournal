@@ -17,7 +17,7 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
     private Journal.Controller _controller;
 
     public const string ACTION_PREFIX = "win.";
-    public const string ACTION_IMPORT = "action_import";
+    public const string ACTION_RESTORE = "action_restore";
 
     public MainWindow (Gtk.Application application) {
         Object (
@@ -59,11 +59,11 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
         _controller = Journal.Controller.shared_instance ();
         _controller.updated_journal_logs.connect (on_updated_journal_logs);
 
-        var import_menuitem = new Gtk.MenuItem.with_label (_("Import to Journal…"));
-        import_menuitem.action_name = ACTION_PREFIX + ACTION_IMPORT;
+        var restore_menuitem = new Gtk.MenuItem.with_label (_("Reset and Restore…"));
+        restore_menuitem.action_name = ACTION_PREFIX + ACTION_RESTORE;
 
         var menu = new Gtk.Menu ();
-        menu.append (import_menuitem);
+        menu.append (restore_menuitem);
         // menu.append (new Gtk.SeparatorMenuItem ());
         menu.show_all ();
 
