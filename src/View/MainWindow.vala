@@ -16,10 +16,6 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
 
     private Journal.Controller _controller;
 
-    public const string ACTION_PREFIX = "win.";
-    public const string ACTION_RESTORE = "action_restore";
-    public const string ACTION_BACKUP = "action_backup";
-
     public MainWindow (Gtk.Application application) {
         Object (
             application: application,
@@ -61,10 +57,14 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
         _controller.updated_journal_logs.connect (on_updated_journal_logs);
 
         var restore_menuitem = new Gtk.MenuItem.with_label (_("Reset and Restore…"));
-        restore_menuitem.action_name = ACTION_PREFIX + ACTION_RESTORE;
+        restore_menuitem.activate.connect (() => {
+            debug ("Not implemented yet.");
+        });
 
         var backup_menuitem = new Gtk.MenuItem.with_label (_("Backup…"));
-        backup_menuitem.action_name = ACTION_PREFIX + ACTION_BACKUP;
+        backup_menuitem.activate.connect (() => {
+            _controller.export_journal ();
+        });
 
         var menu = new Gtk.Menu ();
         menu.append (restore_menuitem);

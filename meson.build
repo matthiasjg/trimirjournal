@@ -37,14 +37,14 @@ dao_files = [
     'src/Dao/LogDao.vala'
 ]
 
-ui_files = [
-    'src/Ui/LogRow.vala',
-    'src/Ui/LogView.vala',
-    'src/Ui/JournalRow.vala',
-    'src/Ui/TagsRow.vala',
-    'src/Ui/SavedSearchesRow.vala',
-    'src/Ui/TagButton.vala',
-    'src/Ui/MainWindow.vala'
+view_files = [
+    'src/View/LogRow.vala',
+    'src/View/LogView.vala',
+    'src/View/JournalRow.vala',
+    'src/View/TagsRow.vala',
+    'src/View/SavedSearchesRow.vala',
+    'src/View/TagButton.vala',
+    'src/View/MainWindow.vala'
 ]
 
 app_files = [
@@ -58,7 +58,7 @@ executable(
     utils_files,
     model_files,
     dao_files,
-    ui_files,
+    view_files,
     app_files,
     dependencies: deps,
     install: true
