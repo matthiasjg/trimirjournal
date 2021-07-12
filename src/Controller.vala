@@ -49,7 +49,7 @@ class Journal.Controller : Object {
         json_filter.set_filter_name (_("JSON (*.json)"));
 
         var file_chooser = new Gtk.FileChooserNative (
-            _("Export Journal"),
+            _("Backup Journal"),
             null,
             Gtk.FileChooserAction.SAVE,
             _("Save"),
