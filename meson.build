@@ -41,10 +41,12 @@ view_files = [
     'src/View/LogRow.vala',
     'src/View/LogView.vala',
     'src/View/JournalRow.vala',
+    'src/View/WelcomeRow.vala',
     'src/View/TagsRow.vala',
     'src/View/SavedSearchesRow.vala',
     'src/View/TagButton.vala',
-    'src/View/MainWindow.vala'
+    'src/View/MainWindow.vala',
+    'src/View/WelcomeView.vala'
 ]
 
 app_files = [

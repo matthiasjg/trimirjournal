@@ -8,13 +8,12 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
     private uint configure_id;
 
     private Gtk.Entry log_entry;
-    private Gtk.ListBox listbox;
-    private Gtk.ButtonBox sidebar_menu_buttonbox;
-    // private Gtk.ActionBar sidebar_actionbar;
     private Gtk.ActionBar log_view_actionbar;
-    private Journal.TagButton tag_filter_button;
 
     private Journal.Controller _controller;
+
+    private const string WELCOME_VIEW_UID = "welcome_view";
+    private const string JOURNAL_VIEW_UID = "journal_view";
 
     public MainWindow (Gtk.Application application) {
         Object (
@@ -77,24 +76,27 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
         menu_button.popup = menu;
         menu_button.valign = Gtk.Align.CENTER;
 
-        var log_view_header = new Hdy.HeaderBar () {
+        var main_header = new Hdy.HeaderBar () {
             show_close_button = true,
             has_subtitle = false,
             decoration_layout = ":maximize"
         };
-        log_view_header.pack_end (menu_button);
-        log_view_header.pack_end (mode_switch);
-        log_view_header.set_title (_("Trimir Journal"));
-        log_view_header.show_all ();
+        main_header.pack_end (menu_button);
+        main_header.pack_end (mode_switch);
+        main_header.set_title (_("Trimir Journal"));
+        main_header.show_all ();
 
-        unowned Gtk.StyleContext log_view_header_context = log_view_header.get_style_context ();
-        log_view_header_context.add_class ("default-decoration");
-        log_view_header_context.add_class (Gtk.STYLE_CLASS_FLAT);
+        unowned Gtk.StyleContext main_header_context = main_header.get_style_context ();
+        main_header_context.add_class ("default-decoration");
+        main_header_context.add_class (Gtk.STYLE_CLASS_FLAT);
 
-        listbox = new Gtk.ListBox ();
+        var sidebar_listbox = new Gtk.ListBox ();
 
+        var welcome_row = new Journal.WelcomeRow ();
         var journal_row = new Journal.JournalRow ();
-        listbox.add (journal_row);
+
+        sidebar_listbox.add (welcome_row);
+        sidebar_listbox.add (journal_row);
 
         /*
         var tags_row = new Journal.TagsRow () {
@@ -105,22 +107,22 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
             sensitive = false,
             tooltip_text = _("Not implemented yet")
         };
-        listbox.add (tags_row);
-        listbox.add (saved_searches_row);
+        sidebar_listbox.add (tags_row);
+        sidebar_listbox.add (saved_searches_row);
         */
 
         var scrolledwindow = new Gtk.ScrolledWindow (null, null) {
             expand = true,
             hscrollbar_policy = Gtk.PolicyType.NEVER
         };
-        scrolledwindow.add (listbox);
+        scrolledwindow.add (sidebar_listbox);
 
-        sidebar_menu_buttonbox = new Gtk.ButtonBox (Gtk.Orientation.VERTICAL);
+        /*
+        var sidebar_menu_buttonbox = new Gtk.ButtonBox (Gtk.Orientation.VERTICAL);
 
         var add_tasklist_popover = new Gtk.Popover (null);
         add_tasklist_popover.add (sidebar_menu_buttonbox);
 
-        /*
         var sidebar_menu_button = new Gtk.MenuButton () {
             label = _("Add Chart"),
             tooltip_text = _("Not implemented yet"),
@@ -130,7 +132,7 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
             sensitive = false
         };
 
-        sidebar_actionbar = new Gtk.ActionBar ();
+        var sidebar_actionbar = new Gtk.ActionBar ();
         sidebar_actionbar.add (sidebar_menu_button);
 
         unowned Gtk.StyleContext sidebar_actionbar_style_context = sidebar_actionbar.get_style_context ();
@@ -146,8 +148,6 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
         unowned Gtk.StyleContext sidebar_style_context = sidebar.get_style_context ();
         sidebar_style_context.add_class (Gtk.STYLE_CLASS_SIDEBAR);
 
-        Journal.LogView log_view = new Journal.LogView ();
-
         log_entry = new Gtk.Entry () {
             hexpand = true,
             placeholder_text = _("Start logging or type ? to search your Journal…"),
@@ -157,20 +157,46 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
         };
         log_entry.set_icon_from_icon_name (0, "edit-find-replace-symbolic");
 
+        var welcome_view = new Journal.WelcomeView ();
+
         log_view_actionbar = new Gtk.ActionBar ();
         log_view_actionbar.add (log_entry);
 
         unowned Gtk.StyleContext log_view_actionbar_style_context = log_view_actionbar.get_style_context ();
         log_view_actionbar_style_context.add_class (Gtk.STYLE_CLASS_FLAT);
 
+        var log_view = new Journal.LogView ();
+
         var log_view_grid = new Gtk.Grid ();
-        log_view_grid.attach (log_view_header, 0, 0);
         log_view_grid.attach (log_view, 0, 1);
         log_view_grid.attach (log_view_actionbar, 0, 2);
 
+        var main_view_stack = new Gtk.Stack ();
+        main_view_stack.add_named (welcome_view, WELCOME_VIEW_UID);
+        main_view_stack.add_named (log_view_grid, JOURNAL_VIEW_UID);
+
+        var main_view_grid = new Gtk.Grid ();
+        main_view_grid.attach (main_header, 0, 0);
+        main_view_grid.attach (main_view_stack, 0, 1);
+
         var paned = new Gtk.Paned (Gtk.Orientation.HORIZONTAL);
         paned.pack1 (sidebar, false, false);
-        paned.pack2 (log_view_grid, true, false);
+        paned.pack2 (main_view_grid, true, false);
+
+        sidebar_listbox.row_selected.connect ((row) => {
+            if (row != null) {
+                if (row is Journal.WelcomeRow) {
+                    main_view_stack.set_visible_child_name (WELCOME_VIEW_UID);
+                }
+                if (row is Journal.JournalRow) {
+                    main_view_stack.set_visible_child_name (JOURNAL_VIEW_UID);
+                }
+            }
+        });
+        var first_row = sidebar_listbox.get_row_at_index (0);
+        if (first_row != null) {
+            sidebar_listbox.select_row (first_row);
+        }
 
         add (paned);
 
@@ -181,7 +207,7 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
         if (log_view_actionbar != null) {
             log_view_actionbar.get_children ().foreach ( child => (log_view_actionbar.remove (child)));
             if (tag_filter != "") {
-                tag_filter_button = new Journal.TagButton (tag_filter, filtered_logs.length);
+                var tag_filter_button = new Journal.TagButton (tag_filter, filtered_logs.length);
                 log_view_actionbar.add (tag_filter_button);
             } else {
                 log_view_actionbar.add (log_entry);
