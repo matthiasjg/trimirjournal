@@ -6,8 +6,12 @@
 class Journal.Controller : Object {
     static Controller __instance;
 
-    private Journal.LogReader _log_reader;
     private Journal.LogModel[] ? _logs;
+
+    private Journal.LogDao _log_dao;
+
+    private Journal.LogReader _log_reader;
+    private Journal.LogWriter _log_writer;
 
     public signal void updated_journal_logs (string tag_filter, LogModel[] logs);
 
@@ -20,8 +24,10 @@ class Journal.Controller : Object {
 
     public void load_journal_logs (string tag_filter = "") {
         if (_logs == null) {
-            _log_reader = Journal.LogReader.shared_instance ();
-            _logs = _log_reader.load_journal ();
+            if (_log_dao == null) {
+                _log_dao = new Journal.LogDao ();
+            }
+            _logs = _log_dao.select_all_entities ();
         }
         debug ("Loaded Journal with %d logs", _logs.length);
 
@@ -39,24 +45,22 @@ class Journal.Controller : Object {
         updated_journal_logs (tag_filter, filtered_logs);
     }
 
-    public void export_journal () {
-
-        var json_file_name = "TrimirJournal_backup_%s.json".printf (
-            new DateTime.now_local ().format ("%Y-%m-%d")
-        );
+    private File ? choose_json_file (string label = "Choose JSON File", string json_file_name = "") {
         var json_filter = new Gtk.FileFilter ();
         json_filter.add_pattern ("*.json");
         json_filter.set_filter_name (_("JSON (*.json)"));
 
         var file_chooser = new Gtk.FileChooserNative (
-            _("Backup Journal"),
+            label,
             null,
             Gtk.FileChooserAction.SAVE,
             _("Save"),
             _("Cancel")
         );
-        file_chooser.do_overwrite_confirmation = true;
-        file_chooser.set_current_name (json_file_name);
+        if (json_file_name != "") {
+            file_chooser.do_overwrite_confirmation = true;
+            file_chooser.set_current_name (json_file_name);
+        }
         file_chooser.add_filter (json_filter);
         file_chooser.set_current_folder (Environment.get_home_dir ());
 
@@ -80,28 +84,49 @@ class Journal.Controller : Object {
 
         if (file != "") {
             var f = File.new_for_path (file);
+            return f;
+        }
 
-            string folder = f.get_parent ().get_uri ();
-            save_journal_export (f.get_basename (), folder);
+        return null;
+    }
+
+    public void ? import_journal () {
+        File ? file = choose_json_file ("Reset and Restore Journal");
+        if (file != null) {
+            if (_log_reader == null) {
+                _log_reader = Journal.LogReader.shared_instance ();
+            }
+            var logs = _log_reader.load_journal_from_json_file (file.get_path ());
+
+            if (_log_dao == null) {
+                _log_dao = new Journal.LogDao ();
+            }
+            for (uint i = 0; i < logs.length; i++) {
+                var log = (Journal.LogModel) logs[i];
+                Journal.LogModel log_inserted = _log_dao.insert_entity (log);
+                debug ("log_inserted: %s", log_inserted.to_string ());
+            }
+            debug ("Imported Journal with %d logs", logs.length);
+            updated_journal_logs ("", logs);
         }
     }
 
-    private bool save_journal_export (string json_file_name, string folder_uri) {
-        bool saved = false;
-        string to_save = "[]";
+    public void export_journal () {
+        var json_file_name = "TrimirJournal_backup_%s.json".printf (
+            new DateTime.now_local ().format ("%Y-%m-%d")
+        );
 
-        File dest = GLib.File.new_for_uri (folder_uri + "/" + json_file_name.replace ("/", "_"));
-        try {
-            var file_stream = dest.create (FileCreateFlags.NONE);
-            var data_stream = new DataOutputStream (file_stream);
-            data_stream.put_string (to_save);
-            saved = true;
-        }
-        catch (Error err) {
-            warning ("Could not save Journal export to file %s at %s: %s",
-                json_file_name, dest.get_path (), err.message);
-        }
+        File ? file = choose_json_file ("Backup Journal", json_file_name);
+        if (file != null) {
+            if (_log_dao == null) {
+                _log_dao = new Journal.LogDao ();
+            }
+            Journal.LogModel[] ? logs = _log_dao.select_all_entities ();
 
-        return saved;
+            if (_log_writer == null) {
+                _log_writer = Journal.LogWriter.shared_instance ();
+            }
+            _log_writer.write_journal_to_json_file (logs, file.get_path ());
+        }
     }
 }

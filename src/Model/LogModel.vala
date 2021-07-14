@@ -4,6 +4,9 @@
  */
 
 public class Journal.LogModel : Object {
+    private const string JSON_LOG = "log";
+    private const string JSON_CREATED_AT = "createdAt";
+
     public int id { get; public set; }
     public string created_at { get; public set; }
     public string log { get; public set; }
@@ -20,10 +23,22 @@ public class Journal.LogModel : Object {
         _created_at = created_at;
     }
 
-    public LogModel.fromJsonObject (Json.Object json) {
-        _log = json.get_string_member ("log");
-        _created_at = json.get_string_member ("createdAt");
+    public LogModel.from_json_object (Json.Object json) {
+        _log = json.get_string_member (JSON_LOG);
+        _created_at = json.get_string_member (JSON_CREATED_AT);
         _id = get_id_from_created_at (_created_at);
+    }
+
+    public string ? to_json_object () {
+        return """{
+            "%s": "%s",
+            "%s": "%s"
+        }""".printf (
+            JSON_LOG,
+            this.log,
+            JSON_CREATED_AT,
+            this.created_at
+        );
     }
 
     public string to_string () {

@@ -6,7 +6,7 @@ tests_conf = configure_file(input: 'Config.vala', output: 'Config.vala', configu
 
 tests_files = [
     join_paths(meson.build_root(), '@0@'.format(tests_conf)),
-    'LogDaoTests.vala'
+    'Tests.vala'
 ]
 
 tests = executable(

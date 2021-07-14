@@ -3,8 +3,6 @@
  * SPDX-FileCopyrightText: 2021 Matthias Joachim Geisler, openwebcraft <matthiasjg@openwebcraft.com>
  */
 
-public const string JOURNAL_FILE_PATH = "/home/matthias/Code/trimirjournal/tests/data/ZenJournal_backup.json";
-
 public class Journal.LogReader : Object {
     private static LogReader __instance;
 
@@ -16,7 +14,10 @@ public class Journal.LogReader : Object {
         return __instance;
     }
 
-    public Journal.LogModel[] ? load_journal (string journal_file_path = JOURNAL_FILE_PATH) {
+    public Journal.LogModel[] ? load_journal_from_json_file (string journal_file_path) {
+        if (journal_file_path == null || journal_file_path == "") {
+            return null;
+        }
         Journal.LogModel[] logs = null;
 
         Json.Parser parser = new Json.Parser ();
@@ -34,12 +35,12 @@ public class Journal.LogReader : Object {
 
             for (uint i = 0; i < array.get_length (); i++) {
                 var object = array.get_object_element (i);
-                var log = new LogModel.fromJsonObject (object);
+                var log = new LogModel.from_json_object (object);
                 debug (log.to_string ());
                 logs += log;
             }
         } catch (Error e) {
-            error ("Unable to parse '%s': %s\n", journal_file_path, e.message);
+            error ("Unable to parse Journal JSON file %s: %s\n", journal_file_path, e.message);
         }
 
         return logs;

@@ -25,7 +25,8 @@ deps = [
 
 utils_files = [
     'src/Utils/Utils.vala',
-    'src/Utils/LogReader.vala'
+    'src/Utils/LogReader.vala',
+    'src/Utils/LogWriter.vala'
 ]
 
 model_files = [

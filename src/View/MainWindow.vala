@@ -57,7 +57,7 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
 
         var restore_menuitem = new Gtk.MenuItem.with_label (_("Reset and Restore…"));
         restore_menuitem.activate.connect (() => {
-            debug ("Not implemented yet.");
+            _controller.import_journal ();
         });
 
         var backup_menuitem = new Gtk.MenuItem.with_label (_("Backup…"));
@@ -148,14 +148,41 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
         unowned Gtk.StyleContext sidebar_style_context = sidebar.get_style_context ();
         sidebar_style_context.add_class (Gtk.STYLE_CLASS_SIDEBAR);
 
+        Regex? search_regex = null;
+        try {
+            search_regex = new Regex ("^\\?*$");
+        } catch (Error e) {
+            critical (e.message);
+        }
+
         log_entry = new Gtk.Entry () {
             hexpand = true,
             placeholder_text = _("Start logging or type ? to search your Journal…"),
             tooltip_text = _("Not implemented yet"),
-            valign = Gtk.Align.CENTER,
-            sensitive = false,
+            valign = Gtk.Align.CENTER
         };
         log_entry.set_icon_from_icon_name (0, "edit-find-replace-symbolic");
+
+        log_entry.changed.connect (() => {
+            if (log_entry.text != null && log_entry.text.strip ().length > 0) {
+                var is_search = search_regex.match (log_entry.text);
+                if (is_search) {
+                    log_entry.set_icon_from_icon_name (0, "edit-find-symbolic");
+                } else {
+                    log_entry.set_icon_from_icon_name (0, "edit-symbolic");
+                }
+            }
+        });
+
+        log_entry.activate.connect (() => {
+            if (log_entry.text != null && log_entry.text.strip ().length > 0) {
+                debug ("log_entry: %s", log_entry.text);
+                var is_search = search_regex.match (log_entry.text);
+                if (is_search) {
+                } else {
+                }
+            }
+        });
 
         var welcome_view = new Journal.WelcomeView ();
 
