@@ -67,15 +67,15 @@
         if (!new_db && db_force_create) {
             try {
                 db_file.delete ();
-            } catch (Error e) {
-                print ("Error: %s", e.message);
+            } catch (Error err) {
+                print ("Error: %s", err.message);
             }
         }
         if (new_db) {
             try {
                 db_file.create (FileCreateFlags.PRIVATE);
-            } catch (Error e) {
-                critical ("Error: %s", e.message);
+            } catch (Error err) {
+                critical ("Error: %s", err.message);
             }
         }
 
@@ -87,8 +87,8 @@
                 Gda.ConnectionOptions.NONE);
             db_connection.open ();
             create_table (sql_table_name, sql_stmt_create_table);
-        } catch (Error e) {
-            error (e.message);
+        } catch (Error err) {
+            error (err.message);
         }
         return db_connection;
     }
@@ -107,8 +107,8 @@
             try {
                 var result = db_connection.execute_non_select_command (sql_stmt_create_table);
                 debug ("Table %s created: %s", sql_table_name, result.to_string ());
-            } catch (Error e) {
-                critical ("Could not CREATE TABLE %s", sql_table_name);
+            } catch (Error err) {
+                critical ("Could not CREATE TABLE %s: %s", sql_table_name, err.message);
             }
         }
     }

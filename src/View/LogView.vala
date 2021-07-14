@@ -112,8 +112,8 @@ public class Journal.LogView : Gtk.Grid {
 
                 match_info.next ();
             }
-        } catch (Error e) {
-            print ("Unable to format tags: %s\n", e.message);
+        } catch (Error err) {
+            print ("Unable to format tags: %s\n", err.message);
         }
         return buffer;
     }

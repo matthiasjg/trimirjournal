@@ -151,8 +151,8 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
         Regex? search_regex = null;
         try {
             search_regex = new Regex ("^\\?*$");
-        } catch (Error e) {
-            critical (e.message);
+        } catch (Error err) {
+            critical (err.message);
         }
 
         log_entry = new Gtk.Entry () {

@@ -5,6 +5,7 @@
 
  public class Journal.LogDao : Journal.BaseDao<Journal.LogModel> {
     private const string SQL_TABLE_NAME = "logs";
+
     private const string SQL_COLUMN_NAME_ID = "id";
     private const string SQL_COLUMN_NAME_CREATED_AT = "created_at";
     private const string SQL_COLUMN_NAME_LOG = "log";
@@ -34,10 +35,10 @@
     }
 
     private Journal.LogModel get_log_from_data_model (Gda.DataModelIter iter) {
-        Journal.LogModel log = new Journal.LogModel.with_id (
+        var log = new Journal.LogModel.with_id (
             iter.get_value_for_field (SQL_COLUMN_NAME_ID).get_int (),
-            iter.get_value_for_field (SQL_COLUMN_NAME_CREATED_AT).get_string (),
-            iter.get_value_for_field (SQL_COLUMN_NAME_LOG).get_string ()
+            iter.get_value_for_field (SQL_COLUMN_NAME_LOG).get_string (),
+            iter.get_value_for_field (SQL_COLUMN_NAME_CREATED_AT).get_string ()
         );
         return log;
     }
@@ -46,6 +47,8 @@
         var builder = new Gda.SqlBuilder (Gda.SqlStatementType.SELECT);
         builder.select_add_field ("*", null, null);
         builder.select_add_target (SQL_TABLE_NAME, null);
+        var order_column = builder.add_id (SQL_COLUMN_NAME_CREATED_AT);
+        builder.select_order_by (order_column, false, null);
 
         Journal.LogModel[] logs = null;
         try {
@@ -56,14 +59,14 @@
             debug ("Row count: %i", row_count);
             if (row_count > 0) {
                 var iter = data_model.create_iter ();
-                do {
+                while (iter.move_next ()) {
                     Journal.LogModel log = get_log_from_data_model (iter);
-                    logs+= log;
-                } while (iter.move_next ());
+                    logs += log;
+                }
                 debug ("Number of logs retrieved: %d", logs.length);
             }
-        } catch (Error e) {
-            critical ("Could not SELECT all logs: %s", e.message);
+        } catch (Error err) {
+            critical ("Could not SELECT all logs: %s", err.message);
         }
         return logs;
     }
@@ -91,8 +94,8 @@
                 iter.move_to_row (0);
                 log = get_log_from_data_model (iter);
             }
-        } catch (Error e) {
-            critical ("Could not SELECT log %i: %s", id, e.message);
+        } catch (Error err) {
+            critical ("Could not SELECT log %i: %s", id, err.message);
         }
         return log;
     }
@@ -115,8 +118,8 @@
             debug (stmt.to_sql_extended (db_connection, null, Gda.StatementSqlFlag.PARAMS_AS_VALUES, null));
             db_connection.statement_execute_non_select (stmt, null , out inserted_row);
             log.id = inserted_row.get_holder_value ("+0").get_int ();
-        } catch (Error e) {
-            critical ("Could not INSERT log '%s': %s", log.to_string (), e.message);
+        } catch (Error err) {
+            critical ("Could not INSERT log '%s': %s", log.to_string (), err.message);
         }
         return log;
     }
@@ -141,8 +144,8 @@
             Gda.Statement stmt = builder.get_statement ();
             debug (stmt.to_sql_extended (db_connection, null, Gda.StatementSqlFlag.PARAMS_AS_VALUES, null));
             db_connection.statement_execute_non_select (stmt, null , out updated_row);
-        } catch (Error e) {
-            critical ("Could not UPDATE log '%s': %s", log.to_string (), e.message);
+        } catch (Error err) {
+            critical ("Could not UPDATE log '%s': %s", log.to_string (), err.message);
         }
         return log;
     }
@@ -162,8 +165,8 @@
             debug (stmt.to_sql_extended (db_connection, null, Gda.StatementSqlFlag.PARAMS_AS_VALUES, null));
             db_connection.statement_execute_non_select (stmt, null , out deleted_row);
             return true;
-        } catch (Error e) {
-            critical ("Could not DELETE log %i: %s", id, e.message);
+        } catch (Error err) {
+            critical ("Could not DELETE log %i: %s", id, err.message);
         }
         return false;
     }

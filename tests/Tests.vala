@@ -30,7 +30,6 @@ void add_log_writer_tests () {
         debug ("json_file_path_read: %s", json_file_path_read);
         debug ("json_file_path_write: %s", json_file_path_write);
 
-
         Journal.LogReader log_reader = Journal.LogReader.shared_instance ();
         var logs_read = log_reader.load_journal_from_json_file (json_file_path_read);
 

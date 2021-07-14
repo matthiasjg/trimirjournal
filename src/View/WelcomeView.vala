@@ -25,11 +25,11 @@ public class Journal.WelcomeView : Gtk.Grid {
         welcome.activated.connect ((index) => {
             switch (index) {
                 case 0:
-                    _controller.export_journal ();
+                    _controller.import_journal ();
                     /* try {
                         AppInfo.launch_default_for_uri ("http://trimir.io", null);
-                    } catch (Error e) {
-                        warning (e.message);
+                    } catch (Error err) {
+                        warning (err.message);
                     } */
                     break;
 

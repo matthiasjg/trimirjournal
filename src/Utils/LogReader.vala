@@ -39,8 +39,8 @@ public class Journal.LogReader : Object {
                 debug (log.to_string ());
                 logs += log;
             }
-        } catch (Error e) {
-            error ("Unable to parse Journal JSON file %s: %s\n", journal_file_path, e.message);
+        } catch (Error err) {
+            error ("Unable to parse Journal JSON file %s: %s\n", journal_file_path, err.message);
         }
 
         return logs;

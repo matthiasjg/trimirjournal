@@ -23,12 +23,10 @@ class Journal.Controller : Object {
     }
 
     public void load_journal_logs (string tag_filter = "") {
-        if (_logs == null) {
-            if (_log_dao == null) {
-                _log_dao = new Journal.LogDao ();
-            }
-            _logs = _log_dao.select_all_entities ();
+        if (_log_dao == null) {
+            _log_dao = new Journal.LogDao ();
         }
+        _logs = _log_dao.select_all_entities ();
         debug ("Loaded Journal with %d logs", _logs.length);
 
         var filtered_logs = new Journal.LogModel[] {};
@@ -45,16 +43,22 @@ class Journal.Controller : Object {
         updated_journal_logs (tag_filter, filtered_logs);
     }
 
-    private File ? choose_json_file (string label = "Choose JSON File", string json_file_name = "") {
+    private File ? choose_json_file (
+        Gtk.FileChooserAction action,
+        string label = "Choose JSON File",
+        string json_file_name = ""
+    ) {
         var json_filter = new Gtk.FileFilter ();
         json_filter.add_pattern ("*.json");
         json_filter.set_filter_name (_("JSON (*.json)"));
 
+        var action_label = action == Gtk.FileChooserAction.SAVE ? _("Save") : _("Open");
+
         var file_chooser = new Gtk.FileChooserNative (
             label,
             null,
-            Gtk.FileChooserAction.SAVE,
-            _("Save"),
+            action,
+            action_label,
             _("Cancel")
         );
         if (json_file_name != "") {
@@ -90,8 +94,8 @@ class Journal.Controller : Object {
         return null;
     }
 
-    public void ? import_journal () {
-        File ? file = choose_json_file ("Reset and Restore Journal");
+    public void import_journal () {
+        File ? file = choose_json_file (Gtk.FileChooserAction.OPEN, "Reset and Restore Journal");
         if (file != null) {
             if (_log_reader == null) {
                 _log_reader = Journal.LogReader.shared_instance ();
@@ -116,7 +120,7 @@ class Journal.Controller : Object {
             new DateTime.now_local ().format ("%Y-%m-%d")
         );
 
-        File ? file = choose_json_file ("Backup Journal", json_file_name);
+        File ? file = choose_json_file (Gtk.FileChooserAction.SAVE, "Backup Journal", json_file_name);
         if (file != null) {
             if (_log_dao == null) {
                 _log_dao = new Journal.LogDao ();
