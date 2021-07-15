@@ -6,9 +6,9 @@
  public class Journal.LogDao : Journal.BaseDao<Journal.LogModel> {
     private const string SQL_TABLE_NAME = "logs";
 
-    private const string SQL_COLUMN_NAME_ID = "id";
-    private const string SQL_COLUMN_NAME_CREATED_AT = "created_at";
-    private const string SQL_COLUMN_NAME_LOG = "log";
+    public const string SQL_COLUMN_NAME_ID = "id";
+    public const string SQL_COLUMN_NAME_CREATED_AT = "created_at";
+    public const string SQL_COLUMN_NAME_LOG = "log";
 
     public LogDao (string db_file_name = DB_FILE_NAME, bool db_force_create = false ) {
         db_connection = init_db (
@@ -49,6 +49,43 @@
         builder.select_add_target (SQL_TABLE_NAME, null);
         var order_column = builder.add_id (SQL_COLUMN_NAME_CREATED_AT);
         builder.select_order_by (order_column, false, null);
+
+        Journal.LogModel[] logs = null;
+        try {
+            Gda.Statement stmt = builder.get_statement ();
+            debug (stmt.to_sql_extended (db_connection, null, Gda.StatementSqlFlag.PARAMS_AS_VALUES, null));
+            Gda.DataModel data_model = db_connection.statement_execute_select (stmt, null);
+            int row_count = data_model.get_n_rows ();
+            debug ("Row count: %i", row_count);
+            if (row_count > 0) {
+                var iter = data_model.create_iter ();
+                while (iter.move_next ()) {
+                    Journal.LogModel log = get_log_from_data_model (iter);
+                    logs += log;
+                }
+                debug ("Number of logs retrieved: %d", logs.length);
+            }
+        } catch (Error err) {
+            critical ("Could not SELECT all logs: %s", err.message);
+        }
+        return logs;
+    }
+
+    public override Journal.LogModel[] ? select_entities_where_column_like (
+        string column,
+        string like
+    ) requires (db_connection.is_opened ()) {
+        var builder = new Gda.SqlBuilder (Gda.SqlStatementType.SELECT);
+        builder.select_add_field ("*", null, null);
+        builder.select_add_target (SQL_TABLE_NAME, null);
+        var order_column = builder.add_id (SQL_COLUMN_NAME_CREATED_AT);
+        builder.select_order_by (order_column, false, null);
+        var column_field = builder.add_id (column);
+        var like_val = Value (typeof (string));
+        like_val.set_string (like);
+        var like_param = builder.add_expr_value (null, like_val);
+        var where_cond = builder.add_cond (Gda.SqlOperatorType.LIKE, column_field, like_param, 0);
+        builder.set_where (where_cond);
 
         Journal.LogModel[] logs = null;
         try {

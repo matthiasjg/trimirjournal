@@ -46,6 +46,28 @@ void add_log_writer_tests () {
     });
 }
 
+void add_journal_reset_and_restore_tests () {
+    Test.add_func ("/Journal/reset_and_restore", () => {
+        var json_file_path = "%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON);
+        debug ("json_file: %s", json_file_path);
+
+        Journal.LogReader log_reader = Journal.LogReader.shared_instance ();
+        var logs_read = log_reader.load_journal_from_json_file (json_file_path);
+
+        assert (logs_read != null && logs_read.length == 4);
+
+        Journal.LogDao log_dao = new Journal.LogDao (SQL_DB_FILE_NAME, true);
+        for (uint i = 0; i < logs_read.length; i++) {
+            var log = (Journal.LogModel) logs_read[i];
+            log_dao.insert_entity (log);
+        }
+
+        Journal.LogModel[] ? logs_selected = log_dao.select_all_entities ();
+        assert (logs_selected != null || logs_selected.length == logs_read.length);
+        assert (logs_selected[0].id == logs_read[0].id);
+    });
+}
+
 void add_log_dao_tests () {
     Test.add_func ("/LogDao/select_all_entities", () => {
         Journal.LogDao log_dao = new Journal.LogDao (SQL_DB_FILE_NAME, true);
@@ -109,10 +131,8 @@ void add_log_dao_tests () {
 
         assert (is_log_deleted == true);
     });
-}
 
-void add_journal_reset_and_restore_tests () {
-    Test.add_func ("/Journal/reset_and_restore", () => {
+    Test.add_func ("/LogDao/select_entities_where_column_like", () => {
         var json_file_path = "%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON);
         debug ("json_file: %s", json_file_path);
 
@@ -127,9 +147,11 @@ void add_journal_reset_and_restore_tests () {
             log_dao.insert_entity (log);
         }
 
-        Journal.LogModel[] ? logs_selected = log_dao.select_all_entities ();
-        assert (logs_selected != null || logs_selected.length == logs_read.length);
-        assert (logs_selected[0].id == logs_read[0].id);
+        Journal.LogModel[] ? logs_selected = log_dao.select_entities_where_column_like (
+            Journal.LogDao.SQL_COLUMN_NAME_LOG,
+            "%#c64%"
+        );
+        assert (logs_selected != null || logs_selected.length == 1);
     });
 }
 

@@ -10,6 +10,8 @@
 
     public abstract TModel[] ? select_all_entities ();
 
+    public abstract TModel[] ? select_entities_where_column_like (string column, string like);
+
     public abstract TModel ? select_entity (int id);
 
     public abstract TModel ? insert_entity (TModel t_model);
