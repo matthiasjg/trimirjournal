@@ -8,8 +8,8 @@ public class Journal.WelcomeView : Gtk.Grid {
 
     construct {
         var welcome = new Granite.Widgets.Welcome (
-            _("Trimir Journal"),
-            _("Journaling, Logging and Activity Tracking.")
+            _("Welcome to Trimir Journal"),
+            _("Your personal activity \"Tricorder\".")
         );
 
         welcome.append ("document-import", _("Reset and Restore Journal"),
