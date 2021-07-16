@@ -112,9 +112,9 @@ class Journal.Controller : Object {
             }
             var logs = _log_reader.load_journal_from_json_file (file.get_path ());
 
-            if (_log_dao == null) {
-                _log_dao = new Journal.LogDao ();
-            }
+            // force re-create db, i.e. reset
+            _log_dao = new Journal.LogDao (Journal.BaseDao.DB_FILE_NAME, true);
+
             for (uint i = 0; i < logs.length; i++) {
                 var log = (Journal.LogModel) logs[i];
                 Journal.LogModel log_inserted = _log_dao.insert_entity (log);

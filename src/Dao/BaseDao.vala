@@ -6,7 +6,7 @@
  public abstract class Journal.BaseDao<TModel> : Object {
     protected Gda.Connection db_connection;
 
-    protected const string DB_FILE_NAME = "io_trimir_journal_1_0_0";
+    public const string DB_FILE_NAME = "io_trimir_journal_1_0_0";
 
     public abstract TModel[] ? select_all_entities ();
 
