@@ -16,12 +16,12 @@ public class Journal.LogView : Gtk.Grid {
         scrolled_window = new Gtk.ScrolledWindow (null, null) {
             expand = true
         };
-        scrolled_window.size_allocate.connect (() => {
-            // autoscroll to bottom
+        // TODO autoscroll log list to bottom
+        /* scrolled_window.size_allocate.connect (() => {
             var scrolled_window_vadjustment = scrolled_window.get_vadjustment ();
             scrolled_window_vadjustment.set_value (
                 scrolled_window_vadjustment.get_upper () - scrolled_window_vadjustment.get_page_size ());
-        });
+        }); */
         log_list = new Gtk.ListBox () {
             selection_mode = Gtk.SelectionMode.NONE
         };
