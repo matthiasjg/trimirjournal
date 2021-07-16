@@ -16,19 +16,24 @@ public class Journal.LogView : Gtk.Grid {
         scrolled_window = new Gtk.ScrolledWindow (null, null) {
             expand = true
         };
-        // TODO autoscroll log list to bottom
-        /* scrolled_window.size_allocate.connect (() => {
-            var scrolled_window_vadjustment = scrolled_window.get_vadjustment ();
-            scrolled_window_vadjustment.set_value (
-                scrolled_window_vadjustment.get_upper () - scrolled_window_vadjustment.get_page_size ());
-        }); */
+
         log_list = new Gtk.ListBox () {
             selection_mode = Gtk.SelectionMode.NONE
         };
+
+        log_list.size_allocate.connect (() => {
+            // auto-scroll to bottom/ last added log
+            var scrolled_window_vadjustment = scrolled_window.get_vadjustment ();
+            scrolled_window_vadjustment.set_value (
+                scrolled_window_vadjustment.get_upper () - scrolled_window_vadjustment.get_page_size ());
+        });
+
         unowned Gtk.StyleContext log_list_style_context = log_list.get_style_context ();
         log_list_style_context.add_class (Gtk.STYLE_CLASS_BACKGROUND);
         log_list.set_filter_func (filter_function);
+
         scrolled_window.add (log_list);
+
         add (scrolled_window);
 
         _controller = Journal.Controller.shared_instance ();
@@ -53,7 +58,10 @@ public class Journal.LogView : Gtk.Grid {
         for (int i = logs.length - 1; i + 1 > 0; --i) {
             var log = logs[i].log;
             var created_at = logs[i].created_at;
-            var created_at_date_time = new DateTime.from_iso8601 (created_at, new TimeZone.utc ());
+            var created_at_date_time = new DateTime.from_iso8601 (
+                created_at,
+                new TimeZone.utc ()
+            );
             var relative_created_at = Granite.DateTime.get_relative_datetime (created_at_date_time);
             var str = "%s:  %s".printf (relative_created_at, log);
             debug (str);
@@ -74,7 +82,7 @@ public class Journal.LogView : Gtk.Grid {
                         tags += data_tag;
                     }
                 });
-            Journal.LogRow log_row = new Journal.LogRow (text_view, tags);
+            var log_row = new Journal.LogRow (text_view, tags);
             log_list.insert (log_row, -1);
         }
         log_list.show_all ();
