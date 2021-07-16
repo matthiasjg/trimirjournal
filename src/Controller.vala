@@ -13,7 +13,7 @@ class Journal.Controller : Object {
     private Journal.LogReader _log_reader;
     private Journal.LogWriter _log_writer;
 
-    public signal void updated_journal_logs (string tag_filter, LogModel[] logs);
+    public signal void updated_journal_logs (string log_filter, LogModel[] logs);
 
     public static Controller shared_instance () {
         if (__instance == null) {
@@ -22,21 +22,21 @@ class Journal.Controller : Object {
         return __instance;
     }
 
-    public void load_journal_logs (string tag_filter = "") {
+    public void load_journal_logs (string log_filter = "") {
         if (_log_dao == null) {
             _log_dao = new Journal.LogDao ();
         }
 
-        if (tag_filter == "") {
+        if (log_filter == "") {
             _logs = _log_dao.select_all_entities ();
         } else {
             _logs = _log_dao.select_entities_where_column_like (
                 Journal.LogDao.SQL_COLUMN_NAME_LOG,
-                tag_filter);
+                log_filter);
         }
-        debug ("Loaded %d Journal logs filtered for %s", _logs.length, tag_filter);
+        debug ("Loaded %d Journal logs filtered for %s", _logs.length, log_filter);
 
-        updated_journal_logs (tag_filter, _logs);
+        updated_journal_logs (log_filter, _logs);
     }
 
     private File ? choose_json_file (

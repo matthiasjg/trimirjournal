@@ -57,11 +57,17 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
 
         var restore_menuitem = new Gtk.MenuItem.with_label (_("Reset and Restore…"));
         restore_menuitem.activate.connect (() => {
+            if (_controller == null) {
+                _controller = Journal.Controller.shared_instance ();
+            }
             _controller.import_journal ();
         });
 
         var backup_menuitem = new Gtk.MenuItem.with_label (_("Backup…"));
         backup_menuitem.activate.connect (() => {
+            if (_controller == null) {
+                _controller = Journal.Controller.shared_instance ();
+            }
             _controller.export_journal ();
         });
 
@@ -150,7 +156,7 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
 
         Regex? search_regex = null;
         try {
-            search_regex = new Regex ("^\\?*$");
+            search_regex = new Regex ("^\\?.+$");
         } catch (Error err) {
             critical (err.message);
         }
@@ -175,10 +181,18 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
         });
 
         log_entry.activate.connect (() => {
-            if (log_entry.text != null && log_entry.text.strip ().length > 0) {
+            if (log_entry.text != null && log_entry.text.strip ().length > 1) {
                 debug ("log_entry: %s", log_entry.text);
                 var is_search = search_regex.match (log_entry.text);
                 if (is_search) {
+                    if (log_entry.text.strip ().length > 1) {
+                        var log_filter = log_entry.text.strip ().replace ("?", "");
+                        debug ("log_filter: %s", log_filter);
+                        if (_controller == null) {
+                            _controller = Journal.Controller.shared_instance ();
+                        }
+                        _controller.load_journal_logs (log_filter);
+                    }
                 } else {
                 }
             }

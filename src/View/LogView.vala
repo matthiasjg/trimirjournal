@@ -78,7 +78,7 @@ public class Journal.LogView : Gtk.Grid {
 
         if (event.type == Gdk.EventType.BUTTON_PRESS) {
             string tag_text = text_tag.get_data ("tag");
-            _controller.load_journal_logs (tag_text);
+            _controller.load_journal_logs ("#" + tag_text);
         }
         return true;
     }
