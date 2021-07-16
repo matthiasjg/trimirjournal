@@ -105,7 +105,7 @@ class Journal.Controller : Object {
     }
 
     public void import_journal () {
-        File ? file = choose_json_file (Gtk.FileChooserAction.OPEN, "Reset and Restore Journal");
+        File ? file = choose_json_file (Gtk.FileChooserAction.OPEN, _("Reset and Restore Journal"));
         if (file != null) {
             if (_log_reader == null) {
                 _log_reader = Journal.LogReader.shared_instance ();
@@ -130,7 +130,7 @@ class Journal.Controller : Object {
             new DateTime.now_local ().format ("%Y-%m-%d")
         );
 
-        File ? file = choose_json_file (Gtk.FileChooserAction.SAVE, "Backup Journal", json_file_name);
+        File ? file = choose_json_file (Gtk.FileChooserAction.SAVE, _("Backup Journal"), json_file_name);
         if (file != null) {
             if (_log_dao == null) {
                 _log_dao = new Journal.LogDao ();
