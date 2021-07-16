@@ -149,7 +149,7 @@ void add_log_dao_tests () {
 
         Journal.LogModel[] ? logs_selected = log_dao.select_entities_where_column_like (
             Journal.LogDao.SQL_COLUMN_NAME_LOG,
-            "%#c64%"
+            "#c64"
         );
         assert (logs_selected != null || logs_selected.length == 1);
     });

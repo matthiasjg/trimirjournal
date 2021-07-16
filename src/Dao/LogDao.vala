@@ -82,7 +82,7 @@
         builder.select_order_by (order_column, false, null);
         var column_field = builder.add_id (column);
         var like_val = Value (typeof (string));
-        like_val.set_string (like);
+        like_val.set_string ("%" + like + "%");
         var like_param = builder.add_expr_value (null, like_val);
         var where_cond = builder.add_cond (Gda.SqlOperatorType.LIKE, column_field, like_param, 0);
         builder.set_where (where_cond);
