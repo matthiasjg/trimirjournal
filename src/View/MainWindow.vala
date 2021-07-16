@@ -71,10 +71,22 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
             _controller.export_journal ();
         });
 
+        var about_menuitem = new Gtk.MenuItem.with_label (_("About")) {
+            sensitive = false
+        };
+        about_menuitem.activate.connect (() => {
+            if (_controller == null) {
+                _controller = Journal.Controller.shared_instance ();
+            }
+            // TODO about dialog
+            debug ("Not implemented yet");
+        });
+
         var menu = new Gtk.Menu ();
         menu.append (restore_menuitem);
         menu.append (backup_menuitem);
-        // menu.append (new Gtk.SeparatorMenuItem ());
+        menu.append (new Gtk.SeparatorMenuItem ());
+        menu.append (about_menuitem);
         menu.show_all ();
 
         var menu_button = new Gtk.MenuButton ();
