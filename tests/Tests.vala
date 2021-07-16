@@ -6,6 +6,25 @@
 const string SQL_DB_FILE_NAME = "io_trimir_journal_1_0_0_test";
 const string TEST_DATA_FILE_JSON = "ZenJournal_backup.json";
 
+void add_date_time_tests () {
+    Test.add_func ("/DateTime/iso8601_with_zero_hour_offset", () => {
+        /* "Zulu time" (UTC)
+        SimpleDateFormat format = new SimpleDateFormat(
+            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
+            format.setTimeZone(TimeZone.getTimeZone("UTC")); */
+        var date_time_now = new DateTime.now_utc ();
+        var date_time_now_utc = date_time_now.to_timezone (new TimeZone.utc ());
+        var date_time_now_utc_iso8601 = date_time_now_utc.format_iso8601 ();
+        var date_time_now_iso8601 = date_time_now.format_iso8601 ();
+        var date_time_now_iso8601_zulu = date_time_now.format ("%Y-%m-%dT%H:%M:%S.000Z");
+        debug ("date_time_now: %s", date_time_now.to_string () );
+        debug ("date_time_now_utc: %s", date_time_now_utc.to_string () );
+        debug ("date_time_now_utc_iso8601: %s", date_time_now_utc_iso8601.to_string () );
+        debug ("date_time_now_iso8601: %s", date_time_now_iso8601 );
+        debug ("date_time_now_iso8601_zulu: %s", date_time_now_iso8601_zulu );
+    });
+}
+
 void add_log_reader_tests () {
     Test.add_func ("/LogReader/load_journal_from_json_file", () => {
         var json_file_path = "%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON);
@@ -157,6 +176,7 @@ void add_log_dao_tests () {
 
 int main (string[] args) {
     Test.init (ref args);
+    add_date_time_tests ();
     add_log_reader_tests ();
     add_log_writer_tests ();
     add_log_dao_tests ();

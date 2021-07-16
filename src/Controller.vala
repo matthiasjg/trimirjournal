@@ -22,6 +22,20 @@ class Journal.Controller : Object {
         return __instance;
     }
 
+    public void add_journal_log_entry (string log_txt = "") {
+        if (log_txt == "") {
+            return;
+        }
+
+        if (_log_dao == null) {
+            _log_dao = new Journal.LogDao ();
+        }
+        var log = new Journal.LogModel (log_txt);
+        var log_inserted = _log_dao.insert_entity (log);
+        debug ("log_inserted: %s", log_inserted.to_string ());
+        load_journal_logs ();
+    }
+
     public void load_journal_logs (string log_filter = "") {
         if (_log_dao == null) {
             _log_dao = new Journal.LogDao ();

@@ -11,7 +11,15 @@ public class Journal.LogModel : Object {
     public string created_at { get; public set; }
     public string log { get; public set; }
 
-    public LogModel (string log, string created_at) {
+    public LogModel (string log) {
+        var date_time_utc = new DateTime.now_utc ();
+        var date_time_utc_iso8601_zulu = date_time_utc.format ("%Y-%m-%dT%H:%M:%S.000Z");
+        _log = log;
+        _created_at = date_time_utc_iso8601_zulu;
+        _id = get_id_from_created_at (created_at);
+    }
+
+    public LogModel.with_created_at (string log, string created_at) {
         _log = log;
         _created_at = created_at;
         _id = get_id_from_created_at (created_at);

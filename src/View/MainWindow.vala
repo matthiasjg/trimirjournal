@@ -185,16 +185,17 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
                 debug ("log_entry: %s", log_entry.text);
                 var is_search = search_regex.match (log_entry.text);
                 if (is_search) {
-                    if (log_entry.text.strip ().length > 1) {
-                        var log_filter = log_entry.text.strip ().replace ("?", "");
-                        debug ("log_filter: %s", log_filter);
-                        if (_controller == null) {
-                            _controller = Journal.Controller.shared_instance ();
-                        }
-                        _controller.load_journal_logs (log_filter);
+                    var log_filter = log_entry.text.strip ().replace ("?", "");
+                    debug ("log_filter: %s", log_filter);
+                    if (_controller == null) {
+                        _controller = Journal.Controller.shared_instance ();
                     }
+                    _controller.load_journal_logs (log_filter);
                 } else {
+                    var log_txt = log_entry.text.strip ();
+                    _controller.add_journal_log_entry (log_txt);
                 }
+                log_entry.text = "";
             }
         });
 

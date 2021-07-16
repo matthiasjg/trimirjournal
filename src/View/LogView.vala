@@ -4,6 +4,7 @@
  */
 
 public class Journal.LogView : Gtk.Grid {
+    private Gtk.ScrolledWindow scrolled_window;
     private Gtk.ListBox log_list;
     private string active_tag_filter;
 
@@ -12,9 +13,15 @@ public class Journal.LogView : Gtk.Grid {
     public LogView () {}
 
     construct {
-        var scrolled_window = new Gtk.ScrolledWindow (null, null) {
+        scrolled_window = new Gtk.ScrolledWindow (null, null) {
             expand = true
         };
+        scrolled_window.size_allocate.connect (() => {
+            // autoscroll to bottom
+            var scrolled_window_vadjustment = scrolled_window.get_vadjustment ();
+            scrolled_window_vadjustment.set_value (
+                scrolled_window_vadjustment.get_upper () - scrolled_window_vadjustment.get_page_size ());
+        });
         log_list = new Gtk.ListBox () {
             selection_mode = Gtk.SelectionMode.NONE
         };
@@ -46,7 +53,7 @@ public class Journal.LogView : Gtk.Grid {
         for (int i = logs.length - 1; i + 1 > 0; --i) {
             var log = logs[i].log;
             var created_at = logs[i].created_at;
-            var created_at_date_time = new DateTime.from_iso8601 (created_at, new TimeZone.local ());
+            var created_at_date_time = new DateTime.from_iso8601 (created_at, new TimeZone.utc ());
             var relative_created_at = Granite.DateTime.get_relative_datetime (created_at_date_time);
             var str = "%s:  %s".printf (relative_created_at, log);
             debug (str);
