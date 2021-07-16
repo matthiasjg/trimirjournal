@@ -196,6 +196,7 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
                     _controller.add_journal_log_entry (log_txt);
                 }
                 log_entry.text = "";
+                log_entry.set_icon_from_icon_name (0, "edit-find-replace-symbolic");
             }
         });
 
