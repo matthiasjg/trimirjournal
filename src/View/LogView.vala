@@ -30,7 +30,7 @@ public class Journal.LogView : Gtk.Grid {
 
         unowned Gtk.StyleContext log_list_style_context = log_list.get_style_context ();
         log_list_style_context.add_class (Gtk.STYLE_CLASS_BACKGROUND);
-        log_list.set_filter_func (filter_function);
+        //log_list.set_filter_func (filter_function);
 
         scrolled_window.add (log_list);
 
@@ -41,7 +41,7 @@ public class Journal.LogView : Gtk.Grid {
         _controller.load_journal_logs ();
     }
 
-    private bool filter_function (Gtk.ListBoxRow row) {
+    /* private bool filter_function (Gtk.ListBoxRow row) {
         if (active_tag_filter != null && active_tag_filter != "") {
             if (active_tag_filter in ((Journal.LogRow) row).tags) {
                 return true;
@@ -49,7 +49,7 @@ public class Journal.LogView : Gtk.Grid {
             return false;
         }
         return true;
-    }
+    } */
 
     private void on_updated_journal_logs (string tag_filter, LogModel[] logs) {
         active_tag_filter = tag_filter;
@@ -63,15 +63,15 @@ public class Journal.LogView : Gtk.Grid {
                 new TimeZone.utc ()
             );
             var relative_created_at = Granite.DateTime.get_relative_datetime (created_at_date_time);
-            var str = "%s:  %s".printf (relative_created_at, log);
-            debug (str);
+            var log_txt = "%s:  %s".printf (relative_created_at, log);
+            debug ("log_txt: %s", log_txt);
             Gtk.TextView text_view = new Gtk.TextView () {};
             text_view.editable = false;
             text_view.left_margin = text_view.right_margin = 6;
             text_view.monospace = true;
             text_view.pixels_above_lines = text_view.pixels_below_lines = 3;
             text_view.wrap_mode = Gtk.WrapMode.WORD_CHAR;
-            text_view.buffer.text = str;
+            text_view.buffer.text = log_txt;
             text_view.buffer = format_tags (text_view.buffer);
             string[] tags = {};
             text_view.buffer
@@ -85,6 +85,7 @@ public class Journal.LogView : Gtk.Grid {
             var log_row = new Journal.LogRow (text_view, tags);
             log_list.insert (log_row, -1);
         }
+        debug ("log_list child count: %i", (int) log_list.get_children ().length ());
         log_list.show_all ();
     }
 
