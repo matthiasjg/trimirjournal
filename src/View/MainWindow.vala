@@ -8,6 +8,8 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
     private uint configure_id;
 
     private Gtk.Entry log_entry;
+    private Gtk.SearchEntry search_entry;
+    private Hdy.HeaderBar main_header;
     private Gtk.ActionBar log_view_actionbar;
 
     private Journal.Controller _controller;
@@ -94,13 +96,38 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
         menu_button.popup = menu;
         menu_button.valign = Gtk.Align.CENTER;
 
-        var main_header = new Hdy.HeaderBar () {
+        search_entry = new Gtk.SearchEntry () {
+            placeholder_text = _("Search Journal"),
+            tooltip_text = _("Not implemented yet"),
+            valign = Gtk.Align.CENTER
+        };
+
+        search_entry.activate.connect (() => {
+            if (search_entry.text != null && search_entry.text.strip ().length > 0) {
+                debug ("search_entry: %s", search_entry.text);
+                var log_filter = search_entry.text.strip ();
+                debug ("log_filter: %s", log_filter);
+                if (_controller == null) {
+                    _controller = Journal.Controller.shared_instance ();
+                }
+                _controller.load_journal_logs (log_filter);
+            }
+        });
+
+        search_entry.changed.connect (() => {
+            if (search_entry.text == null || search_entry.text.strip ().length == 0) {
+                _controller.load_journal_logs ();
+            }
+        });
+
+        main_header = new Hdy.HeaderBar () {
             show_close_button = true,
             has_subtitle = false,
             decoration_layout = ":maximize"
         };
         main_header.pack_end (menu_button);
         main_header.pack_end (mode_switch);
+        main_header.pack_end (search_entry);
         main_header.set_title (_("Trimir Journal"));
         main_header.show_all ();
 
@@ -198,6 +225,7 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
                 var is_search = search_regex.match (log_entry.text);
                 if (is_search) {
                     var log_filter = log_entry.text.strip ().replace ("?", "");
+                    search_entry.text = log_filter;
                     debug ("log_filter: %s", log_filter);
                     if (_controller == null) {
                         _controller = Journal.Controller.shared_instance ();
@@ -258,17 +286,21 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
         Journal.Application.settings.bind ("pane-position", paned, "position", GLib.SettingsBindFlags.DEFAULT);
     }
 
-    private void on_updated_journal_logs (string tag_filter, LogModel[] filtered_logs) {
-        if (log_view_actionbar != null) {
-            log_view_actionbar.get_children ().foreach ( child => (log_view_actionbar.remove (child)));
-            if (tag_filter != "") {
-                var tag_filter_button = new Journal.TagButton (tag_filter, filtered_logs.length);
-                log_view_actionbar.add (tag_filter_button);
-            } else {
-                log_view_actionbar.add (log_entry);
-            }
-            log_view_actionbar.show_all ();
+    private void on_updated_journal_logs (string log_filter, bool is_tag_filter, LogModel[] filtered_logs) {
+        debug ("on_updated_journal_logs: %s %s", log_filter, is_tag_filter.to_string ());
+        if (is_tag_filter && log_filter != null && log_filter != "") {
+            // add tag btn to header bar
+            var tag_filter_button = new Journal.TagButton (log_filter, filtered_logs.length);
+            main_header.pack_end (tag_filter_button);
+        } else {
+            // remove tag btn from header bar, if any
+            main_header.get_children ().foreach ( child => {
+                if (child.get_type () == typeof (Journal.TagButton)) {
+                    main_header.remove (child);
+                }
+            });
         }
+        main_header.show_all ();
     }
 
     public override bool configure_event (Gdk.EventConfigure event) {

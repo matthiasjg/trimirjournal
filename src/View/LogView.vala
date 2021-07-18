@@ -6,6 +6,7 @@
 public class Journal.LogView : Gtk.Grid {
     private Gtk.ScrolledWindow scrolled_window;
     private Gtk.ListBox log_list;
+    private bool is_tag_filter_active;
     private string active_tag_filter;
 
     private Journal.Controller _controller;
@@ -42,7 +43,7 @@ public class Journal.LogView : Gtk.Grid {
     }
 
     /* private bool filter_function (Gtk.ListBoxRow row) {
-        if (active_tag_filter != null && active_tag_filter != "") {
+        if (is_tag_filter_active && active_tag_filter != null && active_tag_filter != "" ) {
             if (active_tag_filter in ((Journal.LogRow) row).tags) {
                 return true;
             }
@@ -51,8 +52,9 @@ public class Journal.LogView : Gtk.Grid {
         return true;
     } */
 
-    private void on_updated_journal_logs (string tag_filter, LogModel[] logs) {
-        active_tag_filter = tag_filter;
+    private void on_updated_journal_logs (string log_filter, bool is_tag_filter, LogModel[] logs) {
+        is_tag_filter_active = is_tag_filter;
+        active_tag_filter = log_filter;
         log_list.foreach ((log) => log_list.remove (log));
 
         for (int i = logs.length - 1; i + 1 > 0; --i) {
@@ -85,7 +87,6 @@ public class Journal.LogView : Gtk.Grid {
             var log_row = new Journal.LogRow (text_view, tags);
             log_list.insert (log_row, -1);
         }
-        debug ("log_list child count: %i", (int) log_list.get_children ().length ());
         log_list.show_all ();
     }
 

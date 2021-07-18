@@ -13,7 +13,7 @@ class Journal.Controller : Object {
     private Journal.LogReader _log_reader;
     private Journal.LogWriter _log_writer;
 
-    public signal void updated_journal_logs (string log_filter, LogModel[] logs);
+    public signal void updated_journal_logs (string log_filter, bool is_tag_filter, LogModel[] logs);
 
     public static Controller shared_instance () {
         if (__instance == null) {
@@ -50,7 +50,15 @@ class Journal.Controller : Object {
         }
         debug ("Loaded %d Journal logs filtered for %s", _logs.length, log_filter);
 
-        updated_journal_logs (log_filter, _logs);
+        Regex? tag_regex = null;
+        try {
+            tag_regex = new Regex ("^#\\w+$");
+        } catch (Error err) {
+            critical (err.message);
+        }
+        var is_tag_filter = tag_regex.match (log_filter);
+
+        updated_journal_logs (log_filter, is_tag_filter, _logs);
     }
 
     private File ? choose_json_file (
@@ -121,7 +129,7 @@ class Journal.Controller : Object {
                 debug ("log_inserted: %s", log_inserted.to_string ());
             }
             debug ("Imported Journal with %d logs", logs.length);
-            updated_journal_logs ("", logs);
+            updated_journal_logs ("", false, logs);
         }
     }
 
