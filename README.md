@@ -124,6 +124,8 @@ gsettings set org.gtk.Settings.Debug enable-inspector-keybinding true
 
 [live-chart](https://github.com/lcallarec/live-chart)
 
+[vala: Serializing object property with Json.gobject_serialize?](https://stackoverflow.com/questions/43344017/vala-serializing-object-property-with-json-gobject-serialize/58461239)
+
 ## Flatpak Resources
 
 - https://docs.flatpak.org/en/latest/sandbox-permissions.html
