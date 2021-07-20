@@ -25,6 +25,32 @@ void add_date_time_tests () {
     });
 }
 
+void add_json_serialization_tests () {
+    Test.add_func ("/JSON/serialize", () => {
+        var json_file_path = "%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON);
+        debug ("json_file: %s", json_file_path);
+
+        Journal.LogReader log_reader = Journal.LogReader.shared_instance ();
+        var logs = log_reader.load_journal_from_json_file (json_file_path);
+        var log = logs[0];
+
+        Json.Builder builder = new Json.Builder ();
+        builder.begin_object ();
+        builder.set_member_name ("log");
+        builder.add_string_value (log.log);
+        builder.set_member_name ("createdAt");
+        builder.add_string_value (log.created_at);
+        builder.end_object ();
+
+        // Json.Node root = Json.gobject_serialize (log);
+        Json.Node root = builder.get_root ();
+
+        Json.Generator generator = new Json.Generator ();
+        generator.set_root (root);
+        debug ("json, %s", generator.to_data (null));
+    });
+}
+
 void add_log_reader_tests () {
     Test.add_func ("/LogReader/load_journal_from_json_file", () => {
         var json_file_path = "%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON);
@@ -177,6 +203,7 @@ void add_log_dao_tests () {
 int main (string[] args) {
     Test.init (ref args);
     add_date_time_tests ();
+    add_json_serialization_tests ();
     add_log_reader_tests ();
     add_log_writer_tests ();
     add_log_dao_tests ();

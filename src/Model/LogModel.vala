@@ -38,15 +38,17 @@ public class Journal.LogModel : Object {
     }
 
     public string ? to_json_object () {
-        return """{
-            "%s": "%s",
-            "%s": "%s"
-        }""".printf (
-            JSON_LOG,
-            this.log,
-            JSON_CREATED_AT,
-            this.created_at
-        );
+        Json.Builder builder = new Json.Builder ();
+        builder.begin_object ();
+        builder.set_member_name (JSON_LOG);
+        builder.add_string_value (this.log);
+        builder.set_member_name (JSON_CREATED_AT);
+        builder.add_string_value (this.created_at);
+        builder.end_object ();
+
+        Json.Generator generator = new Json.Generator ();
+        generator.set_root (builder.get_root ());
+        return generator.to_data (null);
     }
 
     public string to_string () {
