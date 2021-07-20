@@ -15,6 +15,10 @@ You'll need the following dependencies:
 * meson
 * valac
 
+Subprojects as Git submodules in `subprojects/` directory:
+
+* [Live Chart](https://github.com/lcallarec/live-chart) a real-time charting library for GTK3 and Vala, based on Cairo.
+
 Run `meson build` to configure the build environment. Change to the build directory and run `ninja` to build
 
 ```bash
