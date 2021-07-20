@@ -18,7 +18,7 @@ You'll need the following dependencies:
 
 You'll also need to init and update these Git submodules with required subprojects (in `subprojects/` directory):
 
-* [Live Chart](https://github.com/lcallarec/live-chart) a real-time charting library for GTK3 and Vala, based on Cairo.
+* [Live Chart](https://github.com/lcallarec/live-chart) a real-time charting library for GTK3 and Vala, based on [Cairo](https://cairographics.org/).
 
 ```bash
 git submodule init
@@ -136,6 +136,7 @@ gsettings set org.gtk.Settings.Debug enable-inspector-keybinding true
 
 [vala: Serializing object property with Json.gobject_serialize?](https://stackoverflow.com/questions/43344017/vala-serializing-object-property-with-json-gobject-serialize/58461239)
 
+[Self-contained, plain Go implementation of calendar heatmap inspired by GitHub contribution activity.](https://github.com/nikolaydubina/calendarheatmap)
 ## Flatpak Resources
 
 - https://docs.flatpak.org/en/latest/sandbox-permissions.html

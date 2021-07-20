@@ -13,7 +13,7 @@ all:
 	fresh yolo
 
 yolo: 
-	io.elementary.vala-lint \
+	io.elementary.vala-lint ./src ./tests \
 		&& cd build \
 		&& ninja \
 		&& ninja install \
