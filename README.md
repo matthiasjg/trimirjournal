@@ -3,6 +3,7 @@
 ## Building and Installation
 
 You'll need the following dependencies:
+
 * libxml2-dev
 * libgda-5.0-dev
 * glib-2.0
@@ -15,9 +16,14 @@ You'll need the following dependencies:
 * meson
 * valac
 
-Subprojects as Git submodules in `subprojects/` directory:
+You'll also need to init and update these Git submodules with required subprojects (in `subprojects/` directory):
 
 * [Live Chart](https://github.com/lcallarec/live-chart) a real-time charting library for GTK3 and Vala, based on Cairo.
+
+```bash
+git submodule init
+git submodule update
+```
 
 Run `meson build` to configure the build environment. Change to the build directory and run `ninja` to build
 
