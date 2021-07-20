@@ -21,7 +21,7 @@ yolo:
 		; cd -
 
 test: 
-	io.elementary.vala-lint \
+	io.elementary.vala-lint ./src ./tests \
 		&& cd build \
 		&& ninja test \
 		; cd -

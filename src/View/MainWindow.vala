@@ -237,10 +237,12 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
         log_view_actionbar_style_context.add_class (Gtk.STYLE_CLASS_FLAT);
 
         var log_view = new Journal.LogView ();
+        var log_chart_view = new Journal.LogChartView ();
 
         var log_view_grid = new Gtk.Grid ();
         log_view_grid.attach (log_view, 0, 1);
         log_view_grid.attach (log_view_actionbar, 0, 2);
+        log_view_grid.attach (log_chart_view, 0, 3);
 
         var main_view_stack = new Gtk.Stack ();
         main_view_stack.add_named (welcome_view, WELCOME_VIEW_UID);

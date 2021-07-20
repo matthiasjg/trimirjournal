@@ -58,14 +58,10 @@ public class Journal.LogView : Gtk.Grid {
         log_list.foreach ((log) => log_list.remove (log));
 
         for (int i = logs.length - 1; i + 1 > 0; --i) {
-            var log = logs[i].log;
-            var created_at = logs[i].created_at;
-            var created_at_date_time = new DateTime.from_iso8601 (
-                created_at,
-                new TimeZone.utc ()
-            );
-            var relative_created_at = Granite.DateTime.get_relative_datetime (created_at_date_time);
-            var log_txt = "%s:  %s".printf (relative_created_at, log);
+            var log = logs[i];
+            var log_log = log.log;
+            var log_relative_created_at = logs[i].get_relative_created_at ();
+            var log_txt = "%s:  %s".printf (log_relative_created_at, log_log);
             debug ("log_txt: %s", log_txt);
             Gtk.TextView text_view = new Gtk.TextView () {};
             text_view.editable = false;

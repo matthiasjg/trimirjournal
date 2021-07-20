@@ -5,6 +5,7 @@
 
 const string SQL_DB_FILE_NAME = "io_trimir_journal_1_0_0_test";
 const string TEST_DATA_FILE_JSON = "ZenJournal_backup.json";
+const int TEST_DATA_ARRAY_COUNT = 5;
 
 void add_date_time_tests () {
     Test.add_func ("/DateTime/iso8601_with_zero_hour_offset", () => {
@@ -51,6 +52,27 @@ void add_json_serialization_tests () {
     });
 }
 
+void add_tag_unit_value_tests () {
+    Test.add_func ("/Regex/unit_value", () => {
+        var json_file_path = "%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON);
+        debug ("json_file: %s", json_file_path);
+
+        Journal.LogReader log_reader = Journal.LogReader.shared_instance ();
+        var logs = log_reader.load_journal_from_json_file (json_file_path);
+        var log = logs[0];
+
+        var tag = "#Weight";
+
+        Gee.HashMap<double?, string> value_unit_map =
+            Journal.Utils.get_value_with_unit_for_tag (log.log, tag);
+
+        assert (value_unit_map.entries.size == 1);
+        foreach (var entry in value_unit_map.entries) {
+            debug ("value_unit_map: %f %s", entry.key, entry.value);
+        }
+    });
+}
+
 void add_log_reader_tests () {
     Test.add_func ("/LogReader/load_journal_from_json_file", () => {
         var json_file_path = "%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON);
@@ -59,7 +81,7 @@ void add_log_reader_tests () {
         Journal.LogReader log_reader = Journal.LogReader.shared_instance ();
         var logs = log_reader.load_journal_from_json_file (json_file_path);
 
-        assert (logs != null && logs.length == 4);
+        assert (logs != null && logs.length == TEST_DATA_ARRAY_COUNT);
     });
 }
 
@@ -78,7 +100,7 @@ void add_log_writer_tests () {
         Journal.LogReader log_reader = Journal.LogReader.shared_instance ();
         var logs_read = log_reader.load_journal_from_json_file (json_file_path_read);
 
-        assert (logs_read != null && logs_read.length == 4);
+        assert (logs_read != null && logs_read.length == TEST_DATA_ARRAY_COUNT);
 
         Journal.LogWriter log_writer = Journal.LogWriter.shared_instance ();
         var is_logs_written = log_writer.write_journal_to_json_file (logs_read, json_file_path_write);
@@ -99,7 +121,7 @@ void add_journal_reset_and_restore_tests () {
         Journal.LogReader log_reader = Journal.LogReader.shared_instance ();
         var logs_read = log_reader.load_journal_from_json_file (json_file_path);
 
-        assert (logs_read != null && logs_read.length == 4);
+        assert (logs_read != null && logs_read.length == TEST_DATA_ARRAY_COUNT);
 
         Journal.LogDao log_dao = new Journal.LogDao (SQL_DB_FILE_NAME, true);
         for (uint i = 0; i < logs_read.length; i++) {
@@ -184,7 +206,7 @@ void add_log_dao_tests () {
         Journal.LogReader log_reader = Journal.LogReader.shared_instance ();
         var logs_read = log_reader.load_journal_from_json_file (json_file_path);
 
-        assert (logs_read != null && logs_read.length == 4);
+        assert (logs_read != null && logs_read.length == TEST_DATA_ARRAY_COUNT);
 
         Journal.LogDao log_dao = new Journal.LogDao (SQL_DB_FILE_NAME, true);
         for (uint i = 0; i < logs_read.length; i++) {
@@ -204,6 +226,7 @@ int main (string[] args) {
     Test.init (ref args);
     add_date_time_tests ();
     add_json_serialization_tests ();
+    add_tag_unit_value_tests ();
     add_log_reader_tests ();
     add_log_writer_tests ();
     add_log_dao_tests ();

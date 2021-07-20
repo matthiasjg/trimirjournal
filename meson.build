@@ -45,6 +45,7 @@ dao_files = [
 view_files = [
     'src/View/LogRow.vala',
     'src/View/LogView.vala',
+    'src/View/LogChartView.vala',
     'src/View/JournalRow.vala',
     'src/View/WelcomeRow.vala',
     'src/View/TagsRow.vala',

@@ -60,6 +60,14 @@ public class Journal.LogModel : Object {
         }
     }
 
+    public string get_relative_created_at () {
+        var created_at_date_time = new DateTime.from_iso8601 (
+            this.created_at,
+            new TimeZone.utc ()
+        );
+        return Granite.DateTime.get_relative_datetime (created_at_date_time);
+    }
+
     private int get_id_from_created_at (string created_at) {
         var created_at_date_time = new DateTime.from_iso8601 (created_at, new TimeZone.local ());
         return (int) created_at_date_time.to_unix ();
