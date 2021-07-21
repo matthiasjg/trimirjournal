@@ -34,7 +34,8 @@ utils_files = [
 ]
 
 model_files = [
-    'src/Model/LogModel.vala'
+    'src/Model/LogModel.vala',
+    'src/Model/TagMetricModel.vala'
 ]
 
 dao_files = [

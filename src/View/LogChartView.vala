@@ -31,23 +31,35 @@ public class Journal.LogChartView : Gtk.Box {
             critical (err.message);
         }
 
-        if (is_tag_filter && log_filter == "#Weight") {
+        if (is_tag_filter) {
             serie = new LiveChart.Static.StaticSerie (log_filter);
             chart = new LiveChart.Static.StaticChart ();
             chart.add_serie (serie);
-            chart.config.y_axis.unit = "kg";
             var categories = new Gee.ArrayList<string> ();
+            var unit = "";
+            var is_metric_valid = false;
             for (int i = logs.length - 1; i + 1 > 0; --i) {
                 var log = logs[i];
                 var relative_created_at = log.get_relative_created_at ();
-                categories.add (relative_created_at);
-                serie.add (relative_created_at, 5000);
+                var tag_metric = new Journal.TagMetricModel.from_log (log.log, log_filter);
+                if (tag_metric.value.is_normal ()) {
+                    if (unit == "" || unit == tag_metric.unit) {
+                        unit = tag_metric.unit;
+                    }
+                    categories.add (relative_created_at);
+                    serie.add (relative_created_at, tag_metric.value);
+                    is_metric_valid = true;
+                }
             }
-            chart.set_categories (categories);
 
-            pack_start (chart, true, true, 0);
+            if (is_metric_valid) {
+                chart.set_categories (categories);
+                chart.config.y_axis.unit = unit;
 
-            this.expand = true;
+                pack_start (chart, true, true, 0);
+
+                this.expand = true;
+            }
         } else {
             if (chart != null) {
                 remove (chart);

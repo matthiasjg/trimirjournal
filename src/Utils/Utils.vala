@@ -39,43 +39,4 @@ namespace Journal.Utils {
         string dir_path = Path.build_path (Path.DIR_SEPARATOR_S, data_dir, APP_NAME);
         return File.new_for_path (dir_path);
     }
-
-    public Gee.HashMap<double?, string> ? get_value_with_unit_for_tag (string log, string tag) {
-        Regex? value_unit_regex = null;
-        Regex? value_regex = null;
-        try {
-            value_unit_regex = new Regex ("%s\\s*(?P<value_unit>\\S+)".printf (tag));
-            value_regex = new Regex ("\\s*(?P<value>\\d+(\\.\\d+)?)");
-        } catch (Error err) {
-            critical (err.message);
-        }
-
-        MatchInfo info;
-        string value_unit = null;
-        string value = null;
-        string unit = null;
-        var result_map = new Gee.HashMap<double?, string> ();
-        if (value_unit_regex.match (log, 0, out info)) {
-            value_unit = info.fetch_named ("value_unit");
-            if (value_unit != null && value_unit != "") {
-                if (value_regex.match (value_unit, 0, out info)) {
-                    value = info.fetch_named ("value");
-                    if (value != null && value != "") {
-                        unit = value_unit.replace (value, "");
-                        if (unit != null && unit != "") {
-                            double d_value;
-                            if (double.try_parse (value, out d_value)) {
-                                result_map.set (d_value, unit);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        debug ("value_unit, value, unit: %s %s %s", value_unit, value, unit);
-        foreach (var entry in result_map.entries) {
-            debug ("result_map: %f %s", entry.key, entry.value);
-        }
-        return result_map;
-    }
 }

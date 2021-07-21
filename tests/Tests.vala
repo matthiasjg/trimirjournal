@@ -52,24 +52,25 @@ void add_json_serialization_tests () {
     });
 }
 
-void add_tag_unit_value_tests () {
-    Test.add_func ("/Regex/unit_value", () => {
+void add_tag_metric_tests () {
+    Test.add_func ("/TagMetricModel/from_log", () => {
         var json_file_path = "%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON);
         debug ("json_file: %s", json_file_path);
 
         Journal.LogReader log_reader = Journal.LogReader.shared_instance ();
         var logs = log_reader.load_journal_from_json_file (json_file_path);
-        var log = logs[0];
 
+        var log = logs[0].log; // "#Weight 71.2kg #BMI 23.5"
         var tag = "#Weight";
+        var value = "71.2";
+        var unit = "kg";
 
-        Gee.HashMap<double?, string> value_unit_map =
-            Journal.Utils.get_value_with_unit_for_tag (log.log, tag);
+        var tag_metric = new Journal.TagMetricModel.from_log (log, tag);
+        debug ("tag_metric: %s", tag_metric.to_string ());
 
-        assert (value_unit_map.entries.size == 1);
-        foreach (var entry in value_unit_map.entries) {
-            debug ("value_unit_map: %f %s", entry.key, entry.value);
-        }
+        assert (tag_metric != null);
+        assert (tag_metric.value == double.parse (value));
+        assert (tag_metric.unit == unit);
     });
 }
 
@@ -226,7 +227,7 @@ int main (string[] args) {
     Test.init (ref args);
     add_date_time_tests ();
     add_json_serialization_tests ();
-    add_tag_unit_value_tests ();
+    add_tag_metric_tests ();
     add_log_reader_tests ();
     add_log_writer_tests ();
     add_log_dao_tests ();
