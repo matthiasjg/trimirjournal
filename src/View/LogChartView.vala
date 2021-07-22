@@ -32,9 +32,20 @@ public class Journal.LogChartView : Gtk.Box {
         }
 
         if (is_tag_filter) {
+            // colors
+            Gdk.RGBA gdk_white = { 1.0, 1.0, 1.0, 1.0 };
+            Gdk.RGBA gdk_black = { 0.0, 0.0, 0.0, 1.0 };
+            var gtk_settings = Gtk.Settings.get_default ();
+            var bg_color = gtk_settings.gtk_application_prefer_dark_theme ? gdk_white : gdk_black;
+
             serie = new LiveChart.Static.StaticSerie (log_filter);
+            serie.line.color = Granite.contrasting_foreground_color (bg_color);
+
             chart = new LiveChart.Static.StaticChart ();
+            chart.background.color = bg_color;
+            chart.legend.visible = false;
             chart.add_serie (serie);
+
             var categories = new Gee.ArrayList<string> ();
             var unit = "";
             var is_metric_valid = false;
