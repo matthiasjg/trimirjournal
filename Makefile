@@ -31,3 +31,10 @@ i18n:
 		&& ninja io.trimir.journal-pot \
 		&& ninja io.trimir.journal-update-po \
 		; cd -
+
+flatpak-build:
+	flatpak-builder \
+		build io.trimir.journal.yml --user --install --force-clean
+
+flatpak-run: 
+	flatpak run io.trimir.journal

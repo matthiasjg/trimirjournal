@@ -11,6 +11,26 @@ finish-args:
   - '--system-talk-name=org.freedesktop.Accounts'
   - '--metadata=X-DConf=migrate-path=/io/trimir/journal/'
 modules:
+  - name: intltool
+    sources:
+      - type: archive
+        url: https://launchpad.net/intltool/trunk/0.51.0/+download/intltool-0.51.0.tar.gz
+        sha256: 67c74d94196b153b774ab9f89b2fa6c6ba79352407037c8c14d5aeb334e959cd
+
+  - name: libgda
+    config-opts:
+      - '--with-java=no'
+      - '--with-jni=no'
+      - '--with-oracle=no'
+      - '--with-help=no'
+      - '--with-ui=no'
+      - '--disable-tools'
+      - '--enable-vala'
+    sources:
+      - type: archive
+        url: https://download.gnome.org/sources/libgda/5.2/libgda-5.2.9.tar.xz
+        sha256: 59caed8ca72b1ac6437c9844f0677f8a296d52cfd1c0049116026abfb1d87d9b
+
   - name: trimirjournal
     buildsystem: meson
     sources:

@@ -68,12 +68,11 @@ cd ..
 dpkg-buildpackage
 ```
 
-## Flatbak build on Debian Buster
+## Flatbak build
 
 ```bash
-# flatpak remote-add --if-not-exists elementary https://flatpak.elementary.io/repo.flatpakrepo
-# flatpak install io.elementary.Platform
-# flatpak install io.elementary.Sdk
+# flatpak remote-add --if-not-exists --system appcenter https://flatpak.elementary.io/repo.flatpakrepo
+# flatpak install -y appcenter io.elementary.Platform io.elementary.Sdk
 flatpak-builder build  io.trimir.journal.yml --user --install --force-clean
 flatpak run io.trimir.journal
 ```
