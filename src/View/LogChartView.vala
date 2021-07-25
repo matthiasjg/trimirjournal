@@ -35,11 +35,13 @@ public class Journal.LogChartView : Gtk.Box {
             // colors
             Gdk.RGBA gdk_white = { 1.0, 1.0, 1.0, 1.0 };
             Gdk.RGBA gdk_black = { 0.0, 0.0, 0.0, 1.0 };
+            Gdk.RGBA gdk_blueberry_100 = Gdk.RGBA ();
+            gdk_blueberry_100.parse ("#8cd5ff");
             var gtk_settings = Gtk.Settings.get_default ();
             var bg_color = gtk_settings.gtk_application_prefer_dark_theme ? gdk_white : gdk_black;
 
             serie = new LiveChart.Static.StaticSerie (log_filter);
-            serie.line.color = Granite.contrasting_foreground_color (bg_color);
+            serie.line.color = gdk_blueberry_100; // Granite.contrasting_foreground_color (bg_color);
 
             chart = new LiveChart.Static.StaticChart ();
             chart.background.color = bg_color;
