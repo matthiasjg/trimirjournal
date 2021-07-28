@@ -143,3 +143,9 @@ gsettings set org.gtk.Settings.Debug enable-inspector-keybinding true
 ## elementary OS Resources
 
 [awesome-elementaryos](https://github.com/kleinrein/awesome-elementaryos)
+
+## General Resources
+
+Design, etc.
+
+[Designing an Icon for Your App](https://blogs.gnome.org/tbernard/2019/12/30/designing-an-icon-for-your-app/)
