@@ -26,6 +26,7 @@ jobs:
           cache-key: "flatpak-builder-${{ github.sha }}"
           
   lint:
+    name: Lint
     runs-on: ubuntu-latest
 
     steps:
