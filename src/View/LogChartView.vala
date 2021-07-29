@@ -32,20 +32,45 @@ public class Journal.LogChartView : Gtk.Box {
         }
 
         if (is_tag_filter) {
-            // colors
-            Gdk.RGBA gdk_white = { 1.0, 1.0, 1.0, 1.0 };
-            Gdk.RGBA gdk_black = { 0.0, 0.0, 0.0, 1.0 };
-            Gdk.RGBA gdk_blueberry_100 = Gdk.RGBA ();
-            gdk_blueberry_100.parse ("#8cd5ff");
-            var gtk_settings = Gtk.Settings.get_default ();
-            var bg_color = gtk_settings.gtk_application_prefer_dark_theme ? gdk_white : gdk_black;
+            // Gdk.RGBA gdk_background_color = { 122.0, 54.0, 177.0, 1.0 };
+            // Gdk.RGBA gdk_line_color = { 244.0, 233.0, 110.0, 1.0 };
+
+            var gdk_background_color = Gdk.RGBA ();
+            gdk_background_color.parse ("#7A36B1");
+
+            var gdk_line_color = Gdk.RGBA ();
+            gdk_line_color.parse ("#F4E96E");
+
+            var gdk_axis_color = Gdk.RGBA ();
+            gdk_axis_color.parse ("#F4E96E");
+
+            var gdk_labels_color = Gdk.RGBA ();
+            gdk_labels_color.parse ("#F4E96E");
+
+            // var gdk_legend_color = Gdk.RGBA ();
+            // gdk_legend_color.parse ("#F4E96E");
 
             serie = new LiveChart.Static.StaticSerie (log_filter);
-            serie.line.color = gdk_blueberry_100; // Granite.contrasting_foreground_color (bg_color);
+            serie.line.color = gdk_line_color;
 
             chart = new LiveChart.Static.StaticChart ();
-            chart.background.color = bg_color;
+            chart.background.color = gdk_background_color;
+            chart.background.visible = true;
+            chart.config.x_axis.visible = true;
+            chart.config.x_axis.labels.visible = false;
+            chart.config.x_axis.axis.color = gdk_line_color;
+            chart.config.x_axis.axis.width = 2;
+
+            chart.config.y_axis.labels.visible = true;
+            chart.config.y_axis.labels.font.color = gdk_labels_color;
+            chart.config.y_axis.lines.color = gdk_line_color;
+            chart.config.y_axis.lines.dash = LiveChart.Dash () {dashes = {1}, offset = 2};
+            chart.config.y_axis.axis.color = gdk_line_color;
+            chart.config.y_axis.axis.width = 2;
+
+            // chart.legend.main_color = gdk_legend_color;
             chart.legend.visible = false;
+
             chart.add_serie (serie);
 
             var categories = new Gee.ArrayList<string> ();
@@ -67,7 +92,6 @@ public class Journal.LogChartView : Gtk.Box {
 
             if (is_metric_valid) {
                 chart.set_categories (categories);
-                chart.config.x_axis.visible = false;
                 chart.config.y_axis.unit = unit;
 
                 pack_start (chart, true, true, 0);
