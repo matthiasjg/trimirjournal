@@ -54,6 +54,15 @@ public class Journal.LogChartView : Gtk.Box {
             serie.line.color = gdk_line_color;
 
             chart = new LiveChart.Static.StaticChart ();
+
+            /* chart.config.padding = LiveChart.Padding () {
+                smart = LiveChart.AutoPadding.NONE,
+                top = 0,
+                right = 0,
+                bottom = 0,
+                left = 0
+            }; */
+
             chart.background.color = gdk_background_color;
             chart.background.visible = true;
             chart.config.x_axis.visible = true;
@@ -78,19 +87,20 @@ public class Journal.LogChartView : Gtk.Box {
             var is_metric_valid = false;
             for (int i = logs.length - 1; i + 1 > 0; --i) {
                 var log = logs[i];
-                var relative_created_at = log.get_relative_created_at ();
+                // var relative_created_at = log.get_relative_created_at ();
+                // var created_at_formatted = log.get_created_at_datetime ().format ("%m.%d");
                 var tag_metric = new Journal.TagMetricModel.from_log (log.log, log_filter);
                 if (tag_metric.value.is_normal ()) {
                     if (unit == "" || unit == tag_metric.unit) {
                         unit = tag_metric.unit;
                     }
-                    categories.add (relative_created_at);
-                    serie.add (relative_created_at, tag_metric.value);
+                    categories.add (log.created_at);
+                    serie.add (log.created_at, tag_metric.value);
                     is_metric_valid = true;
                 }
             }
 
-            if (is_metric_valid) {
+            if (is_metric_valid && serie.get_values ().size > 1) {
                 chart.set_categories (categories);
                 chart.config.y_axis.unit = unit;
 

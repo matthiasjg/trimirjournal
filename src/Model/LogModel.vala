@@ -60,6 +60,14 @@ public class Journal.LogModel : Object {
         }
     }
 
+    public DateTime get_created_at_datetime () {
+        var created_at_date_time = new DateTime.from_iso8601 (
+            this.created_at,
+            new TimeZone.utc ()
+        );
+        return created_at_date_time;
+    }
+
     public string get_relative_created_at () {
         var created_at_date_time = new DateTime.from_iso8601 (
             this.created_at,
