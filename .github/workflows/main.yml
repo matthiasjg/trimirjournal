@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          submodules: true
       - name: Build
         uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v3
         with:
@@ -22,8 +24,8 @@ jobs:
           repository-url: https://flatpak.elementary.io/repo.flatpakrepo
           cache-key: "flatpak-builder-${{ github.sha }}"
           
-  valalint:
-    name: Lint
+  lint:
+    name: Vala-Lint
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
