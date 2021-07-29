@@ -149,6 +149,8 @@ gsettings set org.gtk.Settings.Debug enable-inspector-keybinding true
 
 [awesome-elementaryos](https://github.com/kleinrein/awesome-elementaryos)
 
+[elementary Brand, Colors](https://elementary.io/en/brand#color)
+
 [elementary OS color palette in .gpl format](https://github.com/Heiko-M/elementary-os-color-palette)
 
 ## General Resources
