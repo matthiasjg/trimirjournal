@@ -67,6 +67,7 @@ public class Journal.LogChartView : Gtk.Box {
 
             if (is_metric_valid) {
                 chart.set_categories (categories);
+                chart.config.x_axis.visible = false;
                 chart.config.y_axis.unit = unit;
 
                 pack_start (chart, true, true, 0);
