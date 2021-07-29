@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.trimir.journal\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-16 17:48+0200\n"
+"POT-Creation-Date: 2021-07-29 10:55+0200\n"
 "PO-Revision-Date: 2021-02-01 21:35+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: data/trimir-journal.desktop.in:3 data/trimir-journal.appdata.xml.in:6
+#: data/trimir-journal.desktop.in:3 data/trimir-journal.appdata.xml.in:7
 msgid "Trimir Journal"
 msgstr "Trimir Journal"
 
@@ -25,29 +25,67 @@ msgstr "Trimir Journal"
 msgid "Journaling App"
 msgstr "Journaling App"
 
-#: data/trimir-journal.desktop.in:5 data/trimir-journal.appdata.xml.in:7
+#: data/trimir-journal.desktop.in:5 data/trimir-journal.appdata.xml.in:8
 msgid "Journaling, Logging and Activity Tracking"
 msgstr "Journaling, Logging and Activity Tracking"
 
 #: data/trimir-journal.desktop.in:8
-msgid "accessories-text-editor"
-msgstr ""
+#, fuzzy
+msgid "io.trimir.journal"
+msgstr "Trimir Journal"
 
 #: data/trimir-journal.desktop.in:11
 msgid "Journal;Journaling;Logging;Activity Tracking;Sports Tracking"
 msgstr "Journal;Journaling;Logging;Activity Tracking;Sports Tracking"
 
-#: data/trimir-journal.appdata.xml.in:9
+#: data/trimir-journal.appdata.xml.in:10
+#, fuzzy
 msgid ""
-"Trimir Journal is designed and built to help record and in retrospect "
-"evaluate all of your experiences, thoughts and ideas as well as your "
-"(sports) activities."
+"Trimir Journal is a text diary to help log and in retrospect evaluate all of "
+"your experiences, thoughts and ideas as well as your (sports) activities."
 msgstr ""
 "Trimir Journal is designed and built to help record and in retrospect "
 "evaluate all of your experiences, thoughts and ideas as well as your "
 "(sports) activities."
 
-#: data/trimir-journal.appdata.xml.in:46
+#: data/trimir-journal.appdata.xml.in:13
+msgid "Features:"
+msgstr ""
+
+#: data/trimir-journal.appdata.xml.in:15
+msgid "Write journal log entries with emoij and hashtags (i.e. 😎️ #elementary)"
+msgstr ""
+
+#: data/trimir-journal.appdata.xml.in:16
+msgid "Filter journal entries by clicking on hashtag link"
+msgstr ""
+
+#: data/trimir-journal.appdata.xml.in:17
+msgid ""
+"Render line chart when filtering for \"metric tags\", i.e. a hashtag "
+"followed by a number with optional unit (e.g. \"#Trailrun 5km\")"
+msgstr ""
+
+#: data/trimir-journal.appdata.xml.in:18
+msgid "Search journal log entries"
+msgstr ""
+
+#: data/trimir-journal.appdata.xml.in:19
+msgid ""
+"Backup and restore journal to and from JSON file compatible with "
+"\"ZenJournal - Minimalist Diary\" (a 3rd party Android and iOS App; not "
+"affiliated)"
+msgstr ""
+
+#: data/trimir-journal.appdata.xml.in:36
+msgid "First release!"
+msgstr ""
+
+#: data/trimir-journal.appdata.xml.in:37
+msgid "Supports the dark style"
+msgstr ""
+
+#: data/trimir-journal.appdata.xml.in:74
 msgid "Matthias Joachim Geisler, openwebcraft"
 msgstr "Matthias Joachim Geisler, openwebcraft"
 

@@ -133,9 +133,14 @@ gsettings set org.gtk.Settings.Debug enable-inspector-keybinding true
 
 [live-chart](https://github.com/lcallarec/live-chart)
 
+[Caroline](https://github.com/dcharles525/Caroline)
+
+[GitHub Topic elementaryos w/ lagnuage vala](https://github.com/topics/elementaryos?l=vala)
+
 [vala: Serializing object property with Json.gobject_serialize?](https://stackoverflow.com/questions/43344017/vala-serializing-object-property-with-json-gobject-serialize/58461239)
 
 [Self-contained, plain Go implementation of calendar heatmap inspired by GitHub contribution activity.](https://github.com/nikolaydubina/calendarheatmap)
+
 ## Flatpak Resources
 
 - https://docs.flatpak.org/en/latest/sandbox-permissions.html
@@ -143,6 +148,8 @@ gsettings set org.gtk.Settings.Debug enable-inspector-keybinding true
 ## elementary OS Resources
 
 [awesome-elementaryos](https://github.com/kleinrein/awesome-elementaryos)
+
+[elementary OS color palette in .gpl format](https://github.com/Heiko-M/elementary-os-color-palette)
 
 ## General Resources
 
