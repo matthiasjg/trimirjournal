@@ -19,7 +19,7 @@ jobs:
         with:
           bundle: io.trimir.journal.flatpak
           manifest-path: io.trimir.journal.yml
-          # run-tests: true
+          run-tests: true
           repository-name: appcenter
           repository-url: https://flatpak.elementary.io/repo.flatpakrepo
           cache-key: "flatpak-builder-${{ github.sha }}"
