@@ -3,13 +3,13 @@
  * SPDX-FileCopyrightText: 2021 Matthias Joachim Geisler, openwebcraft <matthiasjg@openwebcraft.com>
  */
 
-#tag-button grid {
+tag-button grid {
     border-radius: 6px;
     background: @accent_color_100;
     border-color: @accent_color_300;
 }
 
-#tag-button button {
+tag-button button {
     border-radius: 6px;
     background: @accent_color_100;
     color: @accent_color_900;
