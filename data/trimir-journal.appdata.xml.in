@@ -18,7 +18,7 @@
       <li>Search your journal</li>
       <li>Filter your journal by hashtag</li>
       <li>Render timeline charts when filtering for "metric tags", i.e. a hashtag followed by a number with optional unit (e.g. "#Trailrun 5km")</li>
-      <li>Backup and restore your journal to and from a JSON file, compatible with "ZenJournal - Minimalist Diary" (a 3rd party Android and iOS App; not affiliated)</li>
+      <li>Backup and restore your journal to and from a JSON file</li>
     </ul>
   </description>
   <screenshots>
