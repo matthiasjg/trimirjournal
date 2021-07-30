@@ -2,7 +2,7 @@
 Name=Trimir Journal
 GenericName=Journaling App
 Comment=Journaling, Logging and Activity Tracking
-Categories=Office;Utility
+Categories=Office;Utility;GTK
 Exec=io.trimir.journal
 Icon=io.trimir.journal
 Terminal=false
