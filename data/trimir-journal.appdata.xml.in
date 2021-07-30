@@ -74,7 +74,7 @@
   </content_rating>
   <translation type="gettext">io.trimir.journal</translation>
   <developer_name>Matthias Joachim Geisler, openwebcraft</developer_name>
-  <url type="homepage">https://openwebcraft.com</url>
+  <url type="homepage">https://github.com/matthiasjg/trimirjournal</url>
   <url type="bugtracker">https://github.com/matthiasjg/trimirjournal/issues</url>
   <custom>
     <value key="x-appcenter-color-primary">#7a36b1</value>

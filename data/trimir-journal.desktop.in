@@ -2,9 +2,9 @@
 Name=Trimir Journal
 GenericName=Journaling App
 Comment=Journaling, Logging and Activity Tracking
-Categories=Utility;
+Categories=Office;Utility
 Exec=io.trimir.journal
 Icon=io.trimir.journal
 Terminal=false
 Type=Application
-Keywords=Journal;Journaling;Logging;Activity Tracking;Sports Tracking
+Keywords=Journal;Log;Diary;Notes;Personal;Activity;Tracking;Sports;Fitness;Metric
