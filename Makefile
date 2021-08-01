@@ -20,6 +20,11 @@ yolo:
 		&& G_MESSAGES_DEBUG=all GTK_DEBUG=interactive io.trimir.journal \
 		; cd -
 
+uninstall:
+	cd build \
+		&& sudo ninja uninstall \
+		; cd -
+
 test: 
 	io.elementary.vala-lint ./src ./tests \
 		&& cd build \

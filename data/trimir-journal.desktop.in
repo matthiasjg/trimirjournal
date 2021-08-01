@@ -1,7 +1,6 @@
 [Desktop Entry]
 Name=Trimir Journal
-GenericName=Journaling App
-Comment=Journaling, Logging and Activity Tracking
+Comment=Write a diary, log your activities, keep track of your metrics
 Categories=Office;Utility;GTK
 Exec=io.trimir.journal
 Icon=io.trimir.journal
