@@ -64,6 +64,7 @@ public class Journal.LogView : Gtk.Grid {
             var log_txt = "%s:  %s".printf (log_relative_created_at, log_log);
             debug ("log_txt: %s", log_txt);
             Gtk.TextView text_view = new Gtk.TextView () {};
+            text_view.get_style_context ().add_class (Granite.STYLE_CLASS_ACCENT);
             text_view.editable = false;
             text_view.left_margin = text_view.right_margin = 6;
             text_view.monospace = true;

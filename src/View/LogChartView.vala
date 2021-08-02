@@ -24,6 +24,14 @@ public class Journal.LogChartView : Gtk.Box {
     }
 
     private void on_updated_journal_logs (string log_filter, bool is_tag_filter, LogModel[] logs) {
+        // remove prev chart, if any
+        get_children ().foreach ( child => {
+            if (child.get_type () == typeof (LiveChart.Static.StaticChart)) {
+                remove (child);
+            }
+        });
+        this.expand = false;
+
         Regex? value_unit_regex = null;
         try {
             value_unit_regex = new Regex ("%s\\s*(\\S+)".printf (log_filter));
@@ -32,11 +40,8 @@ public class Journal.LogChartView : Gtk.Box {
         }
 
         if (is_tag_filter) {
-            // Gdk.RGBA gdk_background_color = { 122.0, 54.0, 177.0, 1.0 };
-            // Gdk.RGBA gdk_line_color = { 244.0, 233.0, 110.0, 1.0 };
-
             var gdk_background_color = Gdk.RGBA ();
-            gdk_background_color.parse ("#7A36B1");
+            gdk_background_color.parse ("#7239b3");
 
             var gdk_line_color = Gdk.RGBA ();
             gdk_line_color.parse ("#F4E96E");
@@ -52,6 +57,7 @@ public class Journal.LogChartView : Gtk.Box {
 
             serie = new LiveChart.Static.StaticSerie (log_filter);
             serie.line.color = gdk_line_color;
+            serie.line.width = 2;
 
             chart = new LiveChart.Static.StaticChart ();
 
@@ -66,20 +72,23 @@ public class Journal.LogChartView : Gtk.Box {
             chart.background.color = gdk_background_color;
             chart.background.visible = true;
             chart.config.x_axis.visible = true;
-            chart.config.x_axis.labels.visible = false;
-            chart.config.x_axis.axis.color = gdk_line_color;
+            chart.config.x_axis.labels.visible = true;
+            chart.config.x_axis.labels.font.color = gdk_labels_color;
+            chart.config.x_axis.lines.color = gdk_line_color;
+            chart.config.x_axis.lines.dash = LiveChart.Dash () {dashes = {1}, offset = 2};
+            chart.config.x_axis.axis.color = gdk_axis_color;
             chart.config.x_axis.axis.width = 2;
 
             chart.config.y_axis.labels.visible = true;
             chart.config.y_axis.labels.font.color = gdk_labels_color;
             chart.config.y_axis.lines.color = gdk_line_color;
             chart.config.y_axis.lines.dash = LiveChart.Dash () {dashes = {1}, offset = 2};
-            chart.config.y_axis.axis.color = gdk_line_color;
+            chart.config.y_axis.axis.color = gdk_axis_color;
             chart.config.y_axis.axis.width = 2;
 
             // chart.legend.main_color = gdk_legend_color;
             chart.legend.visible = false;
-
+            chart.grid.visible = true;
             chart.add_serie (serie);
 
             var categories = new Gee.ArrayList<string> ();
@@ -87,15 +96,18 @@ public class Journal.LogChartView : Gtk.Box {
             var is_metric_valid = false;
             for (int i = logs.length - 1; i + 1 > 0; --i) {
                 var log = logs[i];
-                // var relative_created_at = log.get_relative_created_at ();
-                // var created_at_formatted = log.get_created_at_datetime ().format ("%m.%d");
+                // var created_at = log.created_at;
+                // var created_at_relative = log.get_relative_created_at ();
+                var created_at_formatted = log.get_created_at_datetime ().format (
+                    Granite.DateTime.get_default_date_format (false, true, true)
+                );
                 var tag_metric = new Journal.TagMetricModel.from_log (log.log, log_filter);
                 if (tag_metric.value.is_normal ()) {
                     if (unit == "" || unit == tag_metric.unit) {
                         unit = tag_metric.unit;
                     }
-                    categories.add (log.created_at);
-                    serie.add (log.created_at, tag_metric.value);
+                    categories.add (created_at_formatted);
+                    serie.add (created_at_formatted, tag_metric.value);
                     is_metric_valid = true;
                 }
             }
@@ -104,15 +116,20 @@ public class Journal.LogChartView : Gtk.Box {
                 chart.set_categories (categories);
                 chart.config.y_axis.unit = unit;
 
+                var tooltip_txt = "%ix %s\n%s %s\n%s %s".printf (
+                    logs.length,
+                    log_filter,
+                    _ ("first"),
+                    categories.first (),
+                    _ ("last"),
+                    categories.last ()
+                );
+                chart.set_tooltip_text (tooltip_txt);
+
                 pack_start (chart, true, true, 0);
 
                 this.expand = true;
             }
-        } else {
-            if (chart != null) {
-                remove (chart);
-            }
-            this.expand = false;
         }
         show_all ();
     }
