@@ -7,6 +7,7 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
 
     private uint configure_id;
 
+    private Gtk.ListBox sidebar_listbox;
     private Gtk.Entry log_entry;
     private Gtk.SearchEntry search_entry;
     private Hdy.HeaderBar main_header;
@@ -123,7 +124,7 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
         main_header_context.add_class ("default-decoration");
         main_header_context.add_class (Gtk.STYLE_CLASS_FLAT);
 
-        var sidebar_listbox = new Gtk.ListBox ();
+        sidebar_listbox = new Gtk.ListBox ();
 
         var welcome_row = new Journal.WelcomeRow ();
         var journal_row = new Journal.JournalRow ();
@@ -278,17 +279,20 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
 
     private void on_updated_journal_logs (string log_filter, bool is_tag_filter, LogModel[] filtered_logs) {
         debug ("on_updated_journal_logs: %s %s", log_filter, is_tag_filter.to_string ());
+        // remove tag btn from header bar, if any
+        main_header.get_children ().foreach ( child => {
+            if (child.get_type () == typeof (Journal.TagButton)) {
+                main_header.remove (child);
+            }
+        });
         if (is_tag_filter && log_filter != null && log_filter != "") {
             // add tag btn to header bar
             var tag_filter_button = new Journal.TagButton (log_filter, filtered_logs.length);
             main_header.pack_end (tag_filter_button);
-        } else {
-            // remove tag btn from header bar, if any
-            main_header.get_children ().foreach ( child => {
-                if (child.get_type () == typeof (Journal.TagButton)) {
-                    main_header.remove (child);
-                }
-            });
+        }
+        if (filtered_logs != null && filtered_logs.length >= 0) {
+            // force journal view visible
+            sidebar_listbox.select_row (sidebar_listbox.get_row_at_index (1));
         }
         main_header.show_all ();
     }
