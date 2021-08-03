@@ -14,6 +14,10 @@ public class Journal.LogRow : Gtk.ListBoxRow {
         Object (log_view: log_view, tags: tags);
     }
 
+    class construct {
+        set_css_name ("log-row");
+    }
+
     static construct {
         logrow_provider = new Gtk.CssProvider ();
         logrow_provider.load_from_resource ("io/trimir/journal/LogRow.css");

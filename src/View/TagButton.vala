@@ -45,6 +45,14 @@ public class Journal.TagButton : Gtk.EventBox {
         tag_button_context.add_class (Gtk.STYLE_CLASS_FLAT);
         tag_button_context.add_provider (style_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
+        /* var bg_color = Value (typeof (string));
+        // Gtk bug? widget class 'TagButton' has no style property named 'background-color'
+        tag_button_context.get_style_property (Gtk.STYLE_PROPERTY_BACKGROUND_COLOR, ref bg_color); */
+
+        // warning: `Gtk.StyleContext.get_background_color' has been deprecated since 3.16
+        var bg_color = tag_button_context.get_background_color (Gtk.StateFlags.NORMAL);
+        apply_contrasting_foreground_color (bg_color, tag_button_context);
+
         var delete_button = new Gtk.Button.from_icon_name ("process-stop-symbolic", Gtk.IconSize.BUTTON) {
             tooltip_text = _("Remove filter for tag %s").printf (_tag_text)
         };
@@ -52,6 +60,7 @@ public class Journal.TagButton : Gtk.EventBox {
         unowned Gtk.StyleContext delete_button_context = delete_button.get_style_context ();
         delete_button_context.add_class (Gtk.STYLE_CLASS_FLAT);
         delete_button_context.add_provider (style_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        apply_contrasting_foreground_color (bg_color, delete_button_context);
 
         var delete_button_revealer = new Gtk.Revealer () {
             transition_type = Gtk.RevealerTransitionType.SLIDE_RIGHT,
@@ -90,5 +99,32 @@ public class Journal.TagButton : Gtk.EventBox {
                 delete_button_revealer.reveal_child = false;
             }
         });
+    }
+
+    private void apply_contrasting_foreground_color (Gdk.RGBA bg_color, Gtk.StyleContext context) {
+        context.add_class ("contrasting_foreground_color");
+
+        var css_provider = new Gtk.CssProvider ();
+        var css = """
+        .contrasting_foreground_color {
+            color: %s;
+        }
+        """;
+        try {
+            css = css.printf (
+                Granite.contrasting_foreground_color (bg_color).to_string ()
+            );
+            css_provider.load_from_data (
+                css,
+                css.length
+            );
+            context.add_provider (
+                css_provider,
+                Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+            );
+        } catch (GLib.Error e) {
+            critical (e.message);
+            return;
+        }
     }
 }

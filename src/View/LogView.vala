@@ -11,6 +11,9 @@ public class Journal.LogView : Gtk.Grid {
 
     private Journal.Controller _controller;
 
+    private const string BG_COLOR_LIGHT = "rgba(255,255,255,0.05)";
+    private const string BG_COLOR_DARK = "rgba(0,0,0,0.05)";
+
     public LogView () {}
 
     construct {
@@ -21,6 +24,7 @@ public class Journal.LogView : Gtk.Grid {
         log_list = new Gtk.ListBox () {
             selection_mode = Gtk.SelectionMode.NONE
         };
+        log_list.set_css_name ("log-list");
 
         log_list.size_allocate.connect (() => {
             // auto-scroll to bottom/ last added log

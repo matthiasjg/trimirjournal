@@ -5,14 +5,14 @@
 
 tag-button grid {
     border-radius: 6px;
-    background: @accent_color_100;
-    border-color: @accent_color_300;
+    background: @accent_color_500;
+    border-color: @accent_color_900;
 }
 
 tag-button button {
     border-radius: 6px;
-    background: @accent_color_100;
-    color: @accent_color_900;
+    background: @accent_color_500;
+    /*color: @accent_color_900;*/
     font-size: 1em;
     font-weight: 600;
 }
