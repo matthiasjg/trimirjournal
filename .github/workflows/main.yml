@@ -22,7 +22,7 @@ jobs:
           # run-tests: true
           repository-name: appcenter
           repository-url: https://flatpak.elementary.io/repo.flatpakrepo
-          cache-key: "flatpak-builder-${{ github.sha }}"
+          cache-key: "flatpak-builder-${{ github.sha }}-${{ hashFiles('com.github.matthiasjg.trimirjournal.yml') }}"
           
   lint:
     name: Vala-Lint
