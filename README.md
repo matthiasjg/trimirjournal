@@ -125,7 +125,7 @@ Install Princeton et al's uber-awesome [vala-vscode](https://marketplace.visuals
 ```bash
 # flatpak remote-add --if-not-exists --system appcenter https://flatpak.elementary.io/repo.flatpakrepo
 # flatpak install -y appcenter io.elementary.Platform io.elementary.Sdk
-flatpak-builder build  com.github.matthiasjg.trimirjournal.yml --user --install --force-clean
+flatpak-builder build com.github.matthiasjg.trimirjournal.yml --user --install --force-clean
 flatpak run com.github.matthiasjg.trimirjournal
 ```
 
