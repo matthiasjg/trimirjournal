@@ -26,7 +26,7 @@ public class Journal.TagButton : Gtk.EventBox {
 
     static construct {
         style_provider = new Gtk.CssProvider ();
-        style_provider.load_from_resource ("io/trimir/journal/TagButton.css");
+        style_provider.load_from_resource ("com/github/matthiasjg/trimirjournal/TagButton.css");
     }
 
     construct {

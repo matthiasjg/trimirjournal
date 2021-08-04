@@ -9,7 +9,7 @@ finish-args:
   - '--socket=wayland'
   - '--filesystem=home'
   - '--system-talk-name=org.freedesktop.Accounts'
-  - '--metadata=X-DConf=migrate-path=/io/trimir/journal/'
+  - '--metadata=X-DConf=migrate-path=/com/github/matthiasjg/trimirjournal/'
 modules:
   - name: intltool
     sources:

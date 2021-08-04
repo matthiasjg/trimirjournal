@@ -20,7 +20,7 @@ public class Journal.LogRow : Gtk.ListBoxRow {
 
     static construct {
         logrow_provider = new Gtk.CssProvider ();
-        logrow_provider.load_from_resource ("io/trimir/journal/LogRow.css");
+        logrow_provider.load_from_resource ("com/github/matthiasjg/trimirjournal/LogRow.css");
     }
 
     construct {

@@ -25,7 +25,7 @@ public class Journal.LogChartView : Gtk.Box {
 
     static construct {
         style_provider = new Gtk.CssProvider ();
-        style_provider.load_from_resource ("io/trimir/journal/LogChart.css");
+        style_provider.load_from_resource ("com/github/matthiasjg/trimirjournal/LogChart.css");
     }
 
     construct {

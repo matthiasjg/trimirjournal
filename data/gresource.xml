@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-  <gresource prefix="/io/trimir/journal">
+  <gresource prefix="/com/github/matthiasjg/trimirjournal">
     <file compressed="true">TagButton.css</file>
     <file compressed="true">LogChart.css</file>
     <file compressed="true">LogRow.css</file>

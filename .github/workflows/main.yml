@@ -1,6 +1,9 @@
 name: CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+  pull_request:
 
 jobs:
   flatpak-builder:
@@ -23,8 +26,7 @@ jobs:
           repository-name: appcenter
           repository-url: https://flatpak.elementary.io/repo.flatpakrepo
           branch: main
-          cache: false
-          cache-key: "flatpak-builder-${{ github.sha }}-${{ hashFiles('com.github.matthiasjg.trimirjournal.yml', 'data/trimir-journal.appdata.xml.in') }}"
+          cache-key: "flatpak-builder-${{ github.sha }}"
           
   lint:
     name: Vala-Lint
