@@ -143,6 +143,6 @@ dpkg-buildpackage
 
 It is a true pleasure to develop on and for this platform.
 
-Starting from the outstanding [elementary developer documentation](https://developer.elementary.io/), the greater [Vala](https://wiki.gnome.org/Projects/Vala), [Valadoc](https://valadoc.org/) ecosystem to the [source code](https://github.com/elementary/) of the OS and bundled (original) apps to the [AppCenter](https://appcenter.elementary.io/) along with all the great and inspiring community apps.
+Starting from the outstanding [elementary developer documentation](https://docs.elementary.io/develop/), the greater [Vala](https://wiki.gnome.org/Projects/Vala), [Valadoc](https://valadoc.org/) ecosystem to the [source code](https://github.com/elementary/) of the OS and bundled (original) apps to the [AppCenter](https://appcenter.elementary.io/) along with all the great and inspiring community apps.
 
 Therefore THANK YOU team and community of elementary OS! ❤️
