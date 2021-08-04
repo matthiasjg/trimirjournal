@@ -1,4 +1,4 @@
-project('io.trimir.journal', 'vala', 'c')
+project('com.github.matthiasjg.trimirjournal', 'vala', 'c')
 
 gnome = import('gnome')
 i18n = import('i18n')

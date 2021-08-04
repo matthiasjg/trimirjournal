@@ -39,6 +39,12 @@
         <p>Supports the dark style</p>
       </description>
     </release>
+    <release version="1.0.1" date="2021-08-04" urgency="medium">
+      <description>
+        <p>The real first release!</p>
+        <p>Changed RDNN to comply with beta developer dashoard</p>
+      </description>
+    </release>
   </releases>
   <provides>
     <binary>com.github.matthiasjg.trimirjournal</binary>

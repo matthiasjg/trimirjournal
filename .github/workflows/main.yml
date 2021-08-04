@@ -25,7 +25,6 @@ jobs:
           # run-tests: true
           repository-name: appcenter
           repository-url: https://flatpak.elementary.io/repo.flatpakrepo
-          branch: main
           cache-key: "flatpak-builder-${{ github.sha }}"
           
   lint:
