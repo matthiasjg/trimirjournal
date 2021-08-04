@@ -33,7 +33,7 @@
     </screenshot>
   </screenshots>
   <releases>
-    <release version="1.0.0" date="2021-07-29" urgency="medium">
+    <release version="1.0.0" date="2021-08-04" urgency="medium">
       <description>
         <p>First release!</p>
         <p>Supports the dark style</p>
