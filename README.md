@@ -63,11 +63,11 @@ cd build
 ninja
 ```
 
-To install, use `ninja install`, then execute with `io.trimir.journal`
+To install, use `ninja install`, then execute with `com.github.matthiasjg.trimirjournal`
 
 ```bash
 ninja install
-io.trimir.journal
+com.github.matthiasjg.trimirjournal
 ```
 
 ## Developing and Packaging
@@ -125,8 +125,8 @@ Install Princeton et al's uber-awesome [vala-vscode](https://marketplace.visuals
 ```bash
 # flatpak remote-add --if-not-exists --system appcenter https://flatpak.elementary.io/repo.flatpakrepo
 # flatpak install -y appcenter io.elementary.Platform io.elementary.Sdk
-flatpak-builder build  io.trimir.journal.yml --user --install --force-clean
-flatpak run io.trimir.journal
+flatpak-builder build  com.github.matthiasjg.trimirjournal.yml --user --install --force-clean
+flatpak run com.github.matthiasjg.trimirjournal
 ```
 
 ### Build .deb locally, though DEPRECATED

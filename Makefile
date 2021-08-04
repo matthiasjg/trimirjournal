@@ -17,7 +17,7 @@ yolo:
 		&& cd build \
 		&& ninja \
 		&& ninja install \
-		&& G_MESSAGES_DEBUG=all GTK_DEBUG=interactive io.trimir.journal \
+		&& G_MESSAGES_DEBUG=all GTK_DEBUG=interactive com.github.matthiasjg.trimirjournal \
 		; cd -
 
 uninstall:
@@ -33,13 +33,13 @@ test:
 
 i18n:
 	cd build \
-		&& ninja io.trimir.journal-pot \
-		&& ninja io.trimir.journal-update-po \
+		&& ninja com.github.matthiasjg.trimirjournal-pot \
+		&& ninja com.github.matthiasjg.trimirjournal-update-po \
 		; cd -
 
 flatpak-build:
 	flatpak-builder \
-		build io.trimir.journal.yml --user --install --force-clean
+		build com.github.matthiasjg.trimirjournal.yml --user --install --force-clean
 
 flatpak-run: 
-	flatpak run io.trimir.journal
+	flatpak run com.github.matthiasjg.trimirjournal

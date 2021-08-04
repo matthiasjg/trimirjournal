@@ -2,8 +2,8 @@
 Name=Trimir Journal
 Comment=Write a diary, log your activities, keep track of your metrics
 Categories=Office;Utility;GTK
-Exec=io.trimir.journal
-Icon=io.trimir.journal
+Exec=com.github.matthiasjg.trimirjournal
+Icon=com.github.matthiasjg.trimirjournal
 Terminal=false
 Type=Application
 Keywords=Journal;Log;Diary;Notes;Personal;Activity;Tracking;Sports;Fitness;Metric

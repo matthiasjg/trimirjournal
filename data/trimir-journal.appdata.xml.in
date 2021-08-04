@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2021 Matthias Joachim Geisler <matthiasjg@openwebcraft.com> -->
 <component type="desktop">
-  <id>io.trimir.journal</id>
+  <id>com.github.matthiasjg.trimirjournal</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0+</project_license>
   <name>Trimir Journal</name>
@@ -41,7 +41,7 @@
     </release>
   </releases>
   <provides>
-    <binary>io.trimir.journal</binary>
+    <binary>com.github.matthiasjg.trimirjournal</binary>
   </provides>
   <content_rating type="oars-1.1">
     <content_attribute id="violence-cartoon">none</content_attribute>
@@ -72,7 +72,7 @@
     <content_attribute id="money-purchasing">none</content_attribute>
     <content_attribute id="money-gambling">none</content_attribute>
   </content_rating>
-  <translation type="gettext">io.trimir.journal</translation>
+  <translation type="gettext">com.github.matthiasjg.trimirjournal</translation>
   <developer_name>Matthias Joachim Geisler, openwebcraft</developer_name>
   <url type="homepage">https://github.com/matthiasjg/trimirjournal</url>
   <url type="bugtracker">https://github.com/matthiasjg/trimirjournal/issues</url>

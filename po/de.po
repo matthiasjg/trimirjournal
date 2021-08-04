@@ -1,11 +1,11 @@
-# German translations for io.trimir.journal package.
-# Copyright (C) 2021 THE io.trimir.journal'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the io.trimir.journal package.
+# German translations for com.github.matthiasjg.trimirjournal package.
+# Copyright (C) 2021 THE com.github.matthiasjg.trimirjournal'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.matthiasjg.trimirjournal package.
 # Automatically generated, 2021.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: io.trimir.journal\n"
+"Project-Id-Version: com.github.matthiasjg.trimirjournal\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-04 11:26+0200\n"
 "PO-Revision-Date: 2021-02-01 21:35+0100\n"
@@ -125,7 +125,7 @@ msgstr ""
 "Überblick über Deine Metriken"
 
 #: data/trimir-journal.desktop.in:7
-msgid "io.trimir.journal"
+msgid "com.github.matthiasjg.trimirjournal"
 msgstr ""
 
 #: data/trimir-journal.desktop.in:10

@@ -21,7 +21,7 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
     public MainWindow (Gtk.Application application) {
         Object (
             application: application,
-            icon_name: "io.trimir.journal",
+            icon_name: "com.github.matthiasjg.trimirjournal",
             title: _("Trimir Journal")
         );
     }

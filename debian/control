@@ -1,4 +1,4 @@
-Source: io.trimir.journal
+Source: com.github.matthiasjg.trimirjournal
 Section: x11
 Priority: extra
 Maintainer: Matthias Joachim Geisler <matthiasjg@openwebcraft.com>
@@ -9,7 +9,7 @@ Build-Depends: debhelper (>= 10.5.1),
                valac (>= 0.28.0)
 Standards-Version: 4.1.1
 
-Package: io.trimir.journal
+Package: com.github.matthiasjg.trimirjournal
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Trimir Journal
