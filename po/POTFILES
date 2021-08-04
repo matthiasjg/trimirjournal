@@ -1,3 +1,14 @@
 src/Application.vala
+src/Controller.vala
+src/View/LogRow.vala
+src/View/LogView.vala
+src/View/LogChartView.vala
+src/View/JournalRow.vala
+src/View/WelcomeRow.vala
+src/View/TagsRow.vala
+src/View/SavedSearchesRow.vala
+src/View/TagButton.vala
+src/View/MainWindow.vala
+src/View/WelcomeView.vala
 data/trimir-journal.desktop.in
 data/trimir-journal.appdata.xml.in

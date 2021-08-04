@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.trimir.journal\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-04 09:43+0200\n"
+"POT-Creation-Date: 2021-08-04 11:26+0200\n"
 "PO-Revision-Date: 2021-02-01 21:35+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -17,13 +17,112 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: src/Controller.vala:71
+msgid "JSON (*.json)"
+msgstr ""
+
+#: src/Controller.vala:73
+msgid "Save"
+msgstr "Speichern"
+
+#: src/Controller.vala:73
+msgid "Open"
+msgstr "Öffnen"
+
+#: src/Controller.vala:80
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: src/Controller.vala:116 src/View/WelcomeView.vala:15
+msgid "Reset and Restore Journal"
+msgstr "Journal zurücksetzen und wiederherstellen "
+
+#: src/Controller.vala:141 src/View/WelcomeView.vala:18
+#, fuzzy
+msgid "Backup Journal"
+msgstr "Sicherheitskopie des Journal erstellen"
+
+#: src/View/LogChartView.vala:155
+msgid "first"
+msgstr "erster"
+
+#: src/View/LogChartView.vala:157
+msgid "last"
+msgstr "letzter"
+
+#: src/View/JournalRow.vala:11
+msgid "Journal"
+msgstr ""
+
+#: src/View/WelcomeRow.vala:11
+msgid "Home"
+msgstr ""
+
+#: src/View/TagsRow.vala:11
+msgid "Tags"
+msgstr ""
+
+#: src/View/SavedSearchesRow.vala:11
+msgid "Saved Searches"
+msgstr "Gespeicherte Suchen"
+
+#: src/View/TagButton.vala:38
+#, c-format
+msgid "Active tag filter %s"
+msgstr "Aktiver Tag Filter %s"
+
+#: src/View/TagButton.vala:54
+#, c-format
+msgid "Remove filter for tag %s"
+msgstr "Entferne Tag Filter %s"
+
+#: src/View/MainWindow.vala:25 src/View/MainWindow.vala:120
 #: data/trimir-journal.desktop.in:3 data/trimir-journal.appdata.xml.in:7
 msgid "Trimir Journal"
 msgstr ""
 
+#: src/View/MainWindow.vala:61
+msgid "Reset and Restore…"
+msgstr "Zurücksetzen und Wiederherstellen…"
+
+#: src/View/MainWindow.vala:69
+msgid "Backup…"
+msgstr "Sicherheitskopie…"
+
+#: src/View/MainWindow.vala:89
+#, fuzzy
+msgid "Search Journal"
+msgstr "Durchsuche Dein Journal"
+
+#: src/View/MainWindow.vala:90 src/View/MainWindow.vala:195
+msgid "Not implemented yet"
+msgstr "Noch nicht umgesetzt"
+
+#: src/View/MainWindow.vala:194
+msgid "Start logging or type ? to search your Journal…"
+msgstr "Erstelle einen Eintrag oder tippe eine ? um dein Journal zu durchsuchen "
+
+#: src/View/WelcomeView.vala:11
+msgid "Welcome to Trimir Journal"
+msgstr "Willkommen im Trimir Journal"
+
+#: src/View/WelcomeView.vala:12 data/trimir-journal.appdata.xml.in:8
+msgid "Your personal activity \"Tricorder\"."
+msgstr "Dein persönlicher \"Tricorder\" für Deine Aktivitäten."
+
+#: src/View/WelcomeView.vala:16
+msgid "Import Journal from a JSON (*.json) file."
+msgstr "Importiere das Journal aus einer JSON-Datei (*.json)."
+
+#: src/View/WelcomeView.vala:19
+msgid "Export Journal to a JSON (*.json) file."
+msgstr "Exportiere das Journal in eine JSON-Datei (*.json)."
+
 #: data/trimir-journal.desktop.in:4
 msgid "Write a diary, log your activities, keep track of your metrics"
-msgstr "Schreib ein Tagebuch, protokolliere Deine Aktivitäten, behalte den Überblick über Deine Metriken"
+msgstr ""
+"Schreibe ein Tagebuch, protokolliere Deine Aktivitäten, behalte den "
+"Überblick über Deine Metriken"
 
 #: data/trimir-journal.desktop.in:7
 msgid "io.trimir.journal"
@@ -33,10 +132,6 @@ msgstr ""
 msgid ""
 "Journal;Log;Diary;Notes;Personal;Activity;Tracking;Sports;Fitness;Metric"
 msgstr ""
-
-#: data/trimir-journal.appdata.xml.in:8
-msgid "Your personal activity \"Tricorder\"."
-msgstr "Dein persönlicher \"Tricorder\" für Deine Aktivitäten."
 
 #: data/trimir-journal.appdata.xml.in:10
 msgid ""
