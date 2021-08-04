@@ -149,13 +149,12 @@ public class Journal.LogChartView : Gtk.Box {
                 chart.set_categories (categories);
                 chart.config.y_axis.unit = unit;
 
-                var tooltip_txt = "%s %i %s %s %s %s %s".printf (
+                var tooltip_txt = "%s (%i)\n%s %s\n%s %s".printf (
                     log_filter,
                     logs.length,
-                    _ ("metrics"),
-                    _ ("between"),
+                    _ ("first"),
                     categories.first (),
-                    _ ("and"),
+                    _ ("last"),
                     categories.last ()
                 );
                 chart.set_tooltip_text (tooltip_txt);
