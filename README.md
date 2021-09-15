@@ -16,6 +16,13 @@ You'll need the following dependencies:
 * meson
 * valac
 
+```bash
+sudo apt install \
+    elementary-sdk \
+    libgda-5.0-dev \
+    libgtksourceview-4-dev
+```
+
 You'll also need to init and update these Git submodules with required subprojects (in `subprojects/` directory):
 
 * [Live Chart](https://github.com/lcallarec/live-chart) a real-time charting library for GTK3 and Vala, based on [Cairo](https://cairographics.org/).
