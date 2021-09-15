@@ -8,13 +8,13 @@ public class Journal.Application : Gtk.Application {
 
     public Application () {
         Object (
-            application_id: "io.trimir.journal",
+            application_id: "com.github.matthiasjg.trimirjournal",
             flags: ApplicationFlags.FLAGS_NONE
         );
     }
 
     static construct {
-        settings = new Settings ("io.trimir.journal");
+        settings = new Settings ("com.github.matthiasjg.trimirjournal");
     }
 
     protected override void activate () {

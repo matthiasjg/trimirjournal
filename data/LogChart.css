@@ -3,8 +3,7 @@
  * SPDX-FileCopyrightText: 2021 Matthias Joachim Geisler, openwebcraft <matthiasjg@openwebcraft.com>
  */
 
- log-row {
-    background-color: @grape_700;
-    margin: 2px;
-    padding: 2px;
+log-chart {
+    background-color: @accent_color_500;
+    /*color: #ffffff;*/
 }

@@ -1,17 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2021 Matthias Joachim Geisler <matthiasjg@openwebcraft.com> -->
 <component type="desktop">
-  <id>io.trimir.journal</id>
-  <metadata_license>CC0</metadata_license>
+  <id>com.github.matthiasjg.trimirjournal</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0+</project_license>
   <name>Trimir Journal</name>
-  <summary>Journaling, Logging and Activity Tracking</summary>
+  <summary>Your personal activity "Tricorder".</summary>
   <description>
     <p>
-      Trimir Journal is designed and built to help record and in retrospect evaluate all of your experiences, thoughts and ideas as well as your (sports) activities.
+      Designed and built for personal text journaling and activity tracking.
+      Write a diary, log your activities, keep track of your metrics.
+      Search, filter and evaluate your journal—your life.
     </p>
+    <p>Features:</p>
+    <ul>
+      <li>Write expressive journal entries with emoijs, organized with hashtags (i.e. "#linux rocks 😎️")</li>
+      <li>Search your journal</li>
+      <li>Filter your journal by hashtag</li>
+      <li>Render timeline charts when filtering for "metric tags", i.e. a hashtag followed by a number with optional unit (e.g. "#Trailrun 5km")</li>
+      <li>Backup and restore your journal to and from a JSON file</li>
+    </ul>
   </description>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/matthiasjg/trimirjournal/master/data/screenshots/welcome.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/matthiasjg/trimirjournal/master/data/screenshots/journal.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/matthiasjg/trimirjournal/master/data/screenshots/logchart.png</image>
+    </screenshot>
+  </screenshots>
+  <releases>
+    <release version="1.0.1" date="2021-08-04" urgency="medium">
+      <description>
+        <p>The real first release!</p>
+        <p>Changed RDNN to comply with beta developer dashoard</p>
+      </description>
+    </release>
+    <release version="1.0.0" date="2021-08-04" urgency="medium">
+      <description>
+        <p>First release!</p>
+        <p>Supports the dark style</p>
+      </description>
+    </release>
+  </releases>
   <provides>
-    <binary>io.trimir.journal</binary>
+    <binary>com.github.matthiasjg.trimirjournal</binary>
   </provides>
   <content_rating type="oars-1.1">
     <content_attribute id="violence-cartoon">none</content_attribute>
@@ -42,13 +78,14 @@
     <content_attribute id="money-purchasing">none</content_attribute>
     <content_attribute id="money-gambling">none</content_attribute>
   </content_rating>
-  <translation type="gettext">io.trimir.journal</translation>
+  <translation type="gettext">com.github.matthiasjg.trimirjournal</translation>
   <developer_name>Matthias Joachim Geisler, openwebcraft</developer_name>
-  <url type="homepage">https://openwebcraft.com</url>
+  <url type="homepage">https://github.com/matthiasjg/trimirjournal</url>
   <url type="bugtracker">https://github.com/matthiasjg/trimirjournal/issues</url>
   <custom>
-    <value key="x-appcenter-color-primary">#603461</value>
-    <value key="x-appcenter-color-primary-text">rgb(255, 255, 255)</value>
-    <value key="x-appcenter-suggested-price">2</value>
+    <value key="x-appcenter-color-primary">#7a36b1</value>
+    <value key="x-appcenter-color-primary-text">rgb(244, 233, 110)</value>
+    <value key="x-appcenter-suggested-price">12</value>
+    <value key="x-appcenter-stripe">pk_live_ZhCzTf7wvITGjHf0jifghtOs</value>
   </custom>
 </component>

@@ -4,7 +4,7 @@
  */
 
 namespace Journal.Utils {
-    private const string APP_NAME = "io.trimir.journal";
+    private const string APP_NAME = "com.github.matthiasjg.trimirjournal";
 
     /*-
     * Copyright (c) 2012-2018 elementary LLC. (https://elementary.io)
@@ -38,5 +38,32 @@ namespace Journal.Utils {
         string data_dir = Environment.get_user_data_dir ();
         string dir_path = Path.build_path (Path.DIR_SEPARATOR_S, data_dir, APP_NAME);
         return File.new_for_path (dir_path);
+    }
+
+    public void apply_contrasting_foreground_color (Gdk.RGBA bg_color, Gtk.StyleContext context) {
+        context.add_class ("contrasting_foreground_color");
+
+        var css_provider = new Gtk.CssProvider ();
+        var css = """
+        .contrasting_foreground_color {
+            color: %s;
+        }
+        """;
+        try {
+            css = css.printf (
+                Granite.contrasting_foreground_color (bg_color).to_string ()
+            );
+            css_provider.load_from_data (
+                css,
+                css.length
+            );
+            context.add_provider (
+                css_provider,
+                Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+            );
+        } catch (GLib.Error e) {
+            critical (e.message);
+            return;
+        }
     }
 }

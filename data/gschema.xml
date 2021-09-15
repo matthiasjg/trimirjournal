@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
-  <schema path="/io/trimir/journal/" id="io.trimir.journal">
+  <schema path="/com/github/matthiasjg/trimirjournal/" id="com.github.matthiasjg.trimirjournal">
     <key name="window-maximized" type="b">
       <default>false</default>
       <summary>Whether the window was maximized on last run</summary>

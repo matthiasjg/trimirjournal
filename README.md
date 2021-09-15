@@ -1,4 +1,34 @@
-# trimirjournal
+# Trimirj Journal — Your personal activity "Tricorder".
+
+Designed and built for personal text journaling and activity tracking.
+
+Write a diary, log your activities, keep track of your metrics.
+
+Search, filter and evaluate your journal—your life.
+
+## Features
+
+* Write expressive journal entries with emoijs, organized with hashtags (i.e. "#linux rocks 😎️")
+* Search your journal
+* Filter your journal by hashtag
+* Render timeline charts when filtering for "metric tags", i.e. a hashtag followed by a number with optional unit (e.g. "#Trailrun 5km")
+* Backup and restore your journal to and from a JSON file, compatible with mobile app "ZenJournal - Minimalist Diary" (iOS, Android)—no affiliation
+
+## Screenshots
+
+![](data/screenshots/welcome.png)
+
+![](data/screenshots/journal.png)
+
+![](data/screenshots/logchart.png)
+
+## Made for [elementary OS](https://elementary.io/)
+
+**Trimir Journal** is designed and developed on and for [elementary OS](https://elementary.io/).
+
+The app will eventually (hopefully) be available for purchasing directly through AppCenter.
+
+Purchasing the app will support the development and ensures instant updates straight from me. All this is to say: get it on AppCenter for the best, sustainable experience. 😀️
 
 ## Building and Installation
 
@@ -40,32 +70,73 @@ cd build
 ninja
 ```
 
-To install, use `ninja install`, then execute with `io.trimir.journal`
+To install, use `ninja install`, then execute with `com.github.matthiasjg.trimirjournal`
 
 ```bash
 ninja install
-io.trimir.journal
+com.github.matthiasjg.trimirjournal
+```
 
-# one liner to lint, build and run with debugging enabled
-io.elementary.vala-lint && \
-    cd build \
-    && ninja \
-    && ninja install \
-    && G_MESSAGES_DEBUG=all io.trimir.journal \
-    ; cd -
+## Developing and Packaging
+
+For development oneshould use `make`™️.
+
+The `make` targets require two more tools being installed:
+
+1. [vala-lint](https://github.com/vala-lang/vala-lint) to assure one is following the [elementary Code-Style guidelines](https://elementary.io/docs/code/reference#code-style)
+
+2. [Gtk Inspector](https://elementary.io/docs/code/os-dev#gtk-inspector) (from ` elementary-sdk`)
+
+
+```bash
+# vala-lint
+git clone https://github.com/vala-lang/vala-lint
+cd vala-lint
+sudo apt install cmake libvala-0.48-dev
+meson build --prefix=/usr
+cd build
+ninja test
+sudo ninja install
+
+# gtk-inspector
+gsettings set org.gtk.Settings.Debug enable-inspector-keybinding true
+```
+
+Useing the `make` targets is then as simple as:
+
+```bash
+# once
+make
+# recurring, each cycle
+make yolo
 ```
 
 ## Translations (i18n)
 
 The app is fully translatable.
 
-Each time new translatable strings are added or old ones change, one should regenerate the `.pot` and `po` files using the commands (targets) `ninja io.trimir.journal-pot` and `ninja io.trimi.journal-update-po` from `build/` dir.
+Each time new translatable strings are added or old ones change, one should regenerate the `.pot` and `po` files using `make i18n`.
 
-For new languages, just list them in the `po/LINGUAS` file and generate the new `.po` file with the command (target) `ninja io.trimir.journal-update-po`.
+For new languages, just list them in the `po/LINGUAS` file and generate the new `.po` file with `make i18n`.
 
-... or `make i18n` ;-).
+## Dev(Ops) Hints
 
-## Build .deb locally
+### Editor / "IDE"
+
+For me (currently, still) [Visual Studio Code](https://code.visualstudio.com/).
+
+Install Princeton et al's uber-awesome [vala-vscode](https://marketplace.visualstudio.com/items?itemName=prince781.vala) ([src](https://github.com/Prince781/vala-vscode)) which requires [vala-language-server](https://github.com/Prince781/vala-language-server) to be installed.
+
+### Flatbak build
+
+```bash
+# flatpak remote-add --if-not-exists --system appcenter https://flatpak.elementary.io/repo.flatpakrepo
+# flatpak install -y appcenter io.elementary.Platform io.elementary.Sdk
+flatpak-builder build com.github.matthiasjg.trimirjournal.yml --user --install --force-clean
+flatpak run com.github.matthiasjg.trimirjournal
+```
+
+### Build .deb locally, though DEPRECATED
 
 ```bash
 meson build --prefix=/usr
@@ -75,84 +146,10 @@ cd ..
 dpkg-buildpackage
 ```
 
-## Flatbak build
+## Special Thanks & Credits
 
-```bash
-# flatpak remote-add --if-not-exists --system appcenter https://flatpak.elementary.io/repo.flatpakrepo
-# flatpak install -y appcenter io.elementary.Platform io.elementary.Sdk
-flatpak-builder build  io.trimir.journal.yml --user --install --force-clean
-flatpak run io.trimir.journal
-```
+It is a true pleasure to develop on and for this platform.
 
-## Editor/ IDE
+Starting from the outstanding [elementary developer documentation](https://docs.elementary.io/develop/), the greater [Vala](https://wiki.gnome.org/Projects/Vala), [Valadoc](https://valadoc.org/) ecosystem to the [source code](https://github.com/elementary/) of the OS and bundled (original) apps to the [AppCenter](https://appcenter.elementary.io/) along with all the great and inspiring community apps.
 
-**Visual Studio Code**
-
-Install Princeton et al's uber-awesome [vala-vscode](https://marketplace.visualstudio.com/items?itemName=prince781.vala) ([src](https://github.com/Prince781/vala-vscode)).
-
-**Codium**
-
-Install [recommended extensions](https://wiki.gnome.org/Projects/Vala/Tools/VisualStudioCode) from `*.vsix` file by downloading it from Visual Studio Marketplace.
-
-## elementary Resources
-
-- https://elementary.io/docs/human-interface-guidelines#color
-- https://github.com/elementary/icons
-
-## Vala & GTK Resources
-
-[vala-language-server](https://github.com/Prince781/vala-language-server)
-
-[Vala support for Visual Studio Code](https://github.com/Prince781/vala-vscode)
-
-To make it easier to follow the [elementary Code-Style guidelines](https://elementary.io/docs/code/reference#code-style) one can use [vala-lint](https://github.com/vala-lang/vala-lint):
-
-```bash
-cd  ~/Code
-git clone https://github.com/vala-lang/vala-lint
-cd vala-lint
-sudo apt install cmake libvala-0.48-dev
-meson build --prefix=/usr
-cd build
-ninja test
-sudo ninja install
-io.elementary.vala-lint
-```
-
-[Gtk Inspecteur](https://elementary.io/docs/code/os-dev#gtk-inspector) (from ` elementary-sdk`):
-
-```bash
-gsettings set org.gtk.Settings.Debug enable-inspector-keybinding true
-# GTK_DEBUG=interactive io.trimir.journal
-```
-
-[awesome-vala](https://github.com/desiderantes/awesome-vala)
-
-[awesome-gtk](https://github.com/unrelentingtech/awesome-gtk), a list of native, open source GTK (3 and 4) applications.
-
-[libgda vala samples](https://gitlab.gnome.org/GNOME/libgda/-/tree/LIBGDA_5_2_8/samples/vala)
-
-[todo-vala-example (gda)](https://github.com/undeadspez/todo-vala-example)
-
-[Writing tests for Vala](https://esite.ch/2012/06/writing-tests-for-vala/)
-
-[design-patterns-for-humans/vala](https://github.com/design-patterns-for-humans/vala)
-
-[live-chart](https://github.com/lcallarec/live-chart)
-
-[vala: Serializing object property with Json.gobject_serialize?](https://stackoverflow.com/questions/43344017/vala-serializing-object-property-with-json-gobject-serialize/58461239)
-
-[Self-contained, plain Go implementation of calendar heatmap inspired by GitHub contribution activity.](https://github.com/nikolaydubina/calendarheatmap)
-## Flatpak Resources
-
-- https://docs.flatpak.org/en/latest/sandbox-permissions.html
-
-## elementary OS Resources
-
-[awesome-elementaryos](https://github.com/kleinrein/awesome-elementaryos)
-
-## General Resources
-
-Design, etc.
-
-[Designing an Icon for Your App](https://blogs.gnome.org/tbernard/2019/12/30/designing-an-icon-for-your-app/)
+Therefore THANK YOU team and community of elementary OS! ❤️

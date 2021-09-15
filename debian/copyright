@@ -1,5 +1,5 @@
 Format: https://dep.debian.net/deps/dep5
-Upstream-Name: io.trimir.journal
+Upstream-Name: com.github.matthiasjg.trimirjournal
 Source: https://github.com/matthiasjg/trimirjournal
 
 Files: src/* data/* debian/*
