@@ -18,7 +18,7 @@ gresource = gnome.compile_resources(
 
 deps = [
         dependency('libxml-2.0'),
-        dependency('libgda-6.0'),
+        dependency('libgda-5.0'),
         dependency('glib-2.0'),
         dependency('gobject-2.0'),
         dependency('gtk+-3.0'),
