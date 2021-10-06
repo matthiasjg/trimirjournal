@@ -3,6 +3,17 @@ runtime: io.elementary.Platform
 runtime-version: '6'
 sdk: io.elementary.Sdk
 command: com.github.matthiasjg.trimirjournal
+cleanup:
+  - '/include'
+  - '/lib/pkgconfig'
+  - '/share/pkgconfig'
+  - '/share/aclocal'
+  - '/man'
+  - '/share/man'
+  - '/share/gtk-doc'
+  - '*.la'
+  - '*.a'
+  - '*.vapi'
 finish-args:
   - '--share=ipc'
   - '--socket=fallback-x11'
@@ -18,18 +29,27 @@ modules:
         sha256: 67c74d94196b153b774ab9f89b2fa6c6ba79352407037c8c14d5aeb334e959cd
 
   - name: libgda
+    buildsystem: meson
     config-opts:
-      - '--with-java=no'
-      - '--with-jni=no'
-      - '--with-oracle=no'
-      - '--with-help=no'
-      - '--with-ui=no'
-      - '--disable-tools'
-      - '--enable-vala'
+      - '-Dui=false'
+      - '-Djson=false'
+      - '-Dsqlcipher=false'
+      - '-Dlibsoup=false'
     sources:
       - type: archive
-        url: https://download.gnome.org/sources/libgda/5.2/libgda-5.2.9.tar.xz
-        sha256: 59caed8ca72b1ac6437c9844f0677f8a296d52cfd1c0049116026abfb1d87d9b
+        url: https://download.gnome.org/sources/libgda/6.0/libgda-6.0.0.tar.xz
+        sha256: 995f4b420e666da5c8bac9faf55e7aedbe3789c525d634720a53be3ccf27a670
+    cleanup:
+      - '/share/doc'
+
+  - name: live-chart
+    cleanup:
+      - '*.vapi'
+    buildsystem: meson
+    sources:
+      - type: archive
+        url: https://github.com/lcallarec/live-chart/archive/refs/tags/1.9.1.tar.gz
+        sha256: 7b5f1d0807b5f6e8b09e2c1dd468af22379578b55b38afd530c0ff006bc33e53
 
   - name: trimirjournal
     buildsystem: meson

@@ -83,7 +83,7 @@
         var column_field = builder.add_id (column);
         var like_val = Value (typeof (string));
         like_val.set_string ("%" + like + "%");
-        var like_param = builder.add_expr_value (null, like_val);
+        var like_param = builder.add_expr_value (like_val);
         var where_cond = builder.add_cond (Gda.SqlOperatorType.LIKE, column_field, like_param, 0);
         builder.set_where (where_cond);
 
@@ -115,7 +115,7 @@
         var id_val = Value (typeof (int));
         id_val.set_int (id);
         var id_field = builder.add_id (SQL_COLUMN_NAME_ID);
-        var id_param = builder.add_expr_value (null, id_val);
+        var id_param = builder.add_expr_value (id_val);
         var id_cond = builder.add_cond (Gda.SqlOperatorType.EQ, id_field, id_param, 0);
         builder.set_where (id_cond);
 
@@ -170,7 +170,7 @@
         created_at_val.set_string (log.created_at);
         log_val.set_string (log.log);
         var id_field = builder.add_id (SQL_COLUMN_NAME_ID);
-        var id_param = builder.add_expr_value (null, id_val);
+        var id_param = builder.add_expr_value (id_val);
         var id_cond = builder.add_cond (Gda.SqlOperatorType.EQ, id_field, id_param, 0);
         builder.set_where (id_cond);
         builder.set_table (SQL_TABLE_NAME);
@@ -192,7 +192,7 @@
         var id_val = Value (typeof (int));
         id_val.set_int (id);
         var id_field = builder.add_id (SQL_COLUMN_NAME_ID);
-        var id_param = builder.add_expr_value (null, id_val);
+        var id_param = builder.add_expr_value (id_val);
         var id_cond = builder.add_cond (Gda.SqlOperatorType.EQ, id_field, id_param, 0);
         builder.set_where (id_cond);
         builder.set_table (SQL_TABLE_NAME);

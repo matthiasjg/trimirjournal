@@ -16,12 +16,9 @@ gresource = gnome.compile_resources(
     source_dir: 'data'
 )
 
-livechart_proj = subproject('live-chart')
-livechart_dep = livechart_proj.get_variable('livechart_dep')
-
 deps = [
         dependency('libxml-2.0'),
-        dependency('libgda-5.0'),
+        dependency('libgda-6.0'),
         dependency('glib-2.0'),
         dependency('gobject-2.0'),
         dependency('gtk+-3.0'),
@@ -29,7 +26,7 @@ deps = [
 	    dependency('granite', version: '>=0.5'),
         dependency('libhandy-1', version: '>=0.90.0'),
         dependency('gtksourceview-4'),
-        livechart_dep
+        dependency('livechart')
     ]
 
 utils_files = [
