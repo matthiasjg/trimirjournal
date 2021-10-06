@@ -43,8 +43,6 @@ modules:
       - '/share/doc'
 
   - name: live-chart
-    cleanup:
-      - '*.vapi'
     buildsystem: meson
     sources:
       - type: archive
