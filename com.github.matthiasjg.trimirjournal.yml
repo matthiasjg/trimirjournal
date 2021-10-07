@@ -3,6 +3,17 @@ runtime: io.elementary.Platform
 runtime-version: '6'
 sdk: io.elementary.Sdk
 command: com.github.matthiasjg.trimirjournal
+cleanup:
+  - '/include'
+  - '/lib/pkgconfig'
+  - '/share/pkgconfig'
+  - '/share/aclocal'
+  - '/man'
+  - '/share/man'
+  - '/share/gtk-doc'
+  - '*.la'
+  - '*.a'
+  - '*.vapi'
 finish-args:
   - '--share=ipc'
   - '--socket=fallback-x11'
@@ -12,6 +23,8 @@ finish-args:
   - '--metadata=X-DConf=migrate-path=/com/github/matthiasjg/trimirjournal/'
 modules:
   - name: intltool
+    cleanup:
+      - '*'
     sources:
       - type: archive
         url: https://launchpad.net/intltool/trunk/0.51.0/+download/intltool-0.51.0.tar.gz
@@ -30,6 +43,16 @@ modules:
       - type: archive
         url: https://download.gnome.org/sources/libgda/5.2/libgda-5.2.9.tar.xz
         sha256: 59caed8ca72b1ac6437c9844f0677f8a296d52cfd1c0049116026abfb1d87d9b
+    cleanup:
+      - '/share/doc'
+      - '/bin'
+
+  - name: live-chart
+    buildsystem: meson
+    sources:
+      - type: archive
+        url: https://github.com/lcallarec/live-chart/archive/refs/tags/1.9.1.tar.gz
+        sha256: 7b5f1d0807b5f6e8b09e2c1dd468af22379578b55b38afd530c0ff006bc33e53
 
   - name: trimirjournal
     buildsystem: meson
