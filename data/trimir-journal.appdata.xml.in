@@ -33,6 +33,12 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.0.2" date="2021-10-07" urgency="medium">
+      <description>
+        <p>The first AppCenter release, maybe.</p>
+        <p>Fixed failing build for AppCenter due to Git submodule</p>
+      </description>
+    </release>
     <release version="1.0.1" date="2021-08-04" urgency="medium">
       <description>
         <p>The real first release!</p>
