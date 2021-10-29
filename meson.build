@@ -26,7 +26,8 @@ deps = [
 	    dependency('granite', version: '>=0.5'),
         dependency('libhandy-1', version: '>=0.90.0'),
         dependency('gtksourceview-4'),
-        dependency('livechart')
+        dependency('livechart'),
+        dependency('libarchive')
     ]
 
 utils_files = [

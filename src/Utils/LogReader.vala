@@ -45,4 +45,47 @@ public class Journal.LogReader : Object {
 
         return logs;
     }
+
+    public void extract_journal_from_gzip_file (File journal_gzip_file, File journal_unzip_location) {
+        Archive.ExtractFlags flags;
+        flags = Archive.ExtractFlags.TIME;
+        flags |= Archive.ExtractFlags.PERM;
+        flags |= Archive.ExtractFlags.ACL;
+        flags |= Archive.ExtractFlags.FFLAGS;
+
+        Archive.Read archive = new Archive.Read ();
+        archive.support_format_all ();
+        archive.support_filter_all ();
+
+        Archive.WriteDisk extractor = new Archive.WriteDisk ();
+        extractor.set_options (flags);
+        extractor.set_standard_lookup ();
+
+        if (archive.open_filename (journal_gzip_file.get_path (), 10240) != Archive.Result.OK) {
+            critical ("Error opening %s: %s (%d)", journal_gzip_file.get_path (), archive.error_string (), archive.errno ());
+        }
+
+        unowned Archive.Entry entry;
+        Archive.Result last_result;
+        while ((last_result = archive.next_header (out entry)) == Archive.Result.OK) {
+            entry.set_perm (0644);
+            entry.set_pathname (Path.build_filename (journal_unzip_location.get_path (), entry.pathname ()));
+
+            if (extractor.write_header (entry) != Archive.Result.OK) {
+                continue;
+            }
+
+            uint8[] buffer;
+            Posix.off_t offset;
+            while (archive.read_data_block (out buffer, out offset) == Archive.Result.OK) {
+                if (extractor.write_data_block (buffer, offset) != Archive.Result.OK) {
+                    break;
+                }
+            }
+        }
+
+        if (last_result != Archive.Result.EOF) {
+            critical ("Error: %s (%d)", archive.error_string (), archive.errno ());
+        }
+    }
 }

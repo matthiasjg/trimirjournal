@@ -43,6 +43,7 @@ You'll need the following dependencies:
 * libgtksourceview-4.0-dev
 * libhandy-1-dev
 * libgranite-dev
+* libarchive
 * meson
 * valac
 
@@ -50,7 +51,8 @@ You'll need the following dependencies:
 sudo apt install \
     elementary-sdk \
     libgda-5.0-dev \
-    libgtksourceview-4-dev
+    libgtksourceview-4-dev \
+    libarchive-dev
 ```
 
 You'll also need to init and update these Git submodules with required subprojects (in `subprojects/` directory):
