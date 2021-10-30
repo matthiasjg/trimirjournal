@@ -1,0 +1,190 @@
+# Spanish translations for com.github.matthiasjg.trimirjournal package.
+# Copyright (C) 2021 THE com.github.matthiasjg.trimirjournal'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.matthiasjg.trimirjournal package
+# Automatically generated, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: com.github.matthiasjg.trimirjournal\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-08-04 11:26+0200\n"
+"PO-Revision-Date: 2021-10-29 22:21-0500\n"
+"Last-Translator: Diego Iván <diegoivan.mae@gmail.com>\n"
+"Language-Team: Spanish - Mexico <diegoivan.mae@gmail.com>\n"
+"Language: es_MX\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0\n"
+
+#: src/Controller.vala:71
+msgid "JSON (*.json)"
+msgstr "JSON (*.json)"
+
+#: src/Controller.vala:73
+msgid "Save"
+msgstr "Guardar"
+
+#: src/Controller.vala:73
+msgid "Open"
+msgstr "Abrir"
+
+#: src/Controller.vala:80
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: src/Controller.vala:116 src/View/WelcomeView.vala:15
+msgid "Reset and Restore Journal"
+msgstr "Reiniciar y Restaurar Diario"
+
+#: src/Controller.vala:141 src/View/WelcomeView.vala:18
+msgid "Backup Journal"
+msgstr "Respaldar Diario"
+
+#: src/View/LogChartView.vala:155
+msgid "first"
+msgstr "primer"
+
+#: src/View/LogChartView.vala:157
+msgid "last"
+msgstr "último"
+
+#: src/View/JournalRow.vala:11
+msgid "Journal"
+msgstr "Diario"
+
+#: src/View/WelcomeRow.vala:11
+msgid "Home"
+msgstr "Inicio"
+
+#: src/View/TagsRow.vala:11
+msgid "Tags"
+msgstr "Etiquetas"
+
+#: src/View/SavedSearchesRow.vala:11
+msgid "Saved Searches"
+msgstr "Búsquedas Guardadas"
+
+#: src/View/TagButton.vala:38
+#, c-format
+msgid "Active tag filter %s"
+msgstr "Filtro de etiquetas Activo %s"
+
+#: src/View/TagButton.vala:54
+#, c-format
+msgid "Remove filter for tag %s"
+msgstr "Eliminar filtro para la etiqueta %s"
+
+#: src/View/MainWindow.vala:25 src/View/MainWindow.vala:120
+#: data/trimir-journal.desktop.in:3 data/trimir-journal.appdata.xml.in:7
+msgid "Trimir Journal"
+msgstr ""
+
+#: src/View/MainWindow.vala:61
+msgid "Reset and Restore…"
+msgstr "Reiniciar y Restaurar…"
+
+#: src/View/MainWindow.vala:69
+msgid "Backup…"
+msgstr "Respaldar…"
+
+#: src/View/MainWindow.vala:89
+msgid "Search Journal"
+msgstr "Buscar un Diario"
+
+#: src/View/MainWindow.vala:90 src/View/MainWindow.vala:195
+msgid "Not implemented yet"
+msgstr "Aún no ha sido implementado"
+
+#: src/View/MainWindow.vala:194
+msgid "Start logging or type ? to search your Journal…"
+msgstr "Empiece su registro o escriba ? para buscar su Diario…"
+
+#: src/View/WelcomeView.vala:11
+msgid "Welcome to Trimir Journal"
+msgstr "Bienvenido a Trimir Journal"
+
+#: src/View/WelcomeView.vala:12 data/trimir-journal.appdata.xml.in:8
+msgid "Your personal activity \"Tricorder\"."
+msgstr "Su actividad personal \"Tricorder\"."
+
+#: src/View/WelcomeView.vala:16
+msgid "Import Journal from a JSON (*.json) file."
+msgstr "Importar Diario desde un archivo JSON (*.json)."
+
+#: src/View/WelcomeView.vala:19
+msgid "Export Journal to a JSON (*.json) file."
+msgstr "Exportar Diario a un archivo JSON (*.json)."
+
+#: data/trimir-journal.desktop.in:4
+msgid "Write a diary, log your activities, keep track of your metrics"
+msgstr ""
+"Escriba un diario, registre sus actividades diarias, haga un seguimiento de "
+"sus métricas"
+
+#: data/trimir-journal.desktop.in:7
+msgid "com.github.matthiasjg.trimirjournal"
+msgstr ""
+
+#: data/trimir-journal.desktop.in:10
+msgid ""
+"Journal;Log;Diary;Notes;Personal;Activity;Tracking;Sports;Fitness;Metric"
+msgstr ""
+"Diario;Registro;Diario;Notas;Personal;Actividades;Seguimiento;Deportes;Salud;"
+"Métricas"
+
+#: data/trimir-journal.appdata.xml.in:10
+msgid ""
+"Designed and built for personal text journaling and activity tracking. Write "
+"a diary, log your activities, keep track of your metrics. Search, filter and "
+"evaluate your journal—your life."
+msgstr ""
+"Diseñado y construido para llevar un diario personal y mantener un "
+"seguimiento de sus actividades. Escriba un diario, registre sus actividades, "
+"lleve un registro de sus métricas. Busque, filtre y evalúe su diario—su vida."
+
+#: data/trimir-journal.appdata.xml.in:15
+msgid "Features:"
+msgstr "Características:"
+
+#: data/trimir-journal.appdata.xml.in:17
+msgid ""
+"Write expressive journal entries with emoijs, organized with hashtags (i.e. "
+"\"#linux rocks 😎️\")"
+msgstr ""
+"Escriba diarios expresivos con emojis, organizados con hashtags (por "
+"ejemplo, \"#linux es genial 😎️\")"
+
+#: data/trimir-journal.appdata.xml.in:18
+msgid "Search your journal"
+msgstr "Busque su diario"
+
+#: data/trimir-journal.appdata.xml.in:19
+msgid "Filter your journal by hashtag"
+msgstr "Filtre su diario con hashtags"
+
+#: data/trimir-journal.appdata.xml.in:20
+msgid ""
+"Render timeline charts when filtering for \"metric tags\", i.e. a hashtag "
+"followed by a number with optional unit (e.g. \"#Trailrun 5km\")"
+msgstr ""
+"Grafique líneas del tiempo cuando filtro por \"etiquetas de métrica\", es "
+"decir, un hashtag seguido de un número con una unidad opcional (por ejemplo "
+"\"Trailrun 5km\")"
+
+#: data/trimir-journal.appdata.xml.in:21
+msgid "Backup and restore your journal to and from a JSON file"
+msgstr "Respalde y restaure su diario de y desde un archivo JSON"
+
+#: data/trimir-journal.appdata.xml.in:38
+msgid "First release!"
+msgstr "Primer Lanzamiento!"
+
+#: data/trimir-journal.appdata.xml.in:39
+msgid "Supports the dark style"
+msgstr "Soporta tema oscuro"
+
+#: data/trimir-journal.appdata.xml.in:76
+msgid "Matthias Joachim Geisler, openwebcraft"
+msgstr ""
