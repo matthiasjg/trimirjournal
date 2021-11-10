@@ -14,8 +14,8 @@ public class Journal.LogReader : Object {
         return __instance;
     }
 
-    public Journal.LogModel[] ? load_journal_from_json_file (string journal_file_path) {
-        if (journal_file_path == null || journal_file_path == "") {
+    public Journal.LogModel[] ? load_journal_from_json_file (File journal_json_file) {
+        if (journal_json_file == null) {
             return null;
         }
         Journal.LogModel[] logs = null;
@@ -25,8 +25,7 @@ public class Journal.LogReader : Object {
             uint8[] contents;
             string etag_out;
 
-            File file = File.new_for_path (journal_file_path);
-            file.load_contents (null, out contents, out etag_out);
+            journal_json_file.load_contents (null, out contents, out etag_out);
 
             // parser.load_from_file ( journal_file_path );
             parser.load_from_data ((string) contents);
@@ -40,52 +39,24 @@ public class Journal.LogReader : Object {
                 logs += log;
             }
         } catch (Error err) {
-            error ("Unable to parse Journal JSON file %s: %s\n", journal_file_path, err.message);
+            error ("Unable to parse Journal JSON file %s: %s\n", journal_json_file.get_path (), err.message);
         }
 
         return logs;
     }
 
-    public void extract_journal_from_gzip_file (File journal_gzip_file, File journal_unzip_location) {
-        Archive.ExtractFlags flags;
-        flags = Archive.ExtractFlags.TIME;
-        flags |= Archive.ExtractFlags.PERM;
-        flags |= Archive.ExtractFlags.ACL;
-        flags |= Archive.ExtractFlags.FFLAGS;
-
-        Archive.Read archive = new Archive.Read ();
-        archive.support_format_all ();
-        archive.support_filter_all ();
-
-        Archive.WriteDisk extractor = new Archive.WriteDisk ();
-        extractor.set_options (flags);
-        extractor.set_standard_lookup ();
-
-        if (archive.open_filename (journal_gzip_file.get_path (), 10240) != Archive.Result.OK) {
-            critical ("Error opening %s: %s (%d)", journal_gzip_file.get_path (), archive.error_string (), archive.errno ());
+    public Journal.LogModel[] ? load_journal_from_zip_archive_file (File archive_file) {
+        if (archive_file == null) {
+            return null;
         }
+        Journal.LogModel[] logs = null;
 
-        unowned Archive.Entry entry;
-        Archive.Result last_result;
-        while ((last_result = archive.next_header (out entry)) == Archive.Result.OK) {
-            entry.set_perm (0644);
-            entry.set_pathname (Path.build_filename (journal_unzip_location.get_path (), entry.pathname ()));
+        Journal.JournalArchiveModel journal_archive = new Journal.JournalArchiveModel (archive_file);
 
-            if (extractor.write_header (entry) != Archive.Result.OK) {
-                continue;
-            }
+        journal_archive.prepare ();
+        logs = journal_archive.load_journal ();
+        journal_archive.close ();
 
-            uint8[] buffer;
-            Posix.off_t offset;
-            while (archive.read_data_block (out buffer, out offset) == Archive.Result.OK) {
-                if (extractor.write_data_block (buffer, offset) != Archive.Result.OK) {
-                    break;
-                }
-            }
-        }
-
-        if (last_result != Archive.Result.EOF) {
-            critical ("Error: %s (%d)", archive.error_string (), archive.errno ());
-        }
+        return logs;
     }
 }

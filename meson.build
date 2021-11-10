@@ -31,12 +31,14 @@ deps = [
     ]
 
 utils_files = [
-    'src/Utils/Utils.vala',
     'src/Utils/LogReader.vala',
-    'src/Utils/LogWriter.vala'
+    'src/Utils/LogWriter.vala',
+    'src/Utils/Utils.vala',
+    'src/Utils/ZipArchiveHandler.vala'
 ]
 
 model_files = [
+    'src/Model/JournalArchiveModel.vala',
     'src/Model/LogModel.vala',
     'src/Model/TagMetricModel.vala'
 ]

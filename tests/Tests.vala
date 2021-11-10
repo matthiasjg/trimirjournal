@@ -3,16 +3,22 @@
  * SPDX-FileCopyrightText: 2021 Matthias Joachim Geisler, openwebcraft <matthiasjg@openwebcraft.com>
  */
 
-const string SQL_DB_FILE_NAME = "io_trimir_journal_1_0_0_test";
-const string TEST_DATA_FILE_JSON = "ZenJournal_backup.json";
-const int TEST_DATA_ARRAY_COUNT = 5;
+ const string SQL_DB_FILE_NAME = "io_trimir_journal_1_0_0_test";
+ const string TEST_DATA_FILE_JSON = "ZenJournal_backup.json";
+ const string TEST_DATA_FILE_JSON_GZIP = "ZenJournal_backup.zip";
 
-void add_date_time_tests () {
-    Test.add_func ("/DateTime/iso8601_with_zero_hour_offset", () => {
+ const int TEST_DATA_COUNT = 5;
+
+ const string TEST_DATA_LOG = "#Weight 71.2kg #BMI 23.5";
+ const string TEST_DATA_CREATED_AT = "2021-07-17T04:49:05.875Z";
+ const int TEST_DATA_ID = 1626497345;
+
+ void add_date_time_tests () {
+     Test.add_func ("/DateTime/iso8601_with_zero_hour_offset", () => {
         /* "Zulu time" (UTC)
         SimpleDateFormat format = new SimpleDateFormat(
-            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
-            format.setTimeZone(TimeZone.getTimeZone("UTC")); */
+           "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
+           format.setTimeZone(TimeZone.getTimeZone("UTC")); */
         var date_time_now = new DateTime.now_utc ();
         var date_time_now_utc = date_time_now.to_timezone (new TimeZone.utc ());
         var date_time_now_utc_iso8601 = date_time_now_utc.format_iso8601 ();
@@ -23,16 +29,16 @@ void add_date_time_tests () {
         debug ("date_time_now_utc_iso8601: %s", date_time_now_utc_iso8601.to_string () );
         debug ("date_time_now_iso8601: %s", date_time_now_iso8601 );
         debug ("date_time_now_iso8601_zulu: %s", date_time_now_iso8601_zulu );
-    });
-}
+     });
+ }
 
-void add_json_serialization_tests () {
-    Test.add_func ("/JSON/serialize", () => {
-        var json_file_path = "%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON);
-        debug ("json_file: %s", json_file_path);
+ void add_json_serialization_tests () {
+     Test.add_func ("/JSON/serialize", () => {
+        File json_file = File.new_for_path ("%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON));
+        debug ("json_file: %s", json_file.get_path ());
 
         Journal.LogReader log_reader = Journal.LogReader.shared_instance ();
-        var logs = log_reader.load_journal_from_json_file (json_file_path);
+        var logs = log_reader.load_journal_from_json_file (json_file);
         var log = logs[0];
 
         Json.Builder builder = new Json.Builder ();
@@ -49,16 +55,16 @@ void add_json_serialization_tests () {
         Json.Generator generator = new Json.Generator ();
         generator.set_root (root);
         debug ("json, %s", generator.to_data (null));
-    });
-}
+     });
+ }
 
-void add_tag_metric_tests () {
-    Test.add_func ("/TagMetricModel/from_log", () => {
-        var json_file_path = "%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON);
-        debug ("json_file: %s", json_file_path);
+ void add_tag_metric_tests () {
+     Test.add_func ("/TagMetricModel/from_log", () => {
+        File json_file = File.new_for_path ("%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON));
+        debug ("json_file: %s", json_file.get_path ());
 
         Journal.LogReader log_reader = Journal.LogReader.shared_instance ();
-        var logs = log_reader.load_journal_from_json_file (json_file_path);
+        var logs = log_reader.load_journal_from_json_file (json_file);
 
         var log = logs[0].log; // "#Weight 71.2kg #BMI 23.5"
         var tag = "#Weight";
@@ -71,58 +77,105 @@ void add_tag_metric_tests () {
         assert (tag_metric != null);
         assert (tag_metric.value == double.parse (value));
         assert (tag_metric.unit == unit);
-    });
-}
+     });
+ }
 
-void add_log_reader_tests () {
-    Test.add_func ("/LogReader/load_journal_from_json_file", () => {
-        var json_file_path = "%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON);
-        debug ("json_file: %s", json_file_path);
+ void add_log_reader_tests () {
+     Test.add_func ("/LogReader/load_journal_from_json_file", () => {
+        File json_file = File.new_for_path ("%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON));
+        debug ("json_file: %s", json_file.get_path ());
 
         Journal.LogReader log_reader = Journal.LogReader.shared_instance ();
-        var logs = log_reader.load_journal_from_json_file (json_file_path);
+        var logs = log_reader.load_journal_from_json_file (json_file);
 
-        assert (logs != null && logs.length == TEST_DATA_ARRAY_COUNT);
-    });
-}
+        assert (logs != null && logs.length == TEST_DATA_COUNT);
+        assert (logs[0].log == TEST_DATA_LOG);
+        assert (logs[0].created_at == TEST_DATA_CREATED_AT);
+        assert (logs[0].id == TEST_DATA_ID);
+     });
+ }
 
-void add_log_writer_tests () {
-    Test.add_func ("/LogWriter/write_journal_to_json_file", () => {
-        var json_file_path_read = "%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON);
+ void add_log_writer_tests () {
+     Test.add_func ("/LogWriter/write_journal_to_json_file", () => {
+        File json_file_read = File.new_for_path ("%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON));
 
         var json_file_name_write = TEST_DATA_FILE_JSON
             .replace (".json", "_%s.json").printf (
                 new DateTime.now_local ().format ("%Y-%m-%d_%H-%M-%S")
             );
-        var json_file_path_write = "%s/%s".printf (Environment.get_tmp_dir (), json_file_name_write);
-        debug ("json_file_path_read: %s", json_file_path_read);
-        debug ("json_file_path_write: %s", json_file_path_write);
+        File json_file_write = File.new_for_path ("%s/%s".printf (Environment.get_tmp_dir (), json_file_name_write));
+        debug ("json_file_path_read: %s", json_file_read.get_path ());
+        debug ("json_file_path_write: %s", json_file_write.get_path ());
 
         Journal.LogReader log_reader = Journal.LogReader.shared_instance ();
-        var logs_read = log_reader.load_journal_from_json_file (json_file_path_read);
+        var logs_read = log_reader.load_journal_from_json_file (json_file_read);
 
-        assert (logs_read != null && logs_read.length == TEST_DATA_ARRAY_COUNT);
+        assert (logs_read != null && logs_read.length == TEST_DATA_COUNT);
 
         Journal.LogWriter log_writer = Journal.LogWriter.shared_instance ();
-        var is_logs_written = log_writer.write_journal_to_json_file (logs_read, json_file_path_write);
+        var is_logs_written = log_writer.write_journal_to_json_file (logs_read, json_file_write);
 
         assert (is_logs_written == true);
 
-        var logs_written_read = log_reader.load_journal_from_json_file (json_file_path_write);
+        var logs_written_read = log_reader.load_journal_from_json_file (json_file_write);
+
+        assert (logs_written_read != null && logs_written_read.length == logs_read.length);
+     });
+ }
+
+ void add_log_archive_reader_tests () {
+    Test.add_func ("/LogReader/load_journal_from_zip_archive_file", () => {
+        File archive_file = File.new_for_path ("%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON_GZIP));
+        debug ("archive_file: %s", archive_file.get_path ());
+
+        Journal.LogReader log_reader = Journal.LogReader.shared_instance ();
+        var logs = log_reader.load_journal_from_zip_archive_file (archive_file);
+
+        assert (logs != null && logs.length == TEST_DATA_COUNT);
+        assert (logs[0].log == TEST_DATA_LOG);
+        assert (logs[0].created_at == TEST_DATA_CREATED_AT);
+        assert (logs[0].id == TEST_DATA_ID);
+    });
+}
+
+void add_log_archive_writer_tests () {
+    Test.add_func ("/LogWriter/write_journal_to_zip_archive_file", () => {
+        File archive_file_read = File.new_for_path ("%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON_GZIP));
+
+        var archive_file_name_write = TEST_DATA_FILE_JSON_GZIP
+           .replace (".zip", "_%s.zip").printf (
+               new DateTime.now_local ().format ("%Y-%m-%d_%H-%M-%S")
+           );
+        File archive_file_write = File
+           .new_for_path ("%s/%s".printf (Environment.get_tmp_dir (), archive_file_name_write));
+        debug ("archive_file_path_read: %s", archive_file_read.get_path ());
+        debug ("archive_file_path_write: %s", archive_file_write.get_path ());
+
+        Journal.LogReader log_reader = Journal.LogReader.shared_instance ();
+        var logs_read = log_reader.load_journal_from_zip_archive_file (archive_file_read);
+
+        assert (logs_read != null && logs_read.length == TEST_DATA_COUNT);
+
+        Journal.LogWriter log_writer = Journal.LogWriter.shared_instance ();
+        var is_logs_written = log_writer.write_journal_to_zip_archive_file (logs_read, archive_file_write);
+
+        assert (is_logs_written == true);
+
+        var logs_written_read = log_reader.load_journal_from_zip_archive_file (archive_file_write);
 
         assert (logs_written_read != null && logs_written_read.length == logs_read.length);
     });
 }
 
-void add_journal_reset_and_restore_tests () {
-    Test.add_func ("/Journal/reset_and_restore", () => {
-        var json_file_path = "%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON);
-        debug ("json_file: %s", json_file_path);
+ void add_journal_reset_and_restore_tests () {
+     Test.add_func ("/Journal/reset_and_restore", () => {
+        File json_file = File.new_for_path ("%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON));
+        debug ("json_file: %s", json_file.get_path ());
 
         Journal.LogReader log_reader = Journal.LogReader.shared_instance ();
-        var logs_read = log_reader.load_journal_from_json_file (json_file_path);
+        var logs_read = log_reader.load_journal_from_json_file (json_file);
 
-        assert (logs_read != null && logs_read.length == TEST_DATA_ARRAY_COUNT);
+        assert (logs_read != null && logs_read.length == TEST_DATA_COUNT);
 
         Journal.LogDao log_dao = new Journal.LogDao (SQL_DB_FILE_NAME, true);
         for (uint i = 0; i < logs_read.length; i++) {
@@ -133,20 +186,20 @@ void add_journal_reset_and_restore_tests () {
         Journal.LogModel[] ? logs_selected = log_dao.select_all_entities ();
         assert (logs_selected != null || logs_selected.length == logs_read.length);
         assert (logs_selected[0].id == logs_read[0].id);
-    });
-}
+     });
+ }
 
-void add_log_dao_tests () {
-    Test.add_func ("/LogDao/select_all_entities", () => {
+ void add_log_dao_tests () {
+     Test.add_func ("/LogDao/select_all_entities", () => {
         Journal.LogDao log_dao = new Journal.LogDao (SQL_DB_FILE_NAME, true);
         Journal.LogModel[] ? logs = log_dao.select_all_entities ();
 
         assert (logs == null || logs.length == 0);
-    });
+     });
 
-    Test.add_func ("/LogDao/insert_entity", () => {
-        var json_file = "%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON);
-        debug ("json_file: %s", json_file);
+     Test.add_func ("/LogDao/insert_entity", () => {
+        File json_file = File.new_for_path ("%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON));
+        debug ("json_file: %s", json_file.get_path ());
 
         Journal.LogReader log_reader = Journal.LogReader.shared_instance ();
         Journal.LogModel[] logs_read = log_reader.load_journal_from_json_file (json_file);
@@ -160,11 +213,11 @@ void add_log_dao_tests () {
         debug ("log_selected: %s", log_selected.to_string ());
 
         assert (log_inserted.id == log_selected.id);
-    });
+     });
 
-    Test.add_func ("/LogDao/update_entity", () => {
-        var json_file = "%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON);
-        debug ("json_file: %s", json_file);
+     Test.add_func ("/LogDao/update_entity", () => {
+        File json_file = File.new_for_path ("%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON));
+        debug ("json_file: %s", json_file.get_path ());
 
         Journal.LogReader log_reader = Journal.LogReader.shared_instance ();
         Journal.LogModel[] logs_read = log_reader.load_journal_from_json_file (json_file);
@@ -173,6 +226,7 @@ void add_log_dao_tests () {
         Journal.LogDao log_dao = new Journal.LogDao (SQL_DB_FILE_NAME, true);
         Journal.LogModel log_inserted = log_dao.insert_entity (log_read);
         debug ("log_inserted: %s", log_inserted.to_string ());
+
         var log_to_update = log_inserted;
         string log_update_txt = "I changed my mind #yolo";
         log_to_update.log = log_update_txt;
@@ -181,11 +235,11 @@ void add_log_dao_tests () {
         debug ("log_updated: %s", log_updated.to_string ());
 
         assert (log_updated.log == log_update_txt);
-    });
+     });
 
-    Test.add_func ("/LogDao/delete_entity", () => {
-        var json_file = "%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON);
-        debug ("json_file: %s", json_file);
+     Test.add_func ("/LogDao/delete_entity", () => {
+        File json_file = File.new_for_path ("%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON));
+        debug ("json_file: %s", json_file.get_path ());
 
         Journal.LogReader log_reader = Journal.LogReader.shared_instance ();
         Journal.LogModel[] logs_read = log_reader.load_journal_from_json_file (json_file);
@@ -198,39 +252,41 @@ void add_log_dao_tests () {
         bool is_log_deleted = log_dao.delete_entity (log_inserted.id);
 
         assert (is_log_deleted == true);
-    });
+     });
 
-    Test.add_func ("/LogDao/select_entities_where_column_like", () => {
-        var json_file_path = "%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON);
-        debug ("json_file: %s", json_file_path);
+     Test.add_func ("/LogDao/select_entities_where_column_like", () => {
+        File json_file = File.new_for_path ("%s/%s".printf (TEST_DATA_DIR, TEST_DATA_FILE_JSON));
+        debug ("json_file: %s", json_file.get_path ());
 
         Journal.LogReader log_reader = Journal.LogReader.shared_instance ();
-        var logs_read = log_reader.load_journal_from_json_file (json_file_path);
+        var logs_read = log_reader.load_journal_from_json_file (json_file);
 
-        assert (logs_read != null && logs_read.length == TEST_DATA_ARRAY_COUNT);
+        assert (logs_read != null && logs_read.length == TEST_DATA_COUNT);
 
         Journal.LogDao log_dao = new Journal.LogDao (SQL_DB_FILE_NAME, true);
         for (uint i = 0; i < logs_read.length; i++) {
-            var log = (Journal.LogModel) logs_read[i];
-            log_dao.insert_entity (log);
+           var log = (Journal.LogModel) logs_read[i];
+           log_dao.insert_entity (log);
         }
 
         Journal.LogModel[] ? logs_selected = log_dao.select_entities_where_column_like (
-            Journal.LogDao.SQL_COLUMN_NAME_LOG,
-            "#c64"
+           Journal.LogDao.SQL_COLUMN_NAME_LOG,
+           "#c64"
         );
         assert (logs_selected != null || logs_selected.length == 1);
-    });
-}
+     });
+ }
 
-int main (string[] args) {
-    Test.init (ref args);
-    add_date_time_tests ();
-    add_json_serialization_tests ();
-    add_tag_metric_tests ();
-    add_log_reader_tests ();
-    add_log_writer_tests ();
-    add_log_dao_tests ();
-    add_journal_reset_and_restore_tests ();
-    return Test.run ();
-}
+ int main (string[] args) {
+     Test.init (ref args);
+     add_date_time_tests ();
+     add_json_serialization_tests ();
+     add_tag_metric_tests ();
+     add_log_reader_tests ();
+     add_log_writer_tests ();
+     add_log_archive_reader_tests ();
+     add_log_archive_writer_tests ();
+     add_log_dao_tests ();
+     add_journal_reset_and_restore_tests ();
+     return Test.run ();
+ }

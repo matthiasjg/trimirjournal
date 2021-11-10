@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.matthiasjg.trimirjournal\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-04 11:26+0200\n"
+"POT-Creation-Date: 2021-11-10 18:11+0100\n"
 "PO-Revision-Date: 2021-02-01 21:35+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -17,27 +17,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/Controller.vala:71
-msgid "JSON (*.json)"
+#: src/Controller.vala:72
+msgid "JSON (*.json), ZIP (*.zip)"
 msgstr ""
 
-#: src/Controller.vala:73
+#: src/Controller.vala:74
 msgid "Save"
 msgstr "Speichern"
 
-#: src/Controller.vala:73
+#: src/Controller.vala:74
 msgid "Open"
 msgstr "Öffnen"
 
-#: src/Controller.vala:80
+#: src/Controller.vala:81
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: src/Controller.vala:116 src/View/WelcomeView.vala:15
+#: src/Controller.vala:107 src/View/WelcomeView.vala:15
 msgid "Reset and Restore Journal"
 msgstr "Journal zurücksetzen und wiederherstellen "
 
-#: src/Controller.vala:141 src/View/WelcomeView.vala:18
+#: src/Controller.vala:139 src/View/WelcomeView.vala:18
 #, fuzzy
 msgid "Backup Journal"
 msgstr "Sicherheitskopie des Journal erstellen"
@@ -100,7 +100,8 @@ msgstr "Noch nicht umgesetzt"
 
 #: src/View/MainWindow.vala:194
 msgid "Start logging or type ? to search your Journal…"
-msgstr "Erstelle einen Eintrag oder tippe eine ? um dein Journal zu durchsuchen "
+msgstr ""
+"Erstelle einen Eintrag oder tippe eine ? um dein Journal zu durchsuchen "
 
 #: src/View/WelcomeView.vala:11
 msgid "Welcome to Trimir Journal"
@@ -169,14 +170,30 @@ msgid "Backup and restore your journal to and from a JSON file"
 msgstr ""
 
 #: data/trimir-journal.appdata.xml.in:38
-msgid "First release!"
+msgid "The first AppCenter release, maybe."
 msgstr ""
 
 #: data/trimir-journal.appdata.xml.in:39
+msgid "Fixed failing build for AppCenter due to Git submodule"
+msgstr ""
+
+#: data/trimir-journal.appdata.xml.in:44
+msgid "The real first release!"
+msgstr ""
+
+#: data/trimir-journal.appdata.xml.in:45
+msgid "Changed RDNN to comply with beta developer dashoard"
+msgstr ""
+
+#: data/trimir-journal.appdata.xml.in:50
+msgid "First release!"
+msgstr ""
+
+#: data/trimir-journal.appdata.xml.in:51
 msgid "Supports the dark style"
 msgstr ""
 
-#: data/trimir-journal.appdata.xml.in:76
+#: data/trimir-journal.appdata.xml.in:88
 msgid "Matthias Joachim Geisler, openwebcraft"
 msgstr ""
 
