@@ -59,7 +59,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/libarchive/libarchive
-        tag: '3.4.0'
+        tag: 'v3.4.0'
     build-commands:
       - ./build/autogen.sh
     cleanup:
