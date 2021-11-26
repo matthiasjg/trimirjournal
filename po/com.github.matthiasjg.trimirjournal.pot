@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.matthiasjg.trimirjournal\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-10 18:11+0100\n"
+"POT-Creation-Date: 2021-11-26 16:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -109,11 +109,11 @@ msgid "Your personal activity \"Tricorder\"."
 msgstr ""
 
 #: src/View/WelcomeView.vala:16
-msgid "Import Journal from a JSON (*.json) file."
+msgid "Import Journal from a JSON (*.json) or ZIP (*.zip) file."
 msgstr ""
 
 #: src/View/WelcomeView.vala:19
-msgid "Export Journal to a JSON (*.json) file."
+msgid "Export Journal to a JSON (*.json) or ZIP (*.zip) file."
 msgstr ""
 
 #: data/trimir-journal.desktop.in:4
@@ -142,8 +142,8 @@ msgstr ""
 
 #: data/trimir-journal.appdata.xml.in:17
 msgid ""
-"Write expressive journal entries with emoijs, organized with hashtags (i.e. "
-"\"#linux rocks 😎️\")"
+"Write expressive journal entries with emoijs and clickable URLs, organized "
+"with hashtags (i.e. \"#linux rocks 😎️\")"
 msgstr ""
 
 #: data/trimir-journal.appdata.xml.in:18
@@ -161,33 +161,51 @@ msgid ""
 msgstr ""
 
 #: data/trimir-journal.appdata.xml.in:21
-msgid "Backup and restore your journal to and from a JSON file"
-msgstr ""
-
-#: data/trimir-journal.appdata.xml.in:38
-msgid "The first AppCenter release, maybe."
+msgid ""
+"Backup and restore your journal to and from a JSON or ZIP archive file "
+"compatible with ZenJournal (Disclaimer: Trimir Journal is not created by, "
+"affiliated with, or supported by ZenJournal.)"
 msgstr ""
 
 #: data/trimir-journal.appdata.xml.in:39
+msgid "Added Spanish translation from Diego, thanks for the contribution 🙌️"
+msgstr ""
+
+#: data/trimir-journal.appdata.xml.in:40
+msgid ""
+"Backup and restore your journal to and from a ZIP archive file compatible "
+"with ZenJournal (Disclaimer: Trimir Journal is not created by, affiliated "
+"with, or supported by ZenJournal.)"
+msgstr ""
+
+#: data/trimir-journal.appdata.xml.in:41
+msgid "URLs in journal entries are now clickable links"
+msgstr ""
+
+#: data/trimir-journal.appdata.xml.in:47
+msgid "The first AppCenter release, maybe."
+msgstr ""
+
+#: data/trimir-journal.appdata.xml.in:48
 msgid "Fixed failing build for AppCenter due to Git submodule"
 msgstr ""
 
-#: data/trimir-journal.appdata.xml.in:44
+#: data/trimir-journal.appdata.xml.in:53
 msgid "The real first release!"
 msgstr ""
 
-#: data/trimir-journal.appdata.xml.in:45
+#: data/trimir-journal.appdata.xml.in:54
 msgid "Changed RDNN to comply with beta developer dashoard"
 msgstr ""
 
-#: data/trimir-journal.appdata.xml.in:50
+#: data/trimir-journal.appdata.xml.in:59
 msgid "First release!"
 msgstr ""
 
-#: data/trimir-journal.appdata.xml.in:51
+#: data/trimir-journal.appdata.xml.in:60
 msgid "Supports the dark style"
 msgstr ""
 
-#: data/trimir-journal.appdata.xml.in:88
+#: data/trimir-journal.appdata.xml.in:97
 msgid "Matthias Joachim Geisler, openwebcraft"
 msgstr ""

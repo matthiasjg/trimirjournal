@@ -13,10 +13,10 @@ public class Journal.WelcomeView : Gtk.Grid {
         );
 
         welcome.append ("document-import", _("Reset and Restore Journal"),
-            _("Import Journal from a JSON (*.json) file."));
+            _("Import Journal from a JSON (*.json) or ZIP (*.zip) file."));
 
         welcome.append ("document-export", _("Backup Journal"),
-            _("Export Journal to a JSON (*.json) file."));
+            _("Export Journal to a JSON (*.json) or ZIP (*.zip) file."));
 
         add (welcome);
 

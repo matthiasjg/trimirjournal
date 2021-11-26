@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.matthiasjg.trimirjournal\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-04 11:26+0200\n"
+"POT-Creation-Date: 2021-11-26 16:24+0100\n"
 "PO-Revision-Date: 2021-10-29 22:21-0500\n"
 "Last-Translator: Diego Iván <diegoivan.mae@gmail.com>\n"
 "Language-Team: Spanish - Mexico <diegoivan.mae@gmail.com>\n"
@@ -18,27 +18,28 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.0\n"
 
-#: src/Controller.vala:71
-msgid "JSON (*.json)"
-msgstr "JSON (*.json)"
+#: src/Controller.vala:72
+#, fuzzy
+msgid "JSON (*.json), ZIP (*.zip)"
+msgstr "JSON (*.json), ZIP (*.zip)"
 
-#: src/Controller.vala:73
+#: src/Controller.vala:74
 msgid "Save"
 msgstr "Guardar"
 
-#: src/Controller.vala:73
+#: src/Controller.vala:74
 msgid "Open"
 msgstr "Abrir"
 
-#: src/Controller.vala:80
+#: src/Controller.vala:81
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: src/Controller.vala:116 src/View/WelcomeView.vala:15
+#: src/Controller.vala:107 src/View/WelcomeView.vala:15
 msgid "Reset and Restore Journal"
 msgstr "Reiniciar y Restaurar Diario"
 
-#: src/Controller.vala:141 src/View/WelcomeView.vala:18
+#: src/Controller.vala:139 src/View/WelcomeView.vala:18
 msgid "Backup Journal"
 msgstr "Respaldar Diario"
 
@@ -110,12 +111,14 @@ msgid "Your personal activity \"Tricorder\"."
 msgstr "Su actividad personal \"Tricorder\"."
 
 #: src/View/WelcomeView.vala:16
-msgid "Import Journal from a JSON (*.json) file."
-msgstr "Importar Diario desde un archivo JSON (*.json)."
+#, fuzzy
+msgid "Import Journal from a JSON (*.json) or ZIP (*.zip) file."
+msgstr "Importar Diario desde un archivo JSON (*.json) o ZIP (* .zip)."
 
 #: src/View/WelcomeView.vala:19
-msgid "Export Journal to a JSON (*.json) file."
-msgstr "Exportar Diario a un archivo JSON (*.json)."
+#, fuzzy
+msgid "Export Journal to a JSON (*.json) or ZIP (*.zip) file."
+msgstr "Exportar Diario a un archivo JSON (*.json) o ZIP (* .zip)."
 
 #: data/trimir-journal.desktop.in:4
 msgid "Write a diary, log your activities, keep track of your metrics"
@@ -149,12 +152,13 @@ msgid "Features:"
 msgstr "Características:"
 
 #: data/trimir-journal.appdata.xml.in:17
+#, fuzzy
 msgid ""
-"Write expressive journal entries with emoijs, organized with hashtags (i.e. "
-"\"#linux rocks 😎️\")"
+"Write expressive journal entries with emoijs and clickable URLs, organized "
+"with hashtags (i.e. \"#linux rocks 😎️\")"
 msgstr ""
-"Escriba diarios expresivos con emojis, organizados con hashtags (por "
-"ejemplo, \"#linux es genial 😎️\")"
+"Escriba diarios expresivos con emojis y URL en las que se puede hacer clic, "
+"organizados con hashtags (por ejemplo, \"#linux es genial 😎️\")"
 
 #: data/trimir-journal.appdata.xml.in:18
 msgid "Search your journal"
@@ -174,17 +178,55 @@ msgstr ""
 "\"Trailrun 5km\")"
 
 #: data/trimir-journal.appdata.xml.in:21
-msgid "Backup and restore your journal to and from a JSON file"
-msgstr "Respalde y restaure su diario de y desde un archivo JSON"
+msgid ""
+"Backup and restore your journal to and from a JSON or ZIP archive file "
+"compatible with ZenJournal (Disclaimer: Trimir Journal is not created by, "
+"affiliated with, or supported by ZenJournal.)"
+msgstr ""
 
-#: data/trimir-journal.appdata.xml.in:38
+#: data/trimir-journal.appdata.xml.in:39
+msgid "Added Spanish translation from Diego, thanks for the contribution 🙌️"
+msgstr ""
+
+#: data/trimir-journal.appdata.xml.in:40
+msgid ""
+"Backup and restore your journal to and from a ZIP archive file compatible "
+"with ZenJournal (Disclaimer: Trimir Journal is not created by, affiliated "
+"with, or supported by ZenJournal.)"
+msgstr ""
+
+#: data/trimir-journal.appdata.xml.in:41
+msgid "URLs in journal entries are now clickable links"
+msgstr ""
+
+#: data/trimir-journal.appdata.xml.in:47
+msgid "The first AppCenter release, maybe."
+msgstr ""
+
+#: data/trimir-journal.appdata.xml.in:48
+msgid "Fixed failing build for AppCenter due to Git submodule"
+msgstr ""
+
+#: data/trimir-journal.appdata.xml.in:53
+#, fuzzy
+msgid "The real first release!"
+msgstr "Primer Lanzamiento!"
+
+#: data/trimir-journal.appdata.xml.in:54
+msgid "Changed RDNN to comply with beta developer dashoard"
+msgstr ""
+
+#: data/trimir-journal.appdata.xml.in:59
 msgid "First release!"
 msgstr "Primer Lanzamiento!"
 
-#: data/trimir-journal.appdata.xml.in:39
+#: data/trimir-journal.appdata.xml.in:60
 msgid "Supports the dark style"
 msgstr "Soporta tema oscuro"
 
-#: data/trimir-journal.appdata.xml.in:76
+#: data/trimir-journal.appdata.xml.in:97
 msgid "Matthias Joachim Geisler, openwebcraft"
 msgstr ""
+
+#~ msgid "Backup and restore your journal to and from a JSON file"
+#~ msgstr "Respalde y restaure su diario de y desde un archivo JSON"
