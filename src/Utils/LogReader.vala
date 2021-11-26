@@ -14,8 +14,8 @@ public class Journal.LogReader : Object {
         return __instance;
     }
 
-    public Journal.LogModel[] ? load_journal_from_json_file (string journal_file_path) {
-        if (journal_file_path == null || journal_file_path == "") {
+    public Journal.LogModel[] ? load_journal_from_json_file (File journal_json_file) {
+        if (journal_json_file == null) {
             return null;
         }
         Journal.LogModel[] logs = null;
@@ -25,8 +25,7 @@ public class Journal.LogReader : Object {
             uint8[] contents;
             string etag_out;
 
-            File file = File.new_for_path (journal_file_path);
-            file.load_contents (null, out contents, out etag_out);
+            journal_json_file.load_contents (null, out contents, out etag_out);
 
             // parser.load_from_file ( journal_file_path );
             parser.load_from_data ((string) contents);
@@ -40,8 +39,23 @@ public class Journal.LogReader : Object {
                 logs += log;
             }
         } catch (Error err) {
-            error ("Unable to parse Journal JSON file %s: %s\n", journal_file_path, err.message);
+            error ("Unable to parse Journal JSON file %s: %s\n", journal_json_file.get_path (), err.message);
         }
+
+        return logs;
+    }
+
+    public Journal.LogModel[] ? load_journal_from_zip_archive_file (File archive_file) {
+        if (archive_file == null) {
+            return null;
+        }
+        Journal.LogModel[] logs = null;
+
+        Journal.JournalArchiveModel journal_archive = new Journal.JournalArchiveModel (archive_file);
+
+        journal_archive.prepare ();
+        logs = journal_archive.load_journal ();
+        journal_archive.close ();
 
         return logs;
     }

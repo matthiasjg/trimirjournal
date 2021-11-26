@@ -1,21 +1,21 @@
-# English translations for com.github.matthiasjg.trimirjournal package.
-# Copyright (C) 2021 THE com.github.matthiasjg.trimirjournal'S COPYRIGHT HOLDER
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.matthiasjg.trimirjournal package.
-# Automatically generated, 2021.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.matthiasjg.trimirjournal\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-10 18:11+0100\n"
-"PO-Revision-Date: 2021-02-01 21:35+0100\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"Language: en\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/Controller.vala:72
 msgid "JSON (*.json), ZIP (*.zip)"
@@ -50,9 +50,8 @@ msgid "last"
 msgstr ""
 
 #: src/View/JournalRow.vala:11
-#, fuzzy
 msgid "Journal"
-msgstr "Trimir Journal"
+msgstr ""
 
 #: src/View/WelcomeRow.vala:11
 msgid "Home"
@@ -79,7 +78,7 @@ msgstr ""
 #: src/View/MainWindow.vala:25 src/View/MainWindow.vala:120
 #: data/trimir-journal.desktop.in:3 data/trimir-journal.appdata.xml.in:7
 msgid "Trimir Journal"
-msgstr "Trimir Journal"
+msgstr ""
 
 #: src/View/MainWindow.vala:61
 msgid "Reset and Restore…"
@@ -90,9 +89,8 @@ msgid "Backup…"
 msgstr ""
 
 #: src/View/MainWindow.vala:89
-#, fuzzy
 msgid "Search Journal"
-msgstr "Trimir Journal"
+msgstr ""
 
 #: src/View/MainWindow.vala:90 src/View/MainWindow.vala:195
 msgid "Not implemented yet"
@@ -103,9 +101,8 @@ msgid "Start logging or type ? to search your Journal…"
 msgstr ""
 
 #: src/View/WelcomeView.vala:11
-#, fuzzy
 msgid "Welcome to Trimir Journal"
-msgstr "Trimir Journal"
+msgstr ""
 
 #: src/View/WelcomeView.vala:12 data/trimir-journal.appdata.xml.in:8
 msgid "Your personal activity \"Tricorder\"."
@@ -124,9 +121,8 @@ msgid "Write a diary, log your activities, keep track of your metrics"
 msgstr ""
 
 #: data/trimir-journal.desktop.in:7
-#, fuzzy
 msgid "com.github.matthiasjg.trimirjournal"
-msgstr "Trimir Journal"
+msgstr ""
 
 #: data/trimir-journal.desktop.in:10
 msgid ""
@@ -194,26 +190,4 @@ msgstr ""
 
 #: data/trimir-journal.appdata.xml.in:88
 msgid "Matthias Joachim Geisler, openwebcraft"
-msgstr "Matthias Joachim Geisler, openwebcraft"
-
-#~ msgid "Journaling App"
-#~ msgstr "Journaling App"
-
-#~ msgid "Journaling, Logging and Activity Tracking"
-#~ msgstr "Journaling, Logging and Activity Tracking"
-
-#~ msgid "Journal;Journaling;Logging;Activity Tracking;Sports Tracking"
-#~ msgstr "Journal;Journaling;Logging;Activity Tracking;Sports Tracking"
-
-#, fuzzy
-#~ msgid ""
-#~ "Trimir Journal is a text diary to help log and in retrospect evaluate all "
-#~ "of your experiences, thoughts and ideas as well as your (sports) "
-#~ "activities."
-#~ msgstr ""
-#~ "Trimir Journal is designed and built to help record and in retrospect "
-#~ "evaluate all of your experiences, thoughts and ideas as well as your "
-#~ "(sports) activities."
-
-#~ msgid "application-default-icon"
-#~ msgstr "application-default-icon"
+msgstr ""

@@ -5,12 +5,12 @@
 
 public class Journal.LogRow : Gtk.ListBoxRow {
 
-    public Gtk.TextView log_view { get; construct; }
+    public Granite.HyperTextView log_view { get; construct; }
     public string[] tags { get; construct; }
 
     private static Gtk.CssProvider logrow_provider;
 
-    public LogRow (Gtk.TextView log_view, string[] tags) {
+    public LogRow (Granite.HyperTextView log_view, string[] tags) {
         Object (log_view: log_view, tags: tags);
     }
 

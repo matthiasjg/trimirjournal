@@ -14,11 +14,11 @@
     </p>
     <p>Features:</p>
     <ul>
-      <li>Write expressive journal entries with emoijs, organized with hashtags (i.e. "#linux rocks 😎️")</li>
+      <li>Write expressive journal entries with emoijs and clickable URLs, organized with hashtags (i.e. "#linux rocks 😎️")</li>
       <li>Search your journal</li>
       <li>Filter your journal by hashtag</li>
       <li>Render timeline charts when filtering for "metric tags", i.e. a hashtag followed by a number with optional unit (e.g. "#Trailrun 5km")</li>
-      <li>Backup and restore your journal to and from a JSON file</li>
+      <li>Backup and restore your journal to and from a JSON or ZIP archive file compatible with ZenJournal (Disclaimer: Trimir Journal is not created by, affiliated with, or supported by ZenJournal.)</li>
     </ul>
   </description>
   <screenshots>
@@ -33,6 +33,15 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.0.3" date="2021-11-26" urgency="medium">
+      <description>
+        <ul>
+          <li>Added Spanish translation from Diego, thanks for the contribution 🙌️</li>
+          <li>Backup and restore your journal to and from a ZIP archive file compatible with ZenJournal (Disclaimer: Trimir Journal is not created by, affiliated with, or supported by ZenJournal.)</li>
+          <li>URLs in journal entries are now clickable links</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.0.2" date="2021-10-07" urgency="medium">
       <description>
         <p>The first AppCenter release, maybe.</p>

@@ -14,8 +14,8 @@ public class Journal.LogWriter : Object {
         return __instance;
     }
 
-    public bool write_journal_to_json_file (Journal.LogModel[] logs, string journal_file_path) {
-        if (journal_file_path == null || journal_file_path == "") {
+    public bool write_journal_to_json_file (Journal.LogModel[] logs, File journal_file, string format = "json") {
+        if (journal_file == null) {
             return false;
         }
 
@@ -36,18 +36,35 @@ public class Journal.LogWriter : Object {
         debug ("journal_json: %s", journal_json);
 
         bool saved = false;
-        File dest = GLib.File.new_for_path (journal_file_path);
         try {
-            var file_stream = dest.create (FileCreateFlags.NONE);
+            var file_stream = journal_file.create (FileCreateFlags.NONE);
             var data_stream = new DataOutputStream (file_stream);
             data_stream.put_string (journal_json);
             saved = true;
         }
         catch (Error err) {
             warning ("Could not write Journal to JSON file %s: %s",
-            journal_file_path, err.message);
+            journal_file.get_path (), err.message);
         }
 
+        return saved;
+    }
+
+    public bool write_journal_to_zip_archive_file (Journal.LogModel[] logs, File archive_file) {
+        if (archive_file == null) {
+            return false;
+        }
+        bool saved = false;
+        Journal.JournalArchiveModel journal_archive = new Journal.JournalArchiveModel (archive_file);
+
+        // replace existing, i.e. delete before re-creating 
+        /* if (archive_file.query_exists ()) {
+            journal_archive.file_collector.mark_for_deletion (archive_file);
+        } */
+
+        journal_archive.prepare ();
+        saved = journal_archive.write_journal (logs);
+        journal_archive.close ();
         return saved;
     }
 }

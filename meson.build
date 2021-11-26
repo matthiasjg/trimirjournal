@@ -26,16 +26,19 @@ deps = [
 	    dependency('granite', version: '>=0.5'),
         dependency('libhandy-1', version: '>=0.90.0'),
         dependency('gtksourceview-4'),
-        dependency('livechart')
+        dependency('livechart'),
+        dependency('libarchive')
     ]
 
 utils_files = [
-    'src/Utils/Utils.vala',
     'src/Utils/LogReader.vala',
-    'src/Utils/LogWriter.vala'
+    'src/Utils/LogWriter.vala',
+    'src/Utils/Utils.vala',
+    'src/Utils/ZipArchiveHandler.vala'
 ]
 
 model_files = [
+    'src/Model/JournalArchiveModel.vala',
     'src/Model/LogModel.vala',
     'src/Model/TagMetricModel.vala'
 ]

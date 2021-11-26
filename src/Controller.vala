@@ -61,14 +61,15 @@ class Journal.Controller : Object {
         updated_journal_logs (log_filter, is_tag_filter, _logs);
     }
 
-    private File ? choose_json_file (
+    private File ? choose_file (
         Gtk.FileChooserAction action,
-        string label = "Choose JSON File",
-        string json_file_name = ""
+        string label = "Choose JSON or ZIP File",
+        string target_file_name = ""
     ) {
-        var json_filter = new Gtk.FileFilter ();
-        json_filter.add_pattern ("*.json");
-        json_filter.set_filter_name (_("JSON (*.json)"));
+        var file_filter = new Gtk.FileFilter ();
+        file_filter.add_pattern ("*.json");
+        file_filter.add_pattern ("*.zip");
+        file_filter.set_filter_name (_("JSON (*.json), ZIP (*.zip)"));
 
         var action_label = action == Gtk.FileChooserAction.SAVE ? _("Save") : _("Open");
 
@@ -79,46 +80,43 @@ class Journal.Controller : Object {
             action_label,
             _("Cancel")
         );
-        if (json_file_name != "") {
+        if (target_file_name != "") {
             file_chooser.do_overwrite_confirmation = true;
-            file_chooser.set_current_name (json_file_name);
+            file_chooser.set_current_name (target_file_name);
         }
-        file_chooser.add_filter (json_filter);
+        file_chooser.add_filter (file_filter);
         file_chooser.set_current_folder (Environment.get_home_dir ());
 
-        string file = "";
-        string name = "";
-        string extension = "";
+        File file = null;
         if (file_chooser.run () == Gtk.ResponseType.ACCEPT) {
-            file = file_chooser.get_filename ();
-            extension = file.slice (file.last_index_of (".", 0), file.length);
+            file = File.new_for_path (file_chooser.get_filename ());
+            string name = file_chooser.get_filename ();
+            name = name.slice (name.last_index_of ("/", 0) + 1, name.last_index_of (".", 0));
 
-            if (extension.length == 0 || extension[0] != '.') {
-                extension = ".json";
-                file += extension;
-            }
-
-            name = file.slice (file.last_index_of ("/", 0) + 1, file.last_index_of (".", 0));
-            message ("name is %s extension is %s\n", name, extension);
+            string ext = get_supported_file_extension (file);
+            name += ext;
+            message ("name is %s extension is %s\n", name, ext);
         }
 
         file_chooser.destroy ();
 
-        if (file != "") {
-            var f = File.new_for_path (file);
-            return f;
-        }
-
-        return null;
+        return file;
     }
 
     public void import_journal () {
-        File ? file = choose_json_file (Gtk.FileChooserAction.OPEN, _("Reset and Restore Journal"));
+        File ? file = choose_file (Gtk.FileChooserAction.OPEN, _("Reset and Restore Journal"));
         if (file != null) {
             if (_log_reader == null) {
                 _log_reader = Journal.LogReader.shared_instance ();
             }
-            var logs = _log_reader.load_journal_from_json_file (file.get_path ());
+            Journal.LogModel[] logs = null;
+
+            string ext = get_supported_file_extension (file);
+            if (ext == "json") {
+                logs = _log_reader.load_journal_from_json_file (file);
+            } else if (ext == "zip") {
+                logs = _log_reader.load_journal_from_zip_archive_file (file);
+            }
 
             // force re-create db, i.e. reset
             _log_dao = new Journal.LogDao (Journal.BaseDao.DB_FILE_NAME, true);
@@ -134,11 +132,11 @@ class Journal.Controller : Object {
     }
 
     public void export_journal () {
-        var json_file_name = "TrimirJournal_backup_%s.json".printf (
+        var default_file_name = "TrimirJournal_backup_%s.json".printf (
             new DateTime.now_local ().format ("%Y-%m-%d")
         );
 
-        File ? file = choose_json_file (Gtk.FileChooserAction.SAVE, _("Backup Journal"), json_file_name);
+        File ? file = choose_file (Gtk.FileChooserAction.SAVE, _("Backup Journal"), default_file_name);
         if (file != null) {
             if (_log_dao == null) {
                 _log_dao = new Journal.LogDao ();
@@ -148,7 +146,23 @@ class Journal.Controller : Object {
             if (_log_writer == null) {
                 _log_writer = Journal.LogWriter.shared_instance ();
             }
-            _log_writer.write_journal_to_json_file (logs, file.get_path ());
+
+            string ext = get_supported_file_extension (file);
+            if (ext == "json") {
+                _log_writer.write_journal_to_json_file (logs, file);
+            } else if (ext == "zip") {
+                _log_writer.write_journal_to_zip_archive_file (logs, file);
+            }
         }
+    }
+
+    private string get_supported_file_extension (File file) {
+        string file_name = file.get_basename ();
+        string ext = file_name.slice (file_name.last_index_of (".", 0) + 1, file_name.length);
+        if (ext.length == 0 || ext == "." || (ext != "json" && ext != "zip")) {
+            warning ("Unsupported file extension: %s", ext);
+            ext = "json"; // sane default
+        }
+        return ext;
     }
 }
