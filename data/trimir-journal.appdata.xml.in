@@ -33,6 +33,11 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.0.5" date="2021-12-14" urgency="medium">
+      <description>
+        <p>Remove Flatpak filesystem permissions</p>
+      </description>
+    </release>
     <release version="1.0.4" date="2021-12-10" urgency="medium">
       <description>
         <p>Fixed Stripe key for integration with AppCenter</p>
