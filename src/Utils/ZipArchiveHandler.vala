@@ -30,9 +30,9 @@
     public FileCollector file_collector { get; private set; }
 
     construct {
-        var parent_folder = opened_file.get_parent ().get_path ();
+        var tmp_folder = Environment.get_tmp_dir ();
         unarchived_location = File.new_for_path (
-            Path.build_filename (parent_folder, UNARCHIVED_PREFIX + opened_file.get_basename ()));
+            Path.build_filename (tmp_folder, UNARCHIVED_PREFIX + opened_file.get_basename ()));
 
         file_collector = new FileCollector (unarchived_location);
     }
