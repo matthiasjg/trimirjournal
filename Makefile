@@ -1,4 +1,6 @@
-.PHONY: clear
+.PHONY: all clear fresh yolo
+
+all: fresh yolo
 
 build:
 	meson build --prefix=/usr
@@ -6,26 +8,28 @@ build:
 clear: 
 	rm -rf build/
 
-fresh:
-	clear build
+fresh: clear build
 
-all:
-	fresh yolo
-
-yolo: 
+ninja-build: build
 	io.elementary.vala-lint ./src ./tests \
 		&& cd build \
 		&& ninja \
-		&& ninja install \
-		&& G_MESSAGES_DEBUG=all GTK_DEBUG=interactive com.github.matthiasjg.trimirjournal \
 		; cd -
 
-uninstall:
+ninja-install: 
 	cd build \
-		&& sudo ninja uninstall \
+		&& ninja install \
 		; cd -
 
-test: 
+ninja-run: 
+	G_MESSAGES_DEBUG=all GTK_DEBUG=interactive com.github.matthiasjg.trimirjournal
+
+ninja-uninstall:
+	cd build \
+		&& ninja uninstall \
+		; cd -
+
+test: fresh
 	io.elementary.vala-lint ./src ./tests \
 		&& cd build \
 		&& ninja test \
@@ -43,3 +47,5 @@ flatpak-build:
 
 flatpak-run: 
 	flatpak run com.github.matthiasjg.trimirjournal
+
+yolo: flatpak-build flatpak-run
