@@ -33,7 +33,7 @@
     </screenshot>
   </screenshots>
   <releases>
-    <release version="1.0.6" date="2021-12-16" urgency="medium">
+    <release version="1.0.6" date="2021-12-17" urgency="medium">
       <description>
         <p>Fixed reset/ restore and backup of journal to zip or json file</p>
       </description>
