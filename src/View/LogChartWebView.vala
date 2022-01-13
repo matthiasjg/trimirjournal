@@ -40,11 +40,12 @@ public class Journal.LogChartWebView : Gtk.Box {
         web_view.get_settings ().set_property ("enable-developer-extras", true);
     }
 
-    private async void inject_data(string accent_color, string log_filter, string logs_json) {
+    private async void inject_data (string accent_color, string log_filter, string logs_json) {
         try {
-            yield web_view.run_javascript("handleData('%s', '%s', '%s');".printf(accent_color, log_filter, logs_json));
+            yield web_view.run_javascript ("handleData('%s', '%s', '%s');"
+                .printf (accent_color, log_filter, logs_json));
         } catch (Error e) {
-            critical("Unable to inject data: %s\n", e.message);
+            critical ("Unable to inject data: %s\n", e.message);
         }
     }
 
@@ -74,10 +75,11 @@ public class Journal.LogChartWebView : Gtk.Box {
 
             // string accent_color = fg_color.to_string ();
             string accent_color = "#%02x%02x%02x"
-                .printf((uint)(Math.round (fg_color.red*255)),
-                        (uint)(Math.round (fg_color.green*255)),
-                        (uint)(Math.round (fg_color.blue*255)))
-                        .up();
+                .printf (
+                    (uint) Math.round (fg_color.red * 255),
+                    (uint) Math.round (fg_color.green * 255),
+                    (uint) Math.round (fg_color.blue * 255)
+                ).up ();
             critical ("accent_color: %s", accent_color);
 
             // warning: `Gtk.StyleContext.get_background_color' has been deprecated since 3.16
@@ -96,7 +98,7 @@ public class Journal.LogChartWebView : Gtk.Box {
                 var dis = new DataInputStream (file.read ());
                 string line;
                 while ((line = dis.read_line (null)) != null) {
-                    html+=line+"\n";
+                    html += line + "\n";
                 }
             } catch (Error e) {
                 error ("%s", e.message);
@@ -119,11 +121,11 @@ public class Journal.LogChartWebView : Gtk.Box {
             logs_json += "]";
 
             web_view.load_changed.connect ((load_event) => {
-                inject_data.begin(accent_color, log_filter, logs_json);
+                inject_data.begin (accent_color, log_filter, logs_json);
             });
 
             // web_view.load_uri (url);
-            web_view.load_html(html, null);
+            web_view.load_html (html, null);
             /*
             web_view.run_javascript_from_gresource.begin ("/com/github/matthiasjg/trimirjournal/js/luxon.min.js", null, (resource, luxon_result) => {
                 try {
