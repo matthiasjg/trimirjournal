@@ -10,10 +10,30 @@ add_project_arguments(
     language: 'vala'
 )
 
+cat_prog = find_program('cat')
+
+html_partials_files = files(
+    'data/html/partials/body-0-logChartWebView.html',
+    'data/html/partials/script-1-luxon.html',
+    'data/html/partials/script-2-chartjs.html',
+    'data/html/partials/script-3-chartjs-adapter-luxon.html',
+    'data/html/partials/script-4-logChartWebView.html'
+)
+
+concat_partials = custom_target(
+  'concat-partials',
+  command: [ cat_prog, '@INPUT@' ],
+  capture: true,
+  input: html_partials_files,
+  output: 'logChartWebView.html',
+  build_by_default: true
+)
+
 gresource = gnome.compile_resources(
     'gresource',
     join_paths('data', 'gresource.xml'),
-    source_dir: 'data'
+    source_dir: 'data',
+    dependencies: [concat_partials]    
 )
 
 deps = [
@@ -27,7 +47,8 @@ deps = [
         dependency('libhandy-1', version: '>=0.90.0'),
         dependency('gtksourceview-4'),
         dependency('livechart'),
-        dependency('libarchive')
+        dependency('libarchive'),
+        dependency('webkit2gtk-4.0', version: '>=2.28')
     ]
 
 utils_files = [
@@ -52,6 +73,7 @@ view_files = [
     'src/View/LogRow.vala',
     'src/View/LogView.vala',
     'src/View/LogChartView.vala',
+    'src/View/LogChartWebView.vala',
     'src/View/JournalRow.vala',
     'src/View/WelcomeRow.vala',
     'src/View/TagsRow.vala',
@@ -75,7 +97,8 @@ executable(
     view_files,
     app_files,
     dependencies: deps,
-    install: true
+    install: true,
+    link_args: ['-lm']
 )
 
 subdir('data')

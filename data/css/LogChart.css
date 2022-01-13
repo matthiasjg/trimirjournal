@@ -5,5 +5,6 @@
 
 log-chart {
     background-color: @accent_color_500;
+    color: @accent_color_500;
     /*color: #ffffff;*/
 }

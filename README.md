@@ -44,6 +44,7 @@ You'll need the following dependencies:
 * libhandy-1-dev
 * libgranite-dev
 * libarchive
+* libwebkit2gtk-4.0-dev
 * meson
 * valac
 
@@ -52,16 +53,8 @@ sudo apt install \
     elementary-sdk \
     libgda-5.0-dev \
     libgtksourceview-4-dev \
-    libarchive-dev
-```
-
-You'll also need to init and update these Git submodules with required subprojects (in `subprojects/` directory):
-
-* [Live Chart](https://github.com/lcallarec/live-chart) a real-time charting library for GTK3 and Vala, based on [Cairo](https://cairographics.org/).
-
-```bash
-git submodule init
-git submodule update
+    libarchive-dev \
+    libwebkit2gtk-4.0-dev
 ```
 
 Run `meson build` to configure the build environment. Change to the build directory and run `ninja` to build
@@ -87,7 +80,7 @@ The `make` targets require two more tools being installed:
 
 1. [vala-lint](https://github.com/vala-lang/vala-lint) to assure one is following the [elementary Code-Style guidelines](https://elementary.io/docs/code/reference#code-style)
 
-2. [Gtk Inspector](https://elementary.io/docs/code/os-dev#gtk-inspector) (from ` elementary-sdk`)
+2. [Gtk Inspector](https://elementary.io/docs/code/os-dev#gtk-inspector) (from `elementary-sdk`)
 
 
 ```bash

@@ -238,7 +238,7 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
         log_view_actionbar_style_context.add_class (Gtk.STYLE_CLASS_FLAT);
 
         var log_view = new Journal.LogView ();
-        var log_chart_view = new Journal.LogChartView ();
+        var log_chart_view = new Journal.LogChartWebView ();
 
         var log_view_grid = new Gtk.Grid ();
         log_view_grid.attach (log_view, 0, 1);
