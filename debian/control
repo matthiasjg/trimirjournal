@@ -2,15 +2,29 @@ Source: com.github.matthiasjg.trimirjournal
 Section: x11
 Priority: extra
 Maintainer: Matthias Joachim Geisler <matthiasjg@openwebcraft.com>
-Build-Depends: debhelper (>= 10.5.1),
+Build-Depends: debhelper (>= 11),
                gettext,
                libgtk-3-dev (>= 3.10),
+               libxml2-dev,
+               libgda-5.0-dev,
+               libglib2.0-dev,
+               libgranite-dev (>= 6.0.0),
+               libhandy-1-dev,
+               libwebkit2gtk-4.0-dev,
+               libjson-glib-dev,
+               libgtksourceview-4-dev,
+               libarchive-dev,
                meson,
-               valac (>= 0.28.0)
+               valac (>= 0.28.0),
 Standards-Version: 4.1.1
 
 Package: com.github.matthiasjg.trimirjournal
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Description: Trimir Journal
- This is a Journaling App written in Vala using Meson build system.
+Description: Your personal activity Tricorder
+ Journaling app designed and built for personal text journaling and activity 
+ tracking.
+ .
+ Write a diary, log your activities, keep track of your metrics.
+ .
+ Search, filter and evaluate your journal — your life.
