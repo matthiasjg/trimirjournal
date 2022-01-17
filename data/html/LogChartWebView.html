@@ -1,0 +1,327 @@
+<!-- partials/head.html -->
+<title>LogChartWebView</title>
+</head>
+
+<body>
+
+    <style>
+        #tagNav {
+            position: absolute;
+            top: 20px;
+            left: 80px;
+        }
+
+        #tagNav label {
+            margin-right: 5px;
+        }
+    </style>
+    <div id="tagNav"></div>
+    <canvas id="logChart"></canvas>
+
+    <!--footer>
+        <p>Powered by <code>Simple.css</code>, <code>Chart.js</code>, <code>Moment/Luxon</code></p>
+    </footer-->
+
+    <script>
+
+        const DateTime = luxon.DateTime;
+
+        const paginate = (items, page = 1, perPage = 10) => {
+            const offset = perPage * (page - 1);
+            const totalPages = Math.ceil(items.length / perPage);
+            const paginatedItems = items.slice(offset, perPage * page);
+
+            return {
+                previousPage: page - 1 ? page - 1 : null,
+                nextPage: (totalPages > page) ? page + 1 : null,
+                total: items.length,
+                totalPages: totalPages,
+                items: paginatedItems
+            };
+        };
+
+        const loadJournal = (logs, page = 1, perPage = 10) => {
+            const rows = logs.map(log => ({
+                ...log,
+                ...({ metrics: getTagMetrics(log.log) }),
+            }));
+            return paginate(rows, page, perPage);
+        };
+
+        const getTagMetrics = (log, tag = null) => {
+            const regexTags = new RegExp(/(^|\s)(#[a-z\d-]+)/, 'gi');
+            const tags = [...log.matchAll(regexTags)].map((t) => t[2]);
+
+            const metrics = tags.map((tag) => {
+                const tagSuccessor = log.split(tag).pop();
+                const tagValuesUnits =
+                    tagSuccessor && `${tag} ${tagSuccessor.split('#')[0].trim()}`;
+
+                const regexMetrics = new RegExp(
+                    `${tag}\\s(?<count>\\d+)\\b|(?<value>\\d+(\\.\\d+)?)(?<unit>[a-zA-Z]+)`,
+                    'g'
+                );
+
+                // tag metrics are either:
+                // "#Tag <count>" (single tag w/ count, e.g. of repetitions)
+                //      OR
+                //  "<value><unit>" (possibly even multiple)
+                const metrics =
+                    (tagValuesUnits &&
+                        [...tagValuesUnits.matchAll(regexMetrics)]
+                            .map((m) => {
+                                return JSON.parse(JSON.stringify(m.groups), (key, val) =>
+                                    key === 'value'
+                                        ? val * 1 // <value> is a number
+                                        : key === 'count'
+                                            ? val * 1 // <count> is a number
+                                            : val
+                                );
+                            })
+                            .map((m) => ({
+                                value: m.value || m.count, // transform <count> to value w/ unit shape
+                                unit: m.unit || 'count',
+                            }))) ||
+                    [];
+                return metrics.length > 0 ? { tag: tag, metrics: metrics } : null;
+            });
+            const tagMetrics = metrics.filter(m => m);
+            if (tag) {
+                return tagMetrics.filter(m => m.tag === tag);
+            } else {
+                return tagMetrics;
+            }
+        };
+
+        const getColor = (config, state, idx) => {
+            const { colors } = config.elementaryos;
+            const { accentColor } = state
+            const colorPaletteName = Object.keys(colors)
+                .find(colorPaletteName => Object.values(colors[colorPaletteName])
+                    .find(val => val.toLowerCase() === accentColor.toLowerCase()));
+            const colorPalette = colors[colorPaletteName];
+            if (idx > colorPalette.length - 1) {
+                idx = 0;
+            }
+            return colorPalette[Object.keys(colorPalette)[idx]];
+        };
+
+        const setColorOpacity = (colorHex, alpha) => `${colorHex}${Math.floor(alpha * 255).toString(16).padStart(2, 0)}`;
+
+        const loadChart = (config, state) => {
+            if (window.logChart && window.logChart.destroy) {
+                window.logChart.destroy();
+            }
+            const { tag, logs } = state;
+            const logsLoaded = loadJournal(logs, 1, 1000);
+            const logsWithTagMetrics = logsLoaded.items.filter(log => log.metrics.length > 0 && log.metrics.find(m => m.tag === tag));
+
+            const tags = [];
+            const chartDatasets = {};
+            const chartLabels = [];
+
+            document.getElementById("tagNav").innerHTML = ''; // reset
+
+            logsWithTagMetrics.forEach(log => {
+                // chart labels, datasets
+                const createdAt = DateTime.fromISO(log.createdAt);
+                chartLabels.push(createdAt.toJSDate()); // .split('T')[0]
+                const { metrics } = log.metrics.find(metric => metric.tag === tag);
+
+                metrics.forEach(metric => {
+                    const { value, unit } = metric;
+                    chartDatasets[unit] = chartDatasets[unit] || [];
+                    chartDatasets[unit].push({ x: createdAt.toISO(), y: value });
+                });
+
+                log.metrics.forEach(metric => {
+                    const { tag } = metric;
+                    if (tags.indexOf(tag) === -1) {
+                        tags.push(tag)
+                        // tag nav
+                        const tagNavItem = document.createElement("input");
+                        tagNavItem.type = "radio";
+                        tagNavItem.name = "tag";
+                        tagNavItem.value = tag;
+                        tagNavItem.checked = tag === state.tag;
+                        tagNavItem.onclick = () => {
+                            state.tag = tag;
+                            window.logChart.destroy();
+                            loadChart(config, state);
+                        };
+
+                        const tagNavLabel = document.createElement("label");
+                        tagNavLabel.appendChild(tagNavItem);
+
+                        const tagNavValue = document.createElement("code");
+                        tagNavValue.innerText = `${tag}`;
+
+                        tagNavLabel.appendChild(tagNavValue);
+                        document.getElementById("tagNav").appendChild(tagNavLabel);
+                    }
+                });
+            });
+
+            const chartData = {
+                labels: chartLabels,
+                datasets: Object.keys(chartDatasets)
+                    .map(unit => ({
+                        label: unit,
+                        data: chartDatasets[unit],
+                        borderColor: getColor(config, state, Object.keys(chartDatasets).findIndex(u => u === unit)),
+                        backgroundColor: setColorOpacity(getColor(config, state, Object.keys(chartDatasets).findIndex(u => u === unit)), 0.5),
+                        // order: Object.keys(chartDatasets).findIndex(u => u === unit),
+                        // type:  Object.keys(chartDatasets).findIndex(u => u === unit) % 2 == 0 ? 'line' : 'line'
+                    }))
+            };
+            // console.log('chartData', chartData);
+            const chartConfig = {
+                type: 'line',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: `Chart for ${tag}`
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'time',
+                            display: true,
+                            time: {
+                                // Luxon format string
+                                tooltipFormat: 'DD T'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: false,
+                                text: chartData.datasets.map(d => d.label).join('/ ')
+                            }
+                        }
+                    },
+                    layout: {
+                        padding: 80
+                    }
+                }
+            };
+            const logChartCtx = document.getElementById('logChart').getContext('2d');
+            const logChart = new Chart(logChartCtx, chartConfig);
+            window.logChart = logChart;
+        };
+
+
+        const config = {
+            elementaryos: {
+                colors: {
+                    strawberry: {
+                        100: "#ff8c82",
+                        300: "#ed5353",
+                        500: "#c6262e",
+                        700: "#a10705",
+                        900: "#7a0000"
+                    },
+                    orange: {
+                        100: "#ffc27d",
+                        300: "#ffa154",
+                        500: "#f37329",
+                        700: "#cc3b02",
+                        900: "#a62100"
+                    },
+                    banana: {
+                        100: "#fff394",
+                        300: "#ffe16b",
+                        500: "#f9c440",
+                        700: "#d48e15",
+                        900: "#ad5f00"
+                    },
+                    lime: {
+                        100: "#d1ff82",
+                        300: "#9bdb4d",
+                        500: "#68b723",
+                        700: "#3a9104",
+                        900: "#206b00"
+                    },
+                    mint: {
+                        100: "#89ffdd",
+                        300: "#43d6b5",
+                        500: "#28bca3",
+                        700: "#0e9a83",
+                        900: "#007367"
+                    },
+                    blueberry: {
+                        100: "#8cd5ff",
+                        300: "#64baff",
+                        500: "#3689e6",
+                        700: "#0d52bf",
+                        900: "#002e99"
+                    },
+                    grape: {
+                        100: "#e4c6fa",
+                        300: "#cd9ef7",
+                        500: "#a56de2",
+                        700: "#7239b3",
+                        900: "#452981"
+                    },
+                    bubblegum: {
+                        100: "#fe9ab8",
+                        300: "#f4679d",
+                        500: "#de3e80",
+                        700: "#bc245d",
+                        900: "#910e38"
+                    },
+                    cocoa: {
+                        100: "#a3907c",
+                        300: "#8a715e",
+                        500: "#715344",
+                        700: "#57392d",
+                        900: "#3d211b"
+                    },
+                    silver: {
+                        100: "#fafafa",
+                        300: "#d4d4d4",
+                        500: "#abacae",
+                        700: "#7e8087",
+                        900: "#555761"
+                    },
+                    slate: {
+                        100: "#95a3ab",
+                        300: "#667885",
+                        500: "#485a6c",
+                        700: "#273445",
+                        900: "#0e141f"
+                    },
+                    black: {
+                        100: "#666666",
+                        300: "#4d4d4d",
+                        500: "#333333",
+                        700: "#1a1a1a",
+                        900: "#000000"
+                    }
+                }
+            }
+        };
+        // state mgmt w/ initial state
+        function handleData(accentColor, tag, logs) {
+            const state = {
+                accentColor: accentColor,
+                tag: tag,
+                logs: JSON.parse(logs)
+            };
+            // console.log('state', state);
+            window.state = state;
+            window.config = config;
+
+            loadChart(config, state);
+        }
+        window.handleData = handleData;
+    </script>
+
+</body>
+
+</html>

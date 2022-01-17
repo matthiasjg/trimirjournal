@@ -12,19 +12,20 @@ add_project_arguments(
 
 cat_prog = find_program('cat')
 
-html_partials_files = files(
-    'data/html/partials/body-0-logChartWebView.html',
-    'data/html/partials/script-1-luxon.html',
-    'data/html/partials/script-2-chartjs.html',
-    'data/html/partials/script-3-chartjs-adapter-luxon.html',
-    'data/html/partials/script-4-logChartWebView.html'
+log_chart_webview_partials = files(
+    'data/html/partials/head.html',
+    'data/html/partials/style-simplecss.html',
+    'data/html/partials/script-luxon.html',
+    'data/html/partials/script-chartjs.html',
+    'data/html/partials/script-chartjs-adapter-luxon.html',
+    'data/html/LogChartWebView.html'
 )
 
-concat_partials = custom_target(
+concat_log_chart_webview_partials = custom_target(
   'concat-partials',
   command: [ cat_prog, '@INPUT@' ],
   capture: true,
-  input: html_partials_files,
+  input: log_chart_webview_partials,
   output: 'logChartWebView.html',
   build_by_default: true
 )
@@ -33,7 +34,7 @@ gresource = gnome.compile_resources(
     'gresource',
     join_paths('data', 'gresource.xml'),
     source_dir: 'data',
-    dependencies: [concat_partials]    
+    dependencies: [concat_log_chart_webview_partials]    
 )
 
 deps = [
