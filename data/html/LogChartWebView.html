@@ -119,12 +119,11 @@
             const logsLoaded = loadJournal(logs, 1, 1000);
             const logsWithTagMetrics = logsLoaded.items.filter(log => log.metrics.length > 0 && log.metrics.find(m => m.tag === tag));
 
-            const tags = [];
+            const tagsWithCount = {};
             const chartDatasets = {};
             const chartLabels = [];
 
-            document.getElementById("tagNav").innerHTML = ''; // reset
-
+            // datasets and labels, create
             logsWithTagMetrics.forEach(log => {
                 // chart labels, datasets
                 const createdAt = DateTime.fromISO(log.createdAt);
@@ -139,30 +138,37 @@
 
                 log.metrics.forEach(metric => {
                     const { tag } = metric;
-                    if (tags.indexOf(tag) === -1) {
-                        tags.push(tag)
-                        // tag nav
-                        const tagNavItem = document.createElement("input");
-                        tagNavItem.type = "radio";
-                        tagNavItem.name = "tag";
-                        tagNavItem.value = tag;
-                        tagNavItem.checked = tag === state.tag;
-                        tagNavItem.onclick = () => {
-                            state.tag = tag;
-                            window.logChart.destroy();
-                            loadChart(config, state);
-                        };
-
-                        const tagNavLabel = document.createElement("label");
-                        tagNavLabel.appendChild(tagNavItem);
-
-                        const tagNavValue = document.createElement("code");
-                        tagNavValue.innerText = `${tag}`;
-
-                        tagNavLabel.appendChild(tagNavValue);
-                        document.getElementById("tagNav").appendChild(tagNavLabel);
+                    if (tagsWithCount[tag]) {
+                        tagsWithCount[tag] += 1;
+                    } else {
+                        tagsWithCount[tag] = 1;
                     }
                 });
+            });
+
+            // tag nav, reset and create
+            document.getElementById("tagNav").innerHTML = '';
+            Object.keys(tagsWithCount).forEach(tag => {
+                const count = tagsWithCount[tag];
+                const tagNavItem = document.createElement("input");
+                tagNavItem.type = "radio";
+                tagNavItem.name = "tag";
+                tagNavItem.value = tag;
+                tagNavItem.checked = tag === state.tag;
+                tagNavItem.onclick = () => {
+                    state.tag = tag;
+                    window.logChart.destroy();
+                    loadChart(config, state);
+                };
+
+                const tagNavLabel = document.createElement("label");
+                tagNavLabel.appendChild(tagNavItem);
+
+                const tagNavValue = document.createElement("code");
+                tagNavValue.innerText = `${tag} (${count})`;
+
+                tagNavLabel.appendChild(tagNavValue);
+                document.getElementById("tagNav").appendChild(tagNavLabel);
             });
 
             const chartData = {

@@ -71,7 +71,7 @@ public class Journal.LogChartWebView : Gtk.Box {
             // get (accent) color from gtk css
             unowned Gtk.StyleContext log_chart_context = this.get_style_context ();
             var fg_color= log_chart_context.get_color (Gtk.StateFlags.NORMAL);
-            critical ("fg_color: %s", fg_color.to_string ());
+            // critical ("fg_color: %s", fg_color.to_string ());
 
             // string accent_color = fg_color.to_string ();
             string accent_color = "#%02x%02x%02x"
@@ -80,7 +80,7 @@ public class Journal.LogChartWebView : Gtk.Box {
                     (uint) Math.round (fg_color.green * 255),
                     (uint) Math.round (fg_color.blue * 255)
                 ).up ();
-            critical ("accent_color: %s", accent_color);
+            // critical ("accent_color: %s", accent_color);
 
             // string url = "javascript:alert('error');";
             // url = "file://" + Path.get_dirname(FileUtils.read_link("/proc/self/exe")) + "/html/test.html";
