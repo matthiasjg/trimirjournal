@@ -82,12 +82,6 @@ public class Journal.LogChartWebView : Gtk.Box {
                 ).up ();
             critical ("accent_color: %s", accent_color);
 
-            // warning: `Gtk.StyleContext.get_background_color' has been deprecated since 3.16
-            // var bg_color = log_chart_context.get_background_color (Gtk.StateFlags.NORMAL);
-            // debug ("bg_color: %s", bg_color.to_string ());
-
-            // var bg_color = gtk_settings.gtk_application_prefer_dark_theme ? gdk_white : gdk_black;
-
             // string url = "javascript:alert('error');";
             // url = "file://" + Path.get_dirname(FileUtils.read_link("/proc/self/exe")) + "/html/test.html";
 
@@ -103,6 +97,9 @@ public class Journal.LogChartWebView : Gtk.Box {
             } catch (Error e) {
                 error ("%s", e.message);
             }
+
+            // replace placeholder/ vars
+            html = html.replace ("[ACCENT_COLOR]", accent_color);
 
             pack_start (web_view, true, true, 0);
 

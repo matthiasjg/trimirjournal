@@ -6,13 +6,15 @@
         --mono-font: "Inter", monospace;
 
         /* Body font size. By default, effectively 18.4px, based on 16px as 'root em' */
-        --base-fontsize: 1.15rem;
+        --base-fontsize: 1.0rem;
+        /* 1.15rem */
 
         /* Major third scale progression - see https://type-scale.com/ */
         --header-scale: 1.25;
 
         /* Line height is set to the "Golden ratio" for optimal legibility */
-        --line-height: 1.618;
+        --line-height: 2.0;
+        /* 1.618 */
 
         /* Default (light) theme */
         --bg: #fff;
@@ -20,9 +22,12 @@
         --text: #212121;
         --text-light: #585858;
         --border: #d8dae1;
-        --accent: #0d47a1;
-        --accent-light: #90caf9;
-        --code: #d81b60;
+        --accent: [ACCENT_COLOR];
+        /* #0d47a1 */
+        --accent-light: [ACCENT_COLOR];
+        /* #90caf9 */
+        --code: [ACCENT_COLOR];
+        /* #d81b60 */
         --preformatted: #444;
         --marked: #ffdd33;
         --disabled: #efefef;
@@ -36,9 +41,12 @@
             --text: #dcdcdc;
             --text-light: #ababab;
             --border: #666;
-            --accent: #ffb300;
-            --accent-light: #ffecb3;
-            --code: #f06292;
+            --accent: [ACCENT_COLOR];
+            /* #ffb300 */
+            --accent-light: [ACCENT_COLOR];
+            /* #ffecb3 */
+            --code: [ACCENT_COLOR];
+            /* #141112 */
             --preformatted: #ccc;
             --disabled: #111;
         }
@@ -471,7 +479,8 @@
     pre span,
     kbd,
     samp {
-        font-size: 1.075rem;
+        font-size: 1.0;
+        /* 1.075rem */
         font-family: var(--mono-font);
         color: var(--code);
     }

@@ -6,13 +6,16 @@
 
     <style>
         #tagNav {
-            position: absolute;
-            top: 20px;
-            left: 80px;
+            margin-top: 5px;
+            margin-bottom: 5px;
         }
 
         #tagNav label {
             margin-right: 5px;
+        }
+
+        #tagNav label:first-of-type code {
+            font-weight: bold;
         }
     </style>
     <div id="tagNav"></div>
@@ -204,10 +207,10 @@
                                 text: chartData.datasets.map(d => d.label).join('/ ')
                             }
                         }
-                    },
+                    }/**,
                     layout: {
                         padding: 80
-                    }
+                    } */
                 }
             };
             const logChartCtx = document.getElementById('logChart').getContext('2d');
