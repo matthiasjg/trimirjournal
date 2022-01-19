@@ -15,10 +15,7 @@
         }
     </style>
     <canvas id="logChart"></canvas>
-    <details>
-        <summary>Details</summary>
-        <nav id="tagNav"></nav>
-    </details>
+    <nav id="tagNav"></nav>
 
     <!--footer>
         <p>Powered by <code>Simple.css</code>, <code>Chart.js</code>, <code>Moment/Luxon</code></p>
@@ -183,11 +180,11 @@
                     plugins: {
                         legend: {
                             position: 'top',
-                        },
+                        }/*,
                         title: {
                             display: true,
                             text: `Chart for ${tag}`
-                        }
+                        }*/
                     },
                     scales: {
                         x: {
