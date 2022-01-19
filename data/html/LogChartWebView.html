@@ -10,16 +10,15 @@
             margin-bottom: 5px;
         }
 
-        #tagNav label {
-            margin-right: 5px;
-        }
-
-        #tagNav label:first-of-type code {
+        #tagNav button:first-of-type {
             font-weight: bold;
         }
     </style>
-    <div id="tagNav"></div>
     <canvas id="logChart"></canvas>
+    <details>
+        <summary>Details</summary>
+        <nav id="tagNav"></nav>
+    </details>
 
     <!--footer>
         <p>Powered by <code>Simple.css</code>, <code>Chart.js</code>, <code>Moment/Luxon</code></p>
@@ -150,25 +149,17 @@
             document.getElementById("tagNav").innerHTML = '';
             Object.keys(tagsWithCount).forEach(tag => {
                 const count = tagsWithCount[tag];
-                const tagNavItem = document.createElement("input");
-                tagNavItem.type = "radio";
-                tagNavItem.name = "tag";
-                tagNavItem.value = tag;
-                tagNavItem.checked = tag === state.tag;
+                const tagNavItem = document.createElement("a");
+                tagNavItem.innerText = `${tag} (${count})`;
+                if (tag === state.tag) {
+                    tagNavItem.classList.add("active");
+                }
                 tagNavItem.onclick = () => {
                     state.tag = tag;
                     window.logChart.destroy();
                     loadChart(config, state);
                 };
-
-                const tagNavLabel = document.createElement("label");
-                tagNavLabel.appendChild(tagNavItem);
-
-                const tagNavValue = document.createElement("code");
-                tagNavValue.innerText = `${tag} (${count})`;
-
-                tagNavLabel.appendChild(tagNavValue);
-                document.getElementById("tagNav").appendChild(tagNavLabel);
+                document.getElementById("tagNav").appendChild(tagNavItem);
             });
 
             const chartData = {

@@ -29,7 +29,8 @@
         --code: [ACCENT_COLOR];
         /* #d81b60 */
         --preformatted: #444;
-        --marked: #ffdd33;
+        --marked: [ACCENT_COLOR];
+        /* #ffdd33 */
         --disabled: #efefef;
     }
 
@@ -72,7 +73,7 @@
         min-height: 100vh;
         flex-direction: column;
         flex: 1;
-        margin: 0 auto;
+        /* margin: 0 auto; */
         max-width: 45rem;
         padding: 0 0.5rem;
         overflow-x: hidden;
@@ -131,7 +132,7 @@
         transition: 0.4s;
     }
 
-    nav a:hover {
+    nav a:hover, nav a.active {
         color: var(--accent) !important;
         border-color: var(--accent);
     }
