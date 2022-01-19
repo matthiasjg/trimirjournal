@@ -267,10 +267,10 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
                 }
             }
         });
-        var first_row = sidebar_listbox.get_row_at_index (0);
+        /* var first_row = sidebar_listbox.get_row_at_index (0);
         if (first_row != null) {
             sidebar_listbox.select_row (first_row);
-        }
+        } */
 
         add (paned);
 
@@ -293,6 +293,9 @@ public class Journal.MainWindow : Hdy.ApplicationWindow {
         if (filtered_logs != null && filtered_logs.length >= 0) {
             // force journal view visible
             sidebar_listbox.select_row (sidebar_listbox.get_row_at_index (1));
+        } else {
+            // fallback show welcome view
+            sidebar_listbox.select_row (sidebar_listbox.get_row_at_index (0));
         }
         main_header.show_all ();
     }
