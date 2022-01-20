@@ -57,7 +57,7 @@
                     tagSuccessor && `${tag} ${tagSuccessor.split('#')[0].trim()}`;
 
                 const regexMetrics = new RegExp(
-                    `${tag}\\s(?<count>\\.\\d+)\\b|(?<value>\\d+(\\.\\d+)?)(?<unit>[a-zA-Z]+)`,
+                    `${tag}\\s(?<count>\\.\\d+)\\b|(?<value>\\d+(\\.\\d+)?)(?<unit>[a-zA-Z]+)?`,
                     'g'
                 );
 
