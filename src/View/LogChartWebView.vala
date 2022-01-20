@@ -144,7 +144,7 @@ public class Journal.LogChartWebView : Gtk.Box {
                     }
                 });
                 */
-                show_all ();   
+                show_all ();
             }
         }
     }
