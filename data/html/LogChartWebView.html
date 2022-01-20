@@ -57,7 +57,7 @@
                     tagSuccessor && `${tag} ${tagSuccessor.split('#')[0].trim()}`;
 
                 const regexMetrics = new RegExp(
-                    `${tag}\\s(?<count>\\d+)\\b|(?<value>\\d+(\\.\\d+)?)(?<unit>[a-zA-Z]+)`,
+                    `${tag}\\s(?<count>\\.\\d+)\\b|(?<value>\\d+(\\.\\d+)?)(?<unit>[a-zA-Z]+)`,
                     'g'
                 );
 
@@ -310,7 +310,7 @@
                 tag: tag,
                 logs: JSON.parse(logs)
             };
-            // console.log('state', state);
+            console.log('state', state);
             window.state = state;
             window.config = config;
 
