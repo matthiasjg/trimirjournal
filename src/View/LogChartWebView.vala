@@ -105,18 +105,7 @@ public class Journal.LogChartWebView : Gtk.Box {
 
             this.expand = true;
 
-            string logs_json = "";
-            logs_json += "[";
-            for (uint i = 0; i < logs.length; i++) {
-                var log = (Journal.LogModel) logs[i];
-                string json_log = log.to_json_object ();
-                logs_json += json_log;
-                if (i + 1 < logs.length) {
-                    logs_json += ",";
-                }
-            }
-            logs_json += "]";
-
+            string logs_json = Journal.LogModel.logs_to_json (logs);
             web_view.load_changed.connect ((load_event) => {
                 inject_data.begin (accent_color, log_filter, logs_json);
             });

@@ -35,22 +35,9 @@
     public bool write_journal (Journal.LogModel[] logs) {
         bool saved = false;
         try {
-            string journal_json = "";
-            journal_json += "[";
-            for (uint i = 0; i < logs.length; i++) {
-                var log = (Journal.LogModel) logs[i];
-                string json_log = log.to_asset_json_object ();
-                journal_json += json_log;
-                if (i + 1 < logs.length) {
-                    journal_json += ",";
-                }
-            }
-            journal_json += "]";
-
+            string journal_json = Journal.LogModel.logs_to_asset_json (logs);
             write_content_to_file (journal_file, journal_json);
-
             write_to_archive ();
-
             saved = true;
         } catch (Error err) {
             error ("Unable to write Journal JSON to archive %s: %s\n", opened_file.get_path (), err.message);

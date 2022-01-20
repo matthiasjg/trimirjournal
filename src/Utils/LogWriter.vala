@@ -22,17 +22,7 @@ public class Journal.LogWriter : Object {
         // Json.Array res = new Json.Array.sized (logs.length);
         // res.add_object_element (owned Json.Object value);
 
-        string journal_json = "";
-        journal_json += "[";
-        for (uint i = 0; i < logs.length; i++) {
-            var log = (Journal.LogModel) logs[i];
-            string json_log = log.to_json_object ();
-            journal_json += json_log;
-            if (i + 1 < logs.length) {
-                journal_json += ",";
-            }
-        }
-        journal_json += "]";
+        string journal_json = Journal.LogModel.logs_to_json (logs);
         debug ("journal_json: %s", journal_json);
 
         bool saved = false;

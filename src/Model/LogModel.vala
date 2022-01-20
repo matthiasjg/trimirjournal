@@ -121,4 +121,34 @@ public class Journal.LogModel : Object {
             return created_at_date_time.format ("%Y-%m-%dT%H:%M:%S.000Z");
         }
     }
+
+    public static string logs_to_json (Journal.LogModel[] logs) {
+        string logs_json = "";
+        logs_json += "[";
+        for (uint i = 0; i < logs.length; i++) {
+            var log = (Journal.LogModel) logs[i];
+            string json_log = log.to_json_object ();
+            logs_json += json_log;
+            if (i + 1 < logs.length) {
+                logs_json += ",";
+            }
+        }
+        logs_json += "]";
+        return logs_json;
+    }
+
+    public static string logs_to_asset_json (Journal.LogModel[] logs) {
+        string logs_json = "";
+        logs_json += "[";
+        for (uint i = 0; i < logs.length; i++) {
+            var log = (Journal.LogModel) logs[i];
+            string json_log = log.to_asset_json_object ();
+            logs_json += json_log;
+            if (i + 1 < logs.length) {
+                logs_json += ",";
+            }
+        }
+        logs_json += "]";
+        return logs_json;
+    }
 }
