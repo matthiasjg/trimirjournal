@@ -1,6 +1,7 @@
 # Trimirj Journal — Your personal activity "Tricorder".
 
-Designed and built for personal text journaling and activity tracking.
+Designed and built for personal 
+![](data/screenshots/journal.pntext journaling and activity tracking.
 
 Write a diary, log your activities, keep track of your metrics.
 
@@ -52,9 +53,10 @@ You'll need the following dependencies:
 sudo apt install \
     elementary-sdk \
     libgda-5.0-dev \
-    libgtksourceview-4-dev \
+    libgtksourceview-4-dev \>
     libarchive-dev \
     libwebkit2gtk-4.0-dev
+flatpak install io.elementary.Sdk/x86_64/6.1
 ```
 
 Run `meson build` to configure the build environment. Change to the build directory and run `ninja` to build
@@ -73,7 +75,7 @@ com.github.matthiasjg.trimirjournal
 ```
 
 ## Developing and Packaging
-
+>
 For development oneshould use `make`™️.
 
 The `make` targets require two more tools being installed:
