@@ -33,6 +33,15 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.0.7" date="2022-01-22" urgency="medium">
+      <description>
+        <p>Consistent support for dark/ light mode and accent color on timeseries chart view</p>
+        <p>Added sub navigation on timeseries chart view for toggling legend and filtering related metric tags</p>
+        <p>The journal view now opens immediately on application start if there are log entries</p>
+        <p>Updated elementary OS Sdk to runtime version 6.1</p>
+        <p>Replaced LiveChart.StaticChart with WebKit.WebView</p>
+      </description>
+    </release>
     <release version="1.0.6" date="2021-12-17" urgency="medium">
       <description>
         <p>Fixed reset/ restore and backup of journal to zip or json file</p>
