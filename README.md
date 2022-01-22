@@ -53,7 +53,7 @@ You'll need the following dependencies:
 sudo apt install \
     elementary-sdk \
     libgda-5.0-dev \
-    libgtksourceview-4-dev \>
+    libgtksourceview-4-dev \
     libarchive-dev \
     libwebkit2gtk-4.0-dev
 flatpak install io.elementary.Sdk/x86_64/6.1
