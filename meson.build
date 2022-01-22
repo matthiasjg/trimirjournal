@@ -47,7 +47,6 @@ deps = [
 	    dependency('granite', version: '>=0.5'),
         dependency('libhandy-1', version: '>=0.90.0'),
         dependency('gtksourceview-4'),
-        dependency('livechart'),
         dependency('libarchive'),
         dependency('webkit2gtk-4.0', version: '>=2.28')
     ]
@@ -73,7 +72,6 @@ dao_files = [
 view_files = [
     'src/View/LogRow.vala',
     'src/View/LogView.vala',
-    'src/View/LogChartView.vala',
     'src/View/LogChartWebView.vala',
     'src/View/JournalRow.vala',
     'src/View/WelcomeRow.vala',
