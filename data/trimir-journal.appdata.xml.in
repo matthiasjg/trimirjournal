@@ -33,13 +33,14 @@
     </screenshot>
   </screenshots>
   <releases>
-    <release version="1.0.7" date="2022-01-22" urgency="medium">
+    <release version="1.0.7" date="2022-01-26" urgency="medium">
       <description>
         <p>Consistent support for dark/ light mode and accent color on timeseries chart view</p>
         <p>Added sub navigation on timeseries chart view for toggling legend and filtering related metric tags</p>
         <p>The journal view now opens immediately on application start if there are log entries</p>
         <p>Updated elementary OS Sdk to runtime version 6.1</p>
         <p>Replaced LiveChart.StaticChart with WebKit.WebView</p>
+        <p>Updated Stripe key for integration with AppCenter</p>
       </description>
     </release>
     <release version="1.0.6" date="2021-12-17" urgency="medium">
@@ -125,6 +126,6 @@
     <value key="x-appcenter-color-primary">#7a36b1</value>
     <value key="x-appcenter-color-primary-text">rgb(244, 233, 110)</value>
     <value key="x-appcenter-suggested-price">12</value>
-    <value key="x-appcenter-stripe">pk_live_5103Eeb2rh8qBcB1CpjdXWlDIYyfxtchIA0TgM3w5wTa1x8ZiClVsWo2I7hqnL2534MQdGnF9h9oo0QurR7lYLTyl00Mi45wBdE</value>
+    <value key="x-appcenter-stripe">pk_live_5103Eeb2rh8qBcB1CWTQHsJafSQjKXRkbS6aqqp2ZVhvHJjJ9u4OskCO9MeVaS2Hs5w8EoAykm0NyY4qBM2PPWnpG00n6Xz8eBC</value>
   </custom>
 </component>
