@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2021 Matthias Joachim Geisler <matthiasjg@openwebcraft.com> -->
-<component type="desktop">
+<!-- Copyright ⓒ 2021 to present, Matthias Joachim Geisler <matthiasjg@openwebcraft.com> -->
+<component type="desktop-application">
   <id>com.github.matthiasjg.trimirjournal</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0+</project_license>
@@ -23,13 +23,15 @@
   </description>
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/matthiasjg/trimirjournal/master/data/screenshots/welcome.png</image>
+      <image xml:lang="de">https://raw.githubusercontent.com/matthiasjg/trimirjournal/master/data/screenshots/de/light-and-dark.png</image>
+      <image xml:lang="es">https://raw.githubusercontent.com/matthiasjg/trimirjournal/master/data/screenshots/es/light-and-dark.png</image>
+      <image>https://raw.githubusercontent.com/matthiasjg/trimirjournal/master/data/screenshots/en/light-and-dark.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/matthiasjg/trimirjournal/master/data/screenshots/journal.png</image>
+      <image>https://raw.githubusercontent.com/matthiasjg/trimirjournal/master/data/screenshots/welcome-light.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/matthiasjg/trimirjournal/master/data/screenshots/logchart.png</image>
+      <image>https://raw.githubusercontent.com/matthiasjg/trimirjournal/master/data/screenshots/logchart-dark.png</image>
     </screenshot>
   </screenshots>
   <releases>
@@ -86,9 +88,6 @@
       </description>
     </release>
   </releases>
-  <provides>
-    <binary>com.github.matthiasjg.trimirjournal</binary>
-  </provides>
   <content_rating type="oars-1.1">
     <content_attribute id="violence-cartoon">none</content_attribute>
     <content_attribute id="violence-fantasy">none</content_attribute>
@@ -120,6 +119,15 @@
   </content_rating>
   <translation type="gettext">com.github.matthiasjg.trimirjournal</translation>
   <developer_name>Matthias Joachim Geisler, openwebcraft</developer_name>
+  <launchable type="desktop-id">com.github.matthiasjg.trimirjournal.desktop</launchable>
+
+  <!--
+    Do not uncomment the icon line, below. It is automatically uncommented and
+    re-commented-out by the preview-in-appcenter task as necessary.
+    If you uncomment this manually, your Flatpak package attempts will fail.
+  -->
+  <!-- <icon type="stock">com.github.matthiasjg.trimirjournal</icon> -->
+
   <url type="homepage">https://github.com/matthiasjg/trimirjournal</url>
   <url type="bugtracker">https://github.com/matthiasjg/trimirjournal/issues</url>
   <custom>

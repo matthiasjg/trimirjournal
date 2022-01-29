@@ -49,3 +49,9 @@ flatpak-run:
 	flatpak run com.github.matthiasjg.trimirjournal
 
 yolo: flatpak-build flatpak-run
+
+screenshots:
+	task/take-screenshots
+
+preview-in-appcenter:
+	task/preview-in-appcenter

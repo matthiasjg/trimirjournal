@@ -78,7 +78,7 @@ msgid "Remove filter for tag %s"
 msgstr "Eliminar filtro para la etiqueta %s"
 
 #: src/View/MainWindow.vala:25 src/View/MainWindow.vala:120
-#: data/trimir-journal.desktop.in:3 data/trimir-journal.appdata.xml.in:7
+#: data/trimir-journal.desktop.in:3 data/trimirjournal.metainfo.xml.in:7
 msgid "Trimir Journal"
 msgstr ""
 
@@ -106,7 +106,7 @@ msgstr "Empiece su registro o escriba ? para buscar su Diario…"
 msgid "Welcome to Trimir Journal"
 msgstr "Bienvenido a Trimir Journal"
 
-#: src/View/WelcomeView.vala:12 data/trimir-journal.appdata.xml.in:8
+#: src/View/WelcomeView.vala:12 data/trimirjournal.metainfo.xml.in:8
 msgid "Your personal activity \"Tricorder\"."
 msgstr "Su actividad personal \"Tricorder\"."
 
@@ -137,7 +137,7 @@ msgstr ""
 "Diario;Registro;Diario;Notas;Personal;Actividades;Seguimiento;Deportes;Salud;"
 "Métricas"
 
-#: data/trimir-journal.appdata.xml.in:10
+#: data/trimirjournal.metainfo.xml.in:10
 msgid ""
 "Designed and built for personal text journaling and activity tracking. Write "
 "a diary, log your activities, keep track of your metrics. Search, filter and "
@@ -147,11 +147,11 @@ msgstr ""
 "seguimiento de sus actividades. Escriba un diario, registre sus actividades, "
 "lleve un registro de sus métricas. Busque, filtre y evalúe su diario—su vida."
 
-#: data/trimir-journal.appdata.xml.in:15
+#: data/trimirjournal.metainfo.xml.in:15
 msgid "Features:"
 msgstr "Características:"
 
-#: data/trimir-journal.appdata.xml.in:17
+#: data/trimirjournal.metainfo.xml.in:17
 #, fuzzy
 msgid ""
 "Write expressive journal entries with emoijs and clickable URLs, organized "
@@ -160,15 +160,15 @@ msgstr ""
 "Escriba diarios expresivos con emojis y URL en las que se puede hacer clic, "
 "organizados con hashtags (por ejemplo, \"#linux es genial 😎️\")"
 
-#: data/trimir-journal.appdata.xml.in:18
+#: data/trimirjournal.metainfo.xml.in:18
 msgid "Search your journal"
 msgstr "Busque su diario"
 
-#: data/trimir-journal.appdata.xml.in:19
+#: data/trimirjournal.metainfo.xml.in:19
 msgid "Filter your journal by hashtag"
 msgstr "Filtre su diario con hashtags"
 
-#: data/trimir-journal.appdata.xml.in:20
+#: data/trimirjournal.metainfo.xml.in:20
 msgid ""
 "Render timeline charts when filtering for \"metric tags\", i.e. a hashtag "
 "followed by a number with optional unit (e.g. \"#Trailrun 5km\")"
@@ -177,54 +177,54 @@ msgstr ""
 "decir, un hashtag seguido de un número con una unidad opcional (por ejemplo "
 "\"Trailrun 5km\")"
 
-#: data/trimir-journal.appdata.xml.in:21
+#: data/trimirjournal.metainfo.xml.in:21
 msgid ""
 "Backup and restore your journal to and from a JSON or ZIP archive file "
 "compatible with ZenJournal (Disclaimer: Trimir Journal is not created by, "
 "affiliated with, or supported by ZenJournal.)"
 msgstr ""
 
-#: data/trimir-journal.appdata.xml.in:39
+#: data/trimirjournal.metainfo.xml.in:39
 msgid "Added Spanish translation from Diego, thanks for the contribution 🙌️"
 msgstr ""
 
-#: data/trimir-journal.appdata.xml.in:40
+#: data/trimirjournal.metainfo.xml.in:40
 msgid ""
 "Backup and restore your journal to and from a ZIP archive file compatible "
 "with ZenJournal (Disclaimer: Trimir Journal is not created by, affiliated "
 "with, or supported by ZenJournal.)"
 msgstr ""
 
-#: data/trimir-journal.appdata.xml.in:41
+#: data/trimirjournal.metainfo.xml.in:41
 msgid "URLs in journal entries are now clickable links"
 msgstr ""
 
-#: data/trimir-journal.appdata.xml.in:47
+#: data/trimirjournal.metainfo.xml.in:47
 msgid "The first AppCenter release, maybe."
 msgstr ""
 
-#: data/trimir-journal.appdata.xml.in:48
+#: data/trimirjournal.metainfo.xml.in:48
 msgid "Fixed failing build for AppCenter due to Git submodule"
 msgstr ""
 
-#: data/trimir-journal.appdata.xml.in:53
+#: data/trimirjournal.metainfo.xml.in:53
 #, fuzzy
 msgid "The real first release!"
 msgstr "Primer Lanzamiento!"
 
-#: data/trimir-journal.appdata.xml.in:54
+#: data/trimirjournal.metainfo.xml.in:54
 msgid "Changed RDNN to comply with beta developer dashoard"
 msgstr ""
 
-#: data/trimir-journal.appdata.xml.in:59
+#: data/trimirjournal.metainfo.xml.in:59
 msgid "First release!"
 msgstr "Primer Lanzamiento!"
 
-#: data/trimir-journal.appdata.xml.in:60
+#: data/trimirjournal.metainfo.xml.in:60
 msgid "Supports the dark style"
 msgstr "Soporta tema oscuro"
 
-#: data/trimir-journal.appdata.xml.in:97
+#: data/trimirjournal.metainfo.xml.in:97
 msgid "Matthias Joachim Geisler, openwebcraft"
 msgstr ""
 

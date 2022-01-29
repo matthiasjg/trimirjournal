@@ -11,4 +11,4 @@ src/View/TagButton.vala
 src/View/MainWindow.vala
 src/View/WelcomeView.vala
 data/trimir-journal.desktop.in
-data/trimir-journal.appdata.xml.in
+data/trimirjournal.metainfo.xml.in
