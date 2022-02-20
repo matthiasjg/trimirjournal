@@ -41,6 +41,9 @@ i18n:
 		&& ninja com.github.matthiasjg.trimirjournal-update-po \
 		; cd -
 
+flatpak-clear:
+	rm -rf .flatpak-builder
+
 flatpak-build:
 	flatpak-builder \
 		build com.github.matthiasjg.trimirjournal.yml --user --install --force-clean
