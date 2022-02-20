@@ -46,13 +46,6 @@ modules:
       - '/share/doc'
       - '/bin'
 
-  - name: live-chart
-    buildsystem: meson
-    sources:
-      - type: archive
-        url: https://github.com/lcallarec/live-chart/archive/refs/tags/1.9.1.tar.gz
-        sha256: 7b5f1d0807b5f6e8b09e2c1dd468af22379578b55b38afd530c0ff006bc33e53
-
   - name: libarchive
     buildsystem: simple
     sources:
