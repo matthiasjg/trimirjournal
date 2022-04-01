@@ -1,0 +1,233 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.matthiasjg.trimirjournal package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: com.github.matthiasjg.trimirjournal\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-26 16:24+0100\n"
+"PO-Revision-Date: 2022-04-01 16:54+0200\n"
+"Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
+"Language-Team: \n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0.1\n"
+
+#: src/Controller.vala:72
+msgid "JSON (*.json), ZIP (*.zip)"
+msgstr "JSON (*.json), ZIP (*.zip)"
+
+#: src/Controller.vala:74
+msgid "Save"
+msgstr "Opslaan"
+
+#: src/Controller.vala:74
+msgid "Open"
+msgstr "Openen"
+
+#: src/Controller.vala:81
+msgid "Cancel"
+msgstr "Annuleren"
+
+#: src/Controller.vala:107 src/View/WelcomeView.vala:15
+msgid "Reset and Restore Journal"
+msgstr "Dagboek wissen of herstellen"
+
+#: src/Controller.vala:139 src/View/WelcomeView.vala:18
+msgid "Backup Journal"
+msgstr "Back-up maken van dagboek"
+
+#: src/View/LogChartView.vala:155
+msgid "first"
+msgstr "eerste"
+
+#: src/View/LogChartView.vala:157
+msgid "last"
+msgstr "laatste"
+
+#: src/View/JournalRow.vala:11
+msgid "Journal"
+msgstr "Dagboek"
+
+#: src/View/WelcomeRow.vala:11
+msgid "Home"
+msgstr "Overzicht"
+
+#: src/View/TagsRow.vala:11
+msgid "Tags"
+msgstr "Labels"
+
+#: src/View/SavedSearchesRow.vala:11
+msgid "Saved Searches"
+msgstr "Opgeslagen zoekopdrachten"
+
+#: src/View/TagButton.vala:38
+#, c-format
+msgid "Active tag filter %s"
+msgstr "Actief filter: %s"
+
+#: src/View/TagButton.vala:54
+#, c-format
+msgid "Remove filter for tag %s"
+msgstr "Labelfilter ‘%s’ verwijderen"
+
+#: src/View/MainWindow.vala:25 src/View/MainWindow.vala:120
+#: data/trimir-journal.desktop.in:3 data/trimirjournal.metainfo.xml.in:7
+msgid "Trimir Journal"
+msgstr "Dagboek"
+
+#: src/View/MainWindow.vala:61
+msgid "Reset and Restore…"
+msgstr "Wissen en herstellen…"
+
+#: src/View/MainWindow.vala:69
+msgid "Backup…"
+msgstr "Back-up maken…"
+
+#: src/View/MainWindow.vala:89
+msgid "Search Journal"
+msgstr "Dagboek doorzoeken"
+
+#: src/View/MainWindow.vala:90 src/View/MainWindow.vala:195
+msgid "Not implemented yet"
+msgstr "Dit is nog niet geïmplementeerd"
+
+#: src/View/MainWindow.vala:194
+msgid "Start logging or type ? to search your Journal…"
+msgstr "Schrijf iets of typ ? om je dagboek te doorzoeken…"
+
+#: src/View/WelcomeView.vala:11
+msgid "Welcome to Trimir Journal"
+msgstr "Welkom bij Trimir-dagboek"
+
+#: src/View/WelcomeView.vala:12 data/trimirjournal.metainfo.xml.in:8
+msgid "Your personal activity \"Tricorder\"."
+msgstr "Je persoonlijke activiteiten‘logboek’."
+
+#: src/View/WelcomeView.vala:16
+msgid "Import Journal from a JSON (*.json) or ZIP (*.zip) file."
+msgstr "Importeer een dagboek uit een json- of zipbestand (*.json/*.zip)."
+
+#: src/View/WelcomeView.vala:19
+msgid "Export Journal to a JSON (*.json) or ZIP (*.zip) file."
+msgstr "Importeer een dagboek naar een json- of zipbestand (*.json/*.zip)."
+
+#: data/trimir-journal.desktop.in:4
+msgid "Write a diary, log your activities, keep track of your metrics"
+msgstr "Houd een dagboek bij of noteer je activiteiten"
+
+#: data/trimir-journal.desktop.in:7
+msgid "com.github.matthiasjg.trimirjournal"
+msgstr "com.github.matthiasjg.trimirjournal"
+
+#: data/trimir-journal.desktop.in:10
+msgid ""
+"Journal;Log;Diary;Notes;Personal;Activity;Tracking;Sports;Fitness;Metric"
+msgstr ""
+"Dagboek;Logboek;Notities;Aantekeningen;Persoonlijk;Activiteit;Bijhouden;"
+"Sport;Fitness;Statistieken"
+
+#: data/trimirjournal.metainfo.xml.in:10
+msgid ""
+"Designed and built for personal text journaling and activity tracking. Write "
+"a diary, log your activities, keep track of your metrics. Search, filter and "
+"evaluate your journal—your life."
+msgstr ""
+"Deze toepassing is ontworpen om je persoonlijke verhalen en activiteiten "
+"vast te leggen. Houd een dagboek bij of noteer je activiteiten, en doorzoek, "
+"filter en evalueer je dagboek."
+
+#: data/trimirjournal.metainfo.xml.in:15
+msgid "Features:"
+msgstr "Kenmerken:"
+
+#: data/trimirjournal.metainfo.xml.in:17
+msgid ""
+"Write expressive journal entries with emoijs and clickable URLs, organized "
+"with hashtags (i.e. \"#linux rocks 😎️\")"
+msgstr ""
+"Schrijf expressieve verhalen met behulp van emoji's en aanklikbare url's, "
+"evt. voorzien van hashtags (bijv. ‘#linux is tof 😎️’)"
+
+#: data/trimirjournal.metainfo.xml.in:18
+msgid "Search your journal"
+msgstr "Doorzoek je dagboek"
+
+#: data/trimirjournal.metainfo.xml.in:19
+msgid "Filter your journal by hashtag"
+msgstr "Filter je dagboek met behulp van hashtags"
+
+#: data/trimirjournal.metainfo.xml.in:20
+msgid ""
+"Render timeline charts when filtering for \"metric tags\", i.e. a hashtag "
+"followed by a number with optional unit (e.g. \"#Trailrun 5km\")"
+msgstr ""
+"Maak grafieken door een hashtag te voorzien van een getal, evt. gevolgd door "
+"een eenheid (bijv. ‘rondje door het park, 1km’)"
+
+#: data/trimirjournal.metainfo.xml.in:21
+msgid ""
+"Backup and restore your journal to and from a JSON or ZIP archive file "
+"compatible with ZenJournal (Disclaimer: Trimir Journal is not created by, "
+"affiliated with, or supported by ZenJournal.)"
+msgstr ""
+"Maak een back-up van je dagboek en herstel deze elders. Er is ondersteuning "
+"voor json- en zipbestanden, die compatibel zijn met ZenJournal.\n"
+"Vrijwaring: Trimir-dagboek is niet gemaakt door of op enige wijze verbonden "
+"aan ZenJournal."
+
+#: data/trimirjournal.metainfo.xml.in:39
+msgid "Added Spanish translation from Diego, thanks for the contribution 🙌️"
+msgstr "Nieuw: Spaanse vertaling, met dank aan Diego 🙌️"
+
+#: data/trimirjournal.metainfo.xml.in:40
+msgid ""
+"Backup and restore your journal to and from a ZIP archive file compatible "
+"with ZenJournal (Disclaimer: Trimir Journal is not created by, affiliated "
+"with, or supported by ZenJournal.)"
+msgstr ""
+"Maak een back-up van je dagboek en herstel deze elders. Er is ondersteuning "
+"voor json- en zipbestanden, die compatibel zijn met ZenJournal.\n"
+"Vrijwaring: Trimir-dagboek is niet gemaakt door of op enige wijze verbonden "
+"aan ZenJournal."
+
+#: data/trimirjournal.metainfo.xml.in:41
+msgid "URLs in journal entries are now clickable links"
+msgstr "Nieuw: url's op dagboekpagina's zijn voortaan aanklikbaar"
+
+#: data/trimirjournal.metainfo.xml.in:47
+msgid "The first AppCenter release, maybe."
+msgstr "Mogelijk de eerste AppCenter-uitgave."
+
+#: data/trimirjournal.metainfo.xml.in:48
+msgid "Fixed failing build for AppCenter due to Git submodule"
+msgstr ""
+"Opgelost: de AppCenter-uitgave werkte niet wegens een ontbrekende Git-"
+"submodule"
+
+#: data/trimirjournal.metainfo.xml.in:53
+msgid "The real first release!"
+msgstr "De eerste échte uitgave!"
+
+#: data/trimirjournal.metainfo.xml.in:54
+msgid "Changed RDNN to comply with beta developer dashoard"
+msgstr ""
+"De RDNN is gewijzigd om te voldoen aan de eisen van het bèta-"
+"ontwikkelingsdashboard"
+
+#: data/trimirjournal.metainfo.xml.in:59
+msgid "First release!"
+msgstr "De eerste uitgave!"
+
+#: data/trimirjournal.metainfo.xml.in:60
+msgid "Supports the dark style"
+msgstr "Ondersteuning voor donkere thema's"
+
+#: data/trimirjournal.metainfo.xml.in:97
+msgid "Matthias Joachim Geisler, openwebcraft"
+msgstr "Matthias Joachim Geisler, openwebcraft"
